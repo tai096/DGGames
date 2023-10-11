@@ -1,0 +1,5 @@
+Step 1: Install python3
+Step 2: Run "pip install -r requirements.txt" to install all dependencies (Important)
+Step 3: Run "flask run --debug" to start server
+
+*** Note: Before committing your code, You should add new dependencies into requirements.txt
