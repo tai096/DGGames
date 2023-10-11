@@ -1,7 +1,40 @@
+:root {
+  --primaryColor: #8858ed;
+  --secondaryColor: #2b1f41;
+  --bgColor: #000000;
+  --textColor: #ffff;
+}
+
+@font-face {
+  font-family: roboto;
+  src: url("assets/fonts/Roboto-Thin.ttf");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: roboto;
+  src: url("assets/fonts/Roboto-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: roboto;
+  src: url("assets/fonts/Roboto-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: roboto;
+  src: url("assets/fonts/Roboto-Bold.ttf");
+  font-weight: 700;
+}
+
 *,
 html {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
+  font-family: roboto;
+  color: var(--textColor);
+  background-color: var(--bgColor);
 }
