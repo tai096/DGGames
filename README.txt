@@ -2,7 +2,9 @@ Step 1: Install python3
 Step 2: Run "pip install -r requirements.txt" to install all dependencies (Important)
 Step 3: Run "flask run --debug" to start server
 
-*** Note: Before committing your code, You should add new dependencies into requirements.txt
+*** Note: 
+    - Before committing your code, You should add new dependencies into requirements.txt
+    - Add this code into <head></head> to using tailwind: <script src="https://cdn.tailwindcss.com"></script>
 
 HAPPY HACKING!!!!!
 
