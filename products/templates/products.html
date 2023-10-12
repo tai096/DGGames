@@ -9,9 +9,16 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../../static/main.css" />
-    <title>Document</title>
+    <title>DG Games</title>
   </head>
   <body>
-    <h1 class="text-5xl text-red-400">This is Products page</h1>
+    <h1 class="text-3xl sm:text-5xl font-bold text-center">SHOP ALL</h1>
+    <div class="flex justify-between">
+      {{ SideBar | safe }}
+
+      {{ Item | safe }}
+      {{ Item | safe }}
+      {{ Item | safe }}
+      {{ Item | safe }}
   </body>
 </html>
