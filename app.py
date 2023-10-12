@@ -13,3 +13,4 @@ app.register_blueprint(general_blueprint)
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(products_blueprint, url_prefix='/products')
 
+app.app_context().push()
