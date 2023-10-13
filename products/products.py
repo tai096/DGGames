@@ -6,8 +6,9 @@ products_blueprint = Blueprint('products', __name__, template_folder='templates'
 def index():
     renderItem = render_template('components/Item.html', var = 'test var')
     renderSideBar = render_template('components/SideBar.html')
+    renderDropdown = render_template('components/Dropdown.html')
 
-    return render_template('products.html', Item = renderItem, SideBar = renderSideBar)
+    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown)
 
 @products_blueprint.route('/<product_id>')
 def product_detail(product_id):

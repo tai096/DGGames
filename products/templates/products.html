@@ -16,18 +16,22 @@
     <div class="flex justify-center">
       {{ SideBar | safe }}
       <div class="lg:w-20"></div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-20">
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
-        {{ Item | safe }}
+
+      <div class="flex flex-col items-center sm:items-end">
+        {{ Dropdown | safe }}
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-20">
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+          {{ Item | safe }}
+        </div>
       </div>
   </body>
 </html>
