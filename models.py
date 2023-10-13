@@ -73,8 +73,7 @@ class Games(db.Model):
     price = db.Column(db.Integer, nullable=False)
     image = db.Column(db.String(1024), nullable=True, default='https://www.uri.edu/wordpress/wp-content/uploads/home/sites/7/500x333.png')
     purchase_number = db.Column(db.Integer, nullable=True, default=0)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
-    publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'), nullable=False) 
+    publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'), nullable=False)
     # One to Many Relationship
     order = db.relationship('Orders', backref='game', lazy=True)
     purchases = db.relationship('Purchases', backref='game', lazy=True)
