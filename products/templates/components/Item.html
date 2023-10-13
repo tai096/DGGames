@@ -1,2 +1,20 @@
-  <li>item</li>
+<div class="flex flex-col items-center w-60 sm:w-80">
+  <a
+    href="{{ url_for('products.product_detail', product_id = var) }}"
+    class="flex flex-col items-center"
+  >
+    <img
+      class="rounded-2xl cursor-pointer hover:opacity-60 duration-200"
+      src="https://static.wixstatic.com/media/a3df9b_3e096b7597e14371b37e489dc78a5949~mv2.jpg/v1/crop/x_720,y_0,w_1120,h_1440/fill/w_536,h_689,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/EGS_Cyberpunk2077_CDPROJEKTRED_S1_03_2560x1440-359e77d3cd0a40aebf3bbc130d14c5c7.jpg"
+      alt="image"
+    />
+    <h1 class="font-bold text:lg sm:text-xl my-3">Cyberpunk 2077</h1>
+    <p>60$</p>
+  </a>
 
+  <button
+    class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-3"
+  >
+    Add to cart
+  </button>
+</div>
