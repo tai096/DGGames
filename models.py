@@ -17,12 +17,21 @@ class User(db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+genre_games = db.Table('genre_games',
+    db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True),
+    db.Column('games_id', db.Integer, db.ForeignKey('games.id'), primary_key=True)
+)
 
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genre_name = db.Column(db.String(30), nullable=False, unique=True)
-    # One to Many Relationship
-    games = db.relationship('Games', backref='genre', lazy=True)
+    # Many to Many Relationship
+    games_of_genre = db.relationship(
+        'Games', 
+        secondary=genre_games, 
+        lazy='subquery', 
+        backref=db.backref('genres_of_game', lazy=True)
+        )
 
     def __repr__(self):
         return f'Genre {self.genre_name}'
@@ -46,7 +55,12 @@ class Platform(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     platform_name = db.Column(db.String(50), nullable=False, unique=True)
     # Many to Many Relationship
-    games_on_platform = db.relationship('Games', secondary=platform_games, lazy='subquery', backref=db.backref('platforms_of_game', lazy=True))
+    games_on_platform = db.relationship(
+        'Games', 
+        secondary=platform_games, 
+        lazy='subquery', 
+        backref=db.backref('platforms_of_game', lazy=True)
+        )
 
     def __repr__(self):
         return f'Platform {self.platform_name}'
@@ -64,7 +78,7 @@ class Games(db.Model):
     # One to Many Relationship
     order = db.relationship('Orders', backref='game', lazy=True)
     purchases = db.relationship('Purchases', backref='game', lazy=True)
-    # Many to Many Relationship with: Platform (use 'platforms_of_game')
+    # Many to Many Relationship with: Platform (use 'platforms_of_game'), Genre (use 'genres_of_game')
 
     def __repr__(self):
         return f'Game {self.name}'
