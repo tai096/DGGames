@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/general.css"/>
+    <!--add this code to using tailwind -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+
+  <body>
+    <!--NAVBAR-->
+    <nav 
+      class="navbar h-28"
+      style="background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750)"
+    >
+      <div class="nav-container h-full w-full px-28 flex justify-between items-center">
+        <div class="logo-container">
+          <a href={{ url_for('general.index') }}>
+            LOGO DGGAMES
+            <img src="" alt="">
+          </a>
+        </div>
+
+        <div class="navbar-toggler">
+          <!--Button toggle navbar in mobile-->
+        </div>
+
+        <div class="navbar-content flex justify-around items-center">
+          <ul class="navbar-nav flex">
+            <li class="nav-item transition-all">
+              <a href={{ url_for('general.index') }} class="px-1 pt-8">Home</a>
+            </li>
+            <li class="nav-item transition-all">
+              <a href={{ url_for('products.index') }} class="px-1 pt-8">Products</a>
+            </li>
+            <li class="nav-item transition-all">
+              <a href='#' class="px-1 pt-8">Contact Us</a>
+            </li>
+            <li class="nav-item nav-item-w-subnav transition-all">
+              <span class="px-1 pt-8">More</span>
+              <ul class="subnav">
+                <li class="subnav-item px-2 pt-3 pb-2">
+                  <a href="#" class="block w-full">Terms & Conditions</a>
+                </li>
+                <li class="subnav-item px-2 py-2">
+                  <a href="#" class="block w-full">Refund Policy</a>
+                </li>
+                <li class="subnav-item px-2 pt-2 pb-3">
+                  <a href="#" class="block w-full">Support</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="navbar-user ml-11 flex">
+            <a href="" class="user-auth flex items-center mr-8">
+              <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
+              <p class="transition-all px-1 py-8">Log In</p>
+            </a>
+            <a href="" class="user-cart pt-8">
+              <i class="fa-solid fa-cart-shopping text-2xl"></i>
+              <p class="cart-quantity">8</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!--CONTENT-->
+    {% block content %}
+    
+    {% endblock content %}
+
+    <footer>
+
+    </footer>
+  </body>
+</html>
