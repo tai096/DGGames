@@ -60,35 +60,31 @@
         />
       </svg>
 
-      <h1 class="text-3xl py-3 border-b-2 w-full">Filter by</h1>
+      <h1 class="text-3xl font-bold py-3 border-b-2 w-full">Filter by</h1>
 
       <div class="flex flex-col pb-5 border-b-2 w-full">
-        <h1 class="py-5 hover:text-purple-500 duration-200">Category</h1>
+        <h1 class="py-3 text-xl">Platform</h1>
         <ul>
           <p class="cursor-pointer hover:text-purple-500 duration-200">All</p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
-            Consoles
-          </p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">Games</p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
-            Controllers
-          </p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
-            Accessories
-          </p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
-            On Sale
-          </p>
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
-            Best Sellers
-          </p>
+          {% for platform in platforms_query%}
+            <p class="cursor-pointer hover:text-purple-500 duration-200">
+              {{platform.platform_name}}
+            </p>
+          {% endfor %}
         </ul>
       </div>
-      <h1
-        class="py-5 border-b-2 w-full cursor-pointer hover:text-purple-500 duration-200"
-      >
-        Price
-      </h1>
+
+      <div class="flex flex-col pb-5 w-full">
+        <h1 class="py-3 text-xl">Gener</h1>
+        <ul>
+          <p class="cursor-pointer hover:text-purple-500 duration-200">All</p>
+          {% for genre in genres_query%}
+            <p class="cursor-pointer hover:text-purple-500 duration-200">
+              {{genre.genre_name}}
+            </p>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
 
     <script>
