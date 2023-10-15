@@ -50,17 +50,24 @@
 
 .cart-quantity {
     position: absolute;
-    top: 15px;
-    left: 18px;
+    /* top: 15px;
+    left: 18px; */
     color: #461751;
     background-color: white;
     border: 2px solid #461751;
-    padding: 0 5px;
+    /* padding: 0 5px; */
     min-width: 36px;
     height: 24px;
     text-align: center;
     font-weight: 500;
     border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+    .cart-quantity {
+        min-width: 12px;
+        height: auto;
+    }
 }
 
 @keyframes fadeIn {
