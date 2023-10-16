@@ -8,13 +8,13 @@
     <img
       style="aspect-ratio: 9/12"
       class="rounded-2xl cursor-pointer hover:opacity-60 duration-200 object-cover"
-      src="{{ game.image }}"
+      src="{{game.image}}"
       alt="image"
     />
     <h1 class="font-bold text-lg sm:text-xl my-3 w-60 text-center truncate">
-      {{ game.name }}
+      {{game.name}}
     </h1>
-    <p>{{ game.price }} vnđ</p>
+    <p>{{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ</p>
   </a>
 
   <button

@@ -23,7 +23,8 @@
           <h1 class="font-bold text-2xl sm:text-4xl mb-5">
             {{game_query.name}}
           </h1>
-          <p class="mb-5 text-lg"><b>Price: </b>{{game_query.price}} vnđ</p>
+          <p class="mb-5 text-lg"><b>Price: </b>{{ '{:,.0f}'.format(game_query.price).replace(',', '.') }} vnđ</p>
+
           <p class="mb-5 text-lg">
             <b>Platform: </b>
             {% for platform in platforms_of_game%}
