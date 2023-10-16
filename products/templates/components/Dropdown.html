@@ -29,16 +29,32 @@
   >
     <ul class="py-2 text-sm">
       <li>
-        <a href="/products/sort?=price-asc" class="block px-4 py-2 hover:bg-purple-500">Price (low to high)</a>
+        <a
+          href="{{ url_for('products.sort_products', sort_by = 'price_asc') }}"
+          class="block px-4 py-2 hover:bg-purple-500"
+          >Price (low to high)</a
+        >
       </li>
       <li>
-        <a href="/products/sort?=price-desc" class="block px-4 py-2 hover:bg-purple-500">Price (high to low)</a>
+        <a
+          href="{{ url_for('products.sort_products', sort_by = 'price_desc') }}"
+          class="block px-4 py-2 hover:bg-purple-500"
+          >Price (high to low)</a
+        >
       </li>
       <li>
-        <a href="/products/sort?=name-asc" class="block px-4 py-2 hover:bg-purple-500">Name A -> Z</a>
+        <a
+          href="{{ url_for('products.sort_products', sort_by = 'name_asc') }}"
+          class="block px-4 py-2 hover:bg-purple-500"
+          >Name A -> Z</a
+        >
       </li>
       <li>
-        <a href="/products/sort?=name-desc" class="block px-4 py-2 hover:bg-purple-500">Name Z -> A</a>
+        <a
+          href="{{ url_for('products.sort_products', sort_by = 'name_desc') }}"
+          class="block px-4 py-2 hover:bg-purple-500"
+          >Name Z -> A</a
+        >
       </li>
     </ul>
   </div>
@@ -60,3 +76,4 @@
     });
   });
 </script>
+

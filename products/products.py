@@ -7,7 +7,7 @@ def index():
     from models import Games, Platform, Genre
 
     # fetch games from db
-    games_query = Games.query.order_by(Games.name.asc()).all()
+    games_query = Games.query.all()
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
@@ -28,7 +28,6 @@ def filterByPlatform(platform):
     platform_query = Platform.query.filter_by(platform_name = platform).first()
 
     games_query = platform_query.games_on_platform
-
 
     renderItem = render_template('components/Item.html', games_query = games_query)
     renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
@@ -51,6 +50,35 @@ def filterByGenre(genre):
     renderItem = render_template('components/Item.html', games_query = games_query)
     renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
     renderDropdown = render_template('components/Dropdown.html')
+    renderSearch = render_template('components/Search.html')
+
+    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
+
+@products_blueprint.route('/sort?=<sort_by>',)
+def sort_products(sort_by):
+    from models import Games, Platform, Genre
+
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
+    
+    match sort_by:
+        case "name_desc":
+            games_query = Games.query.order_by(Games.name.desc()).all()
+            option_value = "Name Z -> A"
+        case "price_asc":
+            games_query = Games.query.order_by(Games.price.asc()).all()
+            option_value = "Price (low to high)"
+        case "price_desc":
+            games_query = Games.query.order_by(Games.price.desc()).all()
+            option_value = "Price (high to low)"
+        case _:
+            games_query = Games.query.order_by(Games.name.asc()).all()
+            option_value = "Name A -> Z"
+
+
+    renderItem = render_template('components/Item.html', games_query = games_query)
+    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
+    renderDropdown = render_template('components/Dropdown.html' , option_value = option_value)
     renderSearch = render_template('components/Search.html')
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
