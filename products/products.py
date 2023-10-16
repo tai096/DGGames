@@ -23,7 +23,7 @@ def product_detail(product_id):
     from models import Games
 
     game_query = Games.query.filter_by(id = product_id).first()
-
+    print(game_query)
     renderBreadcrumbs = render_template('components/Breadcrumbs.html', product_name = game_query.name)
 
     return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query)
