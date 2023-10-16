@@ -1,12 +1,12 @@
-Step 1: Install python3
-Step 2: Run "pip install -r requirements.txt" to install all dependencies (Important)
+Step 1: Install python3, node, yarn
+Step 2: (Important)
+    - Run "pip install -r requirements.txt" to install all dependencies 
+    - Run "yarn" to install to install all dependencies from package.json
 Step 3: Run "mkdir pyenv" -> "cd pyenv" -> "virtualenv venv"
-Step 4: Run "flask run --debug" to start server
+Step 4: Run "yarn run server" to start server
 
 *** Note: 
     - Before committing your code, You should add new dependencies into requirements.txt
-    - Add this code into <head></head> to using tailwind:
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 
 
 HAPPY HACKING!!!!!

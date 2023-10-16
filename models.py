@@ -79,9 +79,20 @@ class Games(db.Model):
     purchases = db.relationship('Purchases', backref='game', lazy=True)
     # Many to Many Relationship with: Platform (use 'platforms_of_game'), Genre (use 'genres_of_game')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'price': self.price,
+            'image': self.image,
+            'purchase_number': self.purchase_number,
+            'publisher_id': self.publisher_id,
+            'order': self.order,
+            'purchases': self.purchases,
+        }
     def __repr__(self):
-        return f'Game {self.name}'
-    
+        return f'Game {self.id} {self.name} {self.description} {self.price} {self.image} {self.purchase_number} {self.publisher_id} {self.order} {self.purchases}'
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)

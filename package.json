@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "tailwindcss": "3.3.3"
+  },
+  "scripts": {
+    "server": "concurrently \"npx tailwindcss -i ./static/main.css -o ./static/output.css --watch\" \"flask run --debug\""
+  },
+  "devDependencies": {
+    "concurrently": "8.2.1"
+  }
+}
