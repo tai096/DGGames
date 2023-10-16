@@ -57,24 +57,25 @@
 
     <div class="flex flex-col pb-5 border-b-2 w-full">
       <h1 class="py-3 text-xl">Platform</h1>
-      <ul>
-        <p class="cursor-pointer hover:text-purple-500 duration-200">All</p>
+      <ul class="flex flex-col">
+        <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for platform in platforms_query%}
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
+          <a href="{{ url_for('products.filterByPlatform', platform = platform.platform_name) }}" class="cursor-pointer hover:text-purple-500 duration-200">
             {{platform.platform_name}}
-          </p>
+          </a>
         {% endfor %}
       </ul>
     </div>
 
     <div class="flex flex-col pb-5 w-full">
-      <h1 class="py-3 text-xl">Gener</h1>
-      <ul>
-        <p class="cursor-pointer hover:text-purple-500 duration-200">All</p>
+      <h1 class="py-3 text-xl">Genre</h1>
+      <ul class="flex flex-col">
+        <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for genre in genres_query%}
-          <p class="cursor-pointer hover:text-purple-500 duration-200">
+          <a href="{{ url_for('products.filterByGenre', genre = genre.genre_name) }}"
+            class="cursor-pointer hover:text-purple-500 duration-200">
             {{genre.genre_name}}
-          </p>
+          </a>
         {% endfor %}
       </ul>
     </div>

@@ -1,27 +1,28 @@
-{% if games_query %}
-  {% for game in games_query %}
-    <div class="flex flex-col items-center w-60 sm:w-80">
-      <a
-        href="{{ url_for('products.product_detail', product_id=game.id) }}"
-        class="flex flex-col items-center"
-      >
-        <img
-          style="aspect-ratio: 9/12;"
-          class="rounded-2xl cursor-pointer hover:opacity-60 duration-200 object-cover"
-          src="{{ game.image }}"
-          alt="image"
-        />
-        <h1 class="font-bold text-lg sm:text-xl my-3 w-60 text-center truncate">{{ game.name }}</h1>
-        <p>{{ game.price }} vnđ</p>
-      </a>
+{% if games_query %} {% for game in games_query %}
+<div class="flex flex-col items-center w-60 sm:w-80">
+  <a
+    title="{{game.name}}"
+    href="{{ url_for('products.product_detail', product_id=game.id) }}"
+    class="flex flex-col items-center"
+  >
+    <img
+      style="aspect-ratio: 9/12"
+      class="rounded-2xl cursor-pointer hover:opacity-60 duration-200 object-cover"
+      src="{{ game.image }}"
+      alt="image"
+    />
+    <h1 class="font-bold text-lg sm:text-xl my-3 w-60 text-center truncate">
+      {{ game.name }}
+    </h1>
+    <p>{{ game.price }} vnđ</p>
+  </a>
 
-      <button
-        class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-3"
-      >
-        Add to cart
-      </button>
-    </div>
-  {% endfor %}
-{% else %}
-  <p class="w-full">No games found</p>
+  <button
+    class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-3"
+  >
+    Add to cart
+  </button>
+</div>
+{% endfor %} {% else %}
+<p class="w-full">No games found</p>
 {% endif %}
