@@ -13,18 +13,38 @@
 
       <div class="flex flex-col sm:flex-row justify-center">
         <img
-          style="aspect-ratio: 9/12;"
+          style="aspect-ratio: 9/12"
           class="w-72 sm:w-80 rounded-xl object-cover mb-5"
-          src={{game_query.image}}
+          src="{{game_query.image}}"
           alt="image"
         />
         <div class="w-10"></div>
         <div class="flex flex-col">
-          <h1 class="font-bold text-2xl sm:text-4xl mb-5">{{game_query.name}}</h1>
-          <p class="mb-5 text-lg">{{game_query.price}} vnđ</p>
-          <p class="w-72 sm:w-80 text-justify">
+          <h1 class="font-bold text-2xl sm:text-4xl mb-5">
+            {{game_query.name}}
+          </h1>
+          <p class="mb-5 text-lg"><b>Price: </b>{{game_query.price}} vnđ</p>
+          <p class="mb-5 text-lg">
+            <b>Platform: </b>
+            {% for platform in platforms_of_game%}
+              {{platform.platform_name}}
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+          <p class="mb-5 text-lg">
+            <b>Genres: </b>
+            {% for genre in genres_of_game%}
+              {{genre.genre_name}}
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+
+          <p class="w-72 sm:w-full max-w-[400px] text-justify">
             <b>Return and Refund Policy: </b>
-            DG-Games refund offer, within two weeks of purchase and with less than two hours of playtime, applies to games and software applications on the DG-Games store. Here is an overview of how refunds work with other types of purchases.
+            DG-Games refund offer, within two weeks of purchase and with less
+            than two hours of playtime, applies to games and software
+            applications on the DG-Games store. Here is an overview of how
+            refunds work with other types of purchases.
           </p>
           <button
             class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
@@ -33,9 +53,7 @@
           </button>
         </div>
       </div>
-      <p class="max-w-2xl my-5 px-2 text-justify">
-        {{game_query.description}}
-      </p>
+      <p class="max-w-2xl my-5 px-2 text-justify">{{game_query.description}}</p>
     </div>
   </body>
 </html>

@@ -44,7 +44,7 @@ def filterByGenre(genre):
     # fetch games from db
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
-    
+
     genre_query = Genre.query.filter_by(genre_name = genre).first()
     games_query = genre_query.games_of_genre
 
@@ -60,10 +60,10 @@ def product_detail(product_id):
     from models import Games
 
     game_query = Games.query.filter_by(id = product_id).first()
-    print(game_query)
+
     renderBreadcrumbs = render_template('components/Breadcrumbs.html', product_name = game_query.name)
 
-    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query)
+    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game)
 
 @products_blueprint.route('/search', methods = ['POST'])
 def handle_search():
