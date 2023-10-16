@@ -7,7 +7,7 @@ def index():
     from models import Games, Platform, Genre
 
     # fetch games from db
-    games_query = Games.query.all()
+    games_query = Games.query.order_by(Games.name.asc()).all()
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
