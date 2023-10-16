@@ -8,18 +8,28 @@ Welcome to DG Games
 {% block content %}
 <div>
     <div id="hero-section">
-        <div class="hero-container">
-            <div 
-            class="hero-content mt-52 ml-32 h-96 rounded-3xl pt-10 pb-11 px-20"
-            style="background-color: var(--primaryColor); width: 610px;"
-            >
-                <p>Power up your game</p>
-                <h1>ROCKET LEAGUE 2023</h1>
-                <p>Now Available on PC and Various Consoles</p>
+        <div class="bg-no-repeat bg-cover bg-fixed"
+        style="background-image: url('static/assets/img/hero-image.jpg');">
+            <div class="hero-container flex justify-between pl-32 pr-40 h-[830px] overflow-visible">
+                <div 
+                class="hero-content mt-52 h-[396px] w-[610px] rounded-3xl pt-10 pb-11 pl-20"
+                style="background-color: var(--primaryColor); box-shadow: 5px 9px 14px 5px rgba(6,5,6,0.41)"
+                >
+                    <p class="text-xl mb-5">Power up your game</p>
+                    <h1 class="text-7xl font-bold">ROCKET LEAGUE 2023</h1>
+                    <p class="text-xl mt-5">Now Available on PC and Various Consoles</p>
+                    <a href="#" class="block mt-5 w-[132px] min-h-12 bg-white text-primaryColor 
+                    font-bold py-3 px-7 text-center rounded-[35px]
+                    hover:text-white hover:bg-primaryColor 
+                    border-2 border-solid border-white transition-all duration-200">Buy Now</a>
+                </div>
+                <div class="hero-vertical-image mt-52 w-[538px] h-[690px]
+                rounded-[35px] overflow-hidden bg-no-repeat bg-cover"
+                style="background-image: url('static/assets/img/hero-image-vertical.jpg'); 
+                box-shadow: 0px 6px 20px 2px rgba(120,120,120,0.4), 3px 9px 14px 5px rgba(6,5,6,0.35)">
+                </div>
             </div>
-            <div class="hero-vertical-image">
-
-            </div>
+            <div class="w-full bg-bgColor h-28"></div>
         </div>
     </div>
 
