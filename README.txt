@@ -7,6 +7,8 @@ Step 4: Run "yarn run server" to start server
 
 *** Note: 
     - Before committing your code, You should add new dependencies into requirements.txt
+    - Add this code "<link rel="stylesheet" href="output.css url" />" at <head/> to apply tailwindcss.
+      For example: <link rel="stylesheet" href="../../static/output.css" />
 
 
 HAPPY HACKING!!!!!
