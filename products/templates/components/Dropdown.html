@@ -4,7 +4,7 @@
     class="z-40 w-52 text-white font-medium rounded-lg bg-purple-500 duration-200 text-sm px-5 py-2.5 text-center inline-flex items-center"
     type="button"
   >
-    Sort by
+    {% if option_value %} {{option_value}} {% else %} Sort by {% endif %}
     <svg
       class="w-2.5 h-2.5 ml-2.5"
       aria-hidden="true"
@@ -76,4 +76,3 @@
     });
   });
 </script>
-

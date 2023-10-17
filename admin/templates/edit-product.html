@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--add this code to using tailwind -->
+    <link rel="stylesheet" href="../../static/output.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 class="text-3xl text-center my-10">Edit</h1>
+    <form action="" method="post" class="flex flex-col">
+      <div class="flex items-center justify-center">
+        <div class="w-[500px]">
+          <div class="flex flex-col mb-3">
+            <label for="name" class="my-2 font-bold">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value="{{game_query.name}}"
+              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+            />
+          </div>
+          <div class="flex flex-col mb-3">
+            <label for="description" class="my-2 font-bold">Description</label>
+            <textarea
+              name="description"
+              id="description"
+              class="bg-transparent w-full max-w-[400px] p-2 h-[200px] border-2 border-primaryColor outline-none resize-none rounded-lg"
+            >
+      {{game_query.description}}</textarea
+            >
+          </div>
+          <div class="flex flex-col mb-3">
+            <label for="price" class="my-2 font-bold">Price (vnđ)</label>
+            <input
+              name="price"
+              id="price"
+              type="number"
+              value="{{game_query.price}}"
+              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+            />
+          </div>
+          <div class="flex flex-col mb-3">
+            <label for="image_url" class="my-2 font-bold">Image url</label>
+            <input
+              id="image_url"
+              name="image_url"
+              type="text"
+              value="{{game_query.image}}"
+              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+            />
+          </div>
+        </div>
+        <img
+          src="{{game_query.image}}"
+          alt="image"
+          class="h-[500px] aspect-[9/13] object-cover rounded-lg"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="max-w-[300px] mx-auto font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
+      >
+        Save
+      </button>
+    </form>
+  </body>
+</html>
