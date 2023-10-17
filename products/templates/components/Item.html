@@ -11,14 +11,21 @@
       src="{{game.image}}"
       alt="image"
     />
-    <h1 class="font-bold text-lg sm:text-xl my-3 w-60 text-center truncate">
+    <h1
+      class="font-bold text-lg sm:text-xl my-3 w-60 sm:w-80 text-center truncate"
+    >
       {{game.name}}
     </h1>
-    <p>{{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ</p>
+    <div class="flex items-center justify-between w-60 sm:w-80">
+      <p class="text-primaryColor font-medium">
+        {{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ
+      </p>
+      <span>{{game.purchase_number}} sold</span>
+    </div>
   </a>
 
   <button
-    class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-3"
+    class="font-bold w-60 sm:w-80 py-3 bg-primaryColor hover:bg-purple-800 duration-300 rounded-full my-5"
   >
     Add to cart
   </button>

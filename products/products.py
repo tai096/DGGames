@@ -88,10 +88,9 @@ def product_detail(product_id):
     from models import Games
 
     game_query = Games.query.filter_by(id = product_id).first()
-
     renderBreadcrumbs = render_template('components/Breadcrumbs.html', product_name = game_query.name)
 
-    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game)
+    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
 
 @products_blueprint.route('/search', methods = ['POST'])
 def handle_search():
