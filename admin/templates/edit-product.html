@@ -24,13 +24,8 @@
           </div>
           <div class="flex flex-col mb-3">
             <label for="description" class="my-2 font-bold">Description</label>
-            <textarea
-              name="description"
-              id="description"
-              class="bg-transparent w-full max-w-[400px] p-2 h-[200px] border-2 border-primaryColor outline-none resize-none rounded-lg"
-            >
-      {{game_query.description}}</textarea
-            >
+            <textarea name="description" id="description" rows="5" class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2">{{game_query.description}}</textarea>
+            
           </div>
           <div class="flex flex-col mb-3">
             <label for="price" class="my-2 font-bold">Price (vnđ)</label>

@@ -31,15 +31,12 @@ def edit_product(product_id):
             price = request.form['price']
             image = request.form['image_url']
 
-            updated_game = Games(
-                name = name,
-                description = description,
-                price = price,
-                image = image,
-                purchase_number = 0,
-                publisher_id = game_query.publisher_id)
+            # Update the attributes of game_query
+            game_query.name = name
+            game_query.description = description
+            game_query.price = price
+            game_query.image = image
 
             db.session.commit()
-            # return redirect('/')
         
     return render_template('edit-product.html', game_query = game_query)
