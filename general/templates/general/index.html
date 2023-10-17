@@ -7,10 +7,18 @@ Welcome to DG Games
 
 {% block content %}
 <div>
+    <!--CAROUSEL JS  AND CSS| SwiperJS-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="static/assets/js/general.js"></script>
+    <!--HERO SECTION-->
     <div id="hero-section">
         <div class="bg-no-repeat bg-cover bg-fixed"
         style="background-image: url('static/assets/img/hero-image.jpg');">
-            <div class="hero-container flex justify-between pl-32 pr-40 h-[830px] overflow-visible">
+            <div class="hero-container flex justify-between px-24 h-[830px] overflow-visible">
                 <div 
                 class="hero-content mt-52 h-[396px] w-[610px] rounded-3xl pt-10 pb-11 pl-20"
                 style="background-color: var(--primaryColor); box-shadow: 5px 9px 14px 5px rgba(6,5,6,0.41)"
@@ -23,7 +31,7 @@ Welcome to DG Games
                     hover:text-white hover:bg-primaryColor 
                     border-2 border-solid border-white transition-all duration-200">Buy Now</a>
                 </div>
-                <div class="hero-vertical-image mt-52 w-[538px] h-[690px]
+                <div class="hero-vertical-image mt-52 mr-8 w-[538px] h-[690px]
                 rounded-[35px] overflow-hidden bg-no-repeat bg-cover"
                 style="background-image: url('static/assets/img/hero-image-vertical.jpg'); 
                 box-shadow: 0px 6px 20px 2px rgba(120,120,120,0.4), 3px 9px 14px 5px rgba(6,5,6,0.35)">
@@ -32,19 +40,178 @@ Welcome to DG Games
             <div class="w-full bg-bgColor h-28"></div>
         </div>
     </div>
-
-    <div id="product-section">
-
+    
+    <!--BEST SELLER SECTION-->
+    <div id="best-sellers-section" class="flex flex-col items-center mt-24">
+        <div class="best-sellers_header w-full px-24 flex justify-between">
+            <h1 class="text-5xl font-semibold">BEST SELLERS</h1>
+            <a href="#" class="block text-primaryColor bg-white 
+            border-2 border-solid border-white w-36 h-10 font-semibold 
+            text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
+        </div>
+        <div class="carousel-container swiper w-full">
+            <div class="product-carousel mt-24" style="width: 100%; padding: 0 96px;">
+                <div class="swiper-wrapper" style="height:auto !important;">
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://cdn.europosters.eu/image/1300/canvas-print-the-legend-of-zelda-breath-of-the-wild-view-i111060.jpg" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">The Legend of Zelda: Breath of The Wild</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://scale.coolshop-cdn.com/product-media.coolshop-cdn.com/AN29B8/064797f7ffbe4b93af083fd5175204c1.jpeg/f/stardew-valley.jpeg" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Stardew Valley</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://www.giantbomb.com/a/uploads/original/0/1992/3302615-fifa_21_covers-1-922x1152.png" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">FIFA 22</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://cdn1.epicgames.com/offer/9773aa1aa54f4f7b80e44bef04986cea/EGS_RocketLeague_PsyonixLLC_S2_1200x1600-ebcb79b7c8aa2432c3ce52dfd4fc4ae0" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Rocket League</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/extras/13_Custom-Images_DX.png?t=1695797262" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Street Fighter VI</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://i.pinimg.com/564x/57/c6/01/57c6019c1c7ca1db67a88aee6c0d5cf7.jpg" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Overwatch 2</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/extras/13_Custom-Images_DX.png?t=1695797262" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Street Fighter V88I</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://i.pinimg.com/564x/57/c6/01/57c6019c1c7ca1db67a88aee6c0d5cf7.jpg" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">Overwatch 3</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/extras/13_Custom-Images_DX.png?t=1695797262" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">111112333asdasd</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                    <div class="swiper-slide flex flex-col items-center text-center">
+                        <a href="#" class="flex flex-col items-center">
+                            <div class="h-[440px]">
+                                <img src="https://i.pinimg.com/564x/57/c6/01/57c6019c1c7ca1db67a88aee6c0d5cf7.jpg" alt="" 
+                                class="h-full object-cover"
+                                style="aspect-ratio: 9/12">
+                            </div>
+                            <h4 class="mt-4 w-72 text-lg font-semibold truncate">asd</h4>
+                            <p class="mt-2">18.000.000</p>
+                        </a>
+                        <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="swiper-button-prev" style="left: 3%"></div>
+                <div class="swiper-button-next" style="right: 3%"></div>
+            </div>
+        </div>
     </div>
 
+    <script>
+        var swiper = new Swiper(".product-carousel", {
+            slidesPerView: 4,
+            spaceBetween: 32,
+            loop: true,
+            grabCursor: 'true',
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+    </script>
+
+    <!--CATEGORY SECTION-->
     <div id="category-section">
 
     </div>
 
+    <!--FEATURED AND RECOMMENDED SECTION-->
+    <div id="product-section">
+        <div class="product-section_header">
+        </div>
+        <div class="product-carousel">
+
+        </div>
+    </div>
+    
+    <!--NEWSLETTER SECTION-->
     <div id="newsletter-section">
 
     </div>
 
+    <!--BLOCK ENDING-->
     <div id="ending-section">
 
     </div>
