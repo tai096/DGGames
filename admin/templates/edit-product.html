@@ -8,7 +8,13 @@
     <title>Document</title>
   </head>
   <body>
-    <h1 class="text-3xl text-center my-10">Edit</h1>
+    <div
+      class="flex flex-row items-end justify-between max-w-[1000px] mx-auto mt-8 mb-20"
+    >
+      <a href="/admin" class="text-lg hover:text-primaryColor">Back to home</a>
+      <h1 class="text-3xl text-center">Edit</h1>
+      <span class="opacity-0">a</span>
+    </div>
     <form action="" method="post" class="flex flex-col">
       <div class="flex items-center justify-center">
         <div class="w-[500px]">
@@ -24,8 +30,14 @@
           </div>
           <div class="flex flex-col mb-3">
             <label for="description" class="my-2 font-bold">Description</label>
-            <textarea name="description" id="description" rows="5" class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2">{{game_query.description}}</textarea>
-            
+            <textarea
+              name="description"
+              id="description"
+              rows="5"
+              class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
+            >
+{{game_query.description}}</textarea
+            >
           </div>
           <div class="flex flex-col mb-3">
             <label for="price" class="my-2 font-bold">Price (vnđ)</label>

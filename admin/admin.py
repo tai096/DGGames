@@ -16,7 +16,9 @@ def management():
     # fetch games from db
     games_query = Games.query.all()
 
-    return render_template('management.html', games_query = games_query)
+    render_modal_create_product = render_template('components/ModalCreateProduct.html')
+
+    return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product)
 
 @admin_blueprint.route('edit-product/<product_id>', methods = ['GET', 'POST'])
 def edit_product(product_id):

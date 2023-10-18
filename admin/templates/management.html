@@ -9,6 +9,7 @@
   </head>
   <body>
     <h1 class="text-3xl text-center my-10">Management</h1>
+    {{ModalCreateProduct | safe}}
     <div class="relative overflow-x-auto shadow-md rounded-lg my-5">
       <table
         class="w-full max-w-[1500px] text-sm text-left text-gray-400 mx-auto"
@@ -21,6 +22,9 @@
             <th scope="col" class="px-6 py-3">Price</th>
             <th scope="col" class="px-6 py-3">
               <span class="sr-only">Edit</span>
+            </th>
+            <th scope="col" class="px-6 py-3">
+              <span class="sr-only">Delete</span>
             </th>
           </tr>
         </thead>
@@ -49,6 +53,11 @@
                 href="{{ url_for('admin.edit_product', product_id = game.id) }}"
                 class="font-medium text-blue-500 hover:underline"
                 >Edit</a
+              >
+            </td>
+            <td class="px-6 py-4 text-right">
+              <a href="#" class="font-medium text-red-500 hover:underline"
+                >Delete</a
               >
             </td>
           </tr>
