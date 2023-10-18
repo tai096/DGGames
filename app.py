@@ -5,6 +5,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dggames.db'
 db = SQLAlchemy(app)
 
+def format_currency(value):
+    return "{:,.0f} VND".format(value)
+
 from general.general import general_blueprint
 from auth.auth import auth_blueprint
 from products.products import products_blueprint
@@ -12,5 +15,7 @@ from products.products import products_blueprint
 app.register_blueprint(general_blueprint)
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(products_blueprint, url_prefix='/products')
+
+app.jinja_env.filters['currency'] = format_currency
 
 app.app_context().push()

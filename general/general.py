@@ -5,6 +5,7 @@ general_blueprint = Blueprint('general', __name__, template_folder='templates',s
 
 @general_blueprint.route('/')
 def index():
+    game_hero_section = Games.query.filter_by(name='Rocket League').first()
     games_best_seller = Games.query.order_by(Games.purchase_number).limit(10).all()
     games_by_price = Games.query.order_by(Games.price).all()
     games_recommended = []
@@ -12,4 +13,4 @@ def index():
     for game in games_by_price:
         if pc in game.platforms_of_game:
             games_recommended.append(game)
-    return render_template('general/index.html', games_best_seller=games_best_seller, games_recommended=games_recommended)
+    return render_template('general/index.html', games_best_seller=games_best_seller, games_recommended=games_recommended, game_hero_section=game_hero_section)

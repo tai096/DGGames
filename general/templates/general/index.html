@@ -25,7 +25,7 @@ Welcome to DG Games
                     <p class="text-xl mb-5">Power up your game</p>
                     <h1 class="text-7xl font-bold">ROCKET LEAGUE 2023</h1>
                     <p class="text-xl mt-5">Now Available on PC and Various Consoles</p>
-                    <a href="#" class="block mt-5 w-[132px] min-h-12 bg-white text-primaryColor 
+                    <a href={{ url_for('products.product_detail', product_id=game_hero_section.id) }} class="block mt-5 w-[132px] min-h-12 bg-white text-primaryColor 
                     font-bold py-3 px-7 text-center rounded-[35px]
                     hover:text-white hover:bg-primaryColor 
                     border-2 border-solid border-white transition-all duration-200">Buy Now</a>
@@ -44,7 +44,7 @@ Welcome to DG Games
     <div id="best-sellers-section" class="flex flex-col items-center mt-24">
         <div class="best-sellers_header w-full px-24 flex justify-between">
             <h1 class="text-5xl font-semibold">BEST SELLERS</h1>
-            <a href="#" class="block text-primaryColor bg-white 
+            <a href={{ url_for('products.index') }} class="block text-primaryColor bg-white 
             border-2 border-solid border-white w-36 h-10 font-semibold 
             text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
         </div>
@@ -53,21 +53,21 @@ Welcome to DG Games
                 <div class="swiper-wrapper" style="height:auto !important;">
                     {% for game in games_best_seller %}
                         <div class="swiper-slide flex flex-col items-center text-center">
-                            <a href="#" class="flex flex-col items-center">
-                                <div class="h-[440px] rounded-3xl">
+                            <a href={{ url_for('products.product_detail', product_id=game.id) }} class="group flex flex-col items-center">
+                                <div class="h-[440px] rounded-3xl overflow-hidden">
                                     <img src={{ game.image }} alt="Game Image" 
-                                    class="h-full object-cover rounded-3xl"
+                                    class="h-full object-cover rounded-3xl group-hover:scale-125 transition-all duration-300"
                                     style="aspect-ratio: 9/12">
                                 </div>
                                 <h4 class="mt-4 w-72 text-lg font-semibold truncate">{{ game.name }}</h4>
-                                <p class="mt-2">{{ "{:,} VND".format(game.price) }}</p>
+                                <p class="mt-2">{{ game.price|currency }}</p>
                             </a>
                             <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="swiper-button-prev" style="left: 3%"></div>
-                <div class="swiper-button-next" style="right: 3%"></div>
+                <div class="swiper-button-prev carousel-swipe-btn" style="left: 3%"></div>
+                <div class="swiper-button-next carousel-swipe-btn" style="right: 3%"></div>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@ Welcome to DG Games
                     <img src="https://cdn2.unrealengine.com/egs-ac-mirage-carousel-desktop-1920x1080-9380e8fef189.jpg?h=720&quality=medium&resize=1&w=1280" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Action</p>
             </a>
@@ -96,7 +96,7 @@ Welcome to DG Games
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_9efa694175609b73e9d3dca54190cbd8f6a0bc60.600x338.jpg?t=1695060909" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Adventure</p>
             </a>
@@ -105,16 +105,16 @@ Welcome to DG Games
                     <img src="https://images.axios.com/JOUiw5V1Hz3yHP9v1s5BVzTCmb4=/0x0:1920x1080/1920x1080/2022/09/26/1664220539433.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Role-playing</p>
             </a>
             <a href="#" class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1222670/header.jpg?t=1695920644" 
+                    <img src="https://www.kotaku.com.au/wp-content/uploads/2022/09/15/f5cfd85385282e757be2bef0bf200c5b.jpg?quality=75" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Simulation</p>
             </a>
@@ -123,7 +123,7 @@ Welcome to DG Games
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/2497760/ss_974412e04c3fcd48ba79f1faaecac163dbc5ab1c.600x338.jpg?t=1696924927" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Strategy</p>
             </a>
@@ -132,7 +132,7 @@ Welcome to DG Games
                     <img src="https://cdn2.unrealengine.com/egs-easportsfc24standardedition-eacanada-g1a-07-1920x1080-4a5ea9f5ddce.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Sport</p>
             </a>
@@ -141,7 +141,7 @@ Welcome to DG Games
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/1659040/ss_33539163983d92cc770717b26b6f449f145d45a7.600x338.jpg?t=1693992811" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Puzzle</p>
             </a>
@@ -150,7 +150,7 @@ Welcome to DG Games
                     <img src="https://cdn2.unrealengine.com/egs-sonic-superstars-carousel-desktop-2-1920x1080-678bb1d757ad.jpg?h=720&quality=medium&resize=1&w=1280" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Arcade</p>
             </a>
@@ -159,7 +159,7 @@ Welcome to DG Games
                     <img src="https://cdn2.unrealengine.com/03-tcm-announce-screenshots-04-1920x1080-1920x1080-f92576407c51.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Racing</p>
             </a>
@@ -168,7 +168,7 @@ Welcome to DG Games
                     <img src="https://img-cdn.2game.vn/2022/06/23/52118140173_7935ba1924_h.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
                     <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
-                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-500"></div>
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
                 </div>
                 <p class="text-xl mt-3">Fighting</p>
             </a>
@@ -179,7 +179,7 @@ Welcome to DG Games
     <div id="best-sellers-section" class="flex flex-col items-center mt-24" style="padding-bottom: 96px">
         <div class="best-sellers_header w-full px-24 flex justify-between">
             <h1 class="text-5xl font-semibold">FEATURED AND RECOMMENDED</h1>
-            <a href="#" class="block text-primaryColor bg-white 
+            <a href={{ url_for('products.index') }} class="block text-primaryColor bg-white 
             border-2 border-solid border-white w-36 h-10 font-semibold 
             text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
         </div>
@@ -188,44 +188,50 @@ Welcome to DG Games
                 <div class="swiper-wrapper" style="height:auto !important;">
                     {% for game in games_recommended %}
                         <div class="swiper-slide flex flex-col items-center text-center">
-                            <a href="#" class="flex flex-col items-center">
-                                <div class="h-[440px] rounded-3xl">
+                            <a href={{ url_for('products.product_detail', product_id=game.id) }} class="group flex flex-col items-center">
+                                <div class="h-[440px] rounded-3xl overflow-hidden">
                                     <img src={{ game.image }} alt="" 
-                                    class="h-full object-cover rounded-3xl"
+                                    class="h-full object-cover rounded-3xl group-hover:scale-125 transition-all duration-300"
                                     style="aspect-ratio: 9/12">
                                 </div>
                                 <h4 class="mt-4 w-72 text-lg font-semibold truncate">{{ game.name }}</h4>
-                                <p class="mt-2">{{ "{:,} VND".format(game.price) }}</p>
+                                <p class="mt-2">{{ game.price|currency }}</p>
                             </a>
                             <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="swiper-button-prev" style="left: 3%"></div>
-                <div class="swiper-button-next" style="right: 3%"></div>
+                <div class="swiper-button-prev carousel-swipe-btn" style="left: 3%;"></div>
+                <div class="swiper-button-next carousel-swipe-btn" style="right: 3%;"></div>
             </div>
         </div>
     </div>
     
     <!--NEWSLETTER SECTION-->
-    <div id="newsletter-section" class="pt-24 text-center flex flex-col items-center pb-48
-    bg-no-repeat bg-cover bg-opacity-10"
-    style="background-image: url('https://static.wixstatic.com/media/c837a6_81939da7c37340c09c59a78434528f49~mv2.jpg/v1/fill/w_1270,h_836,al_b,q_85,usm_0.66_1.00_0.01,enc_auto/c837a6_81939da7c37340c09c59a78434528f49~mv2.jpg')">
-        <h1 class="text-5xl font-semibold">NEWSLETTER</h1>
-        <p class="w-60 mt-6">Sign up to receive updates on new products and special offers</p>
-        <div class="mt-10">
-            <form action="" method='POST' class="flex flex-col items-center w-[500px]">
-                <span>Email *</span>
-                <input type="text" name="newsletter-email" placeholder="example@email.com"
-                class="w-full h-12 px-4 py-2 text-center rounded-tl-xl rounded-tr-xl border-2 
-                border-solid focus:border-orange-600 bg-transparent text-white outline-none
-                transition-all placeholder:italic">
-                <button type="submit" class="w-full h-12 text-bgColor bg-white rounded-bl-xl rounded-br-xl 
-                font-semibold border-2 border-solid border-white transition-all
-                hover:text-white hover:bg-primaryColor">Subcribe</button>
-            </form>
+    <div id="newsletter-section" class="relative">
+        <div class="h-[568px] absolute top-0 -z-10 w-full bg-no-repeat bg-cover bg-fixed"
+        style="background-image: url('static/assets/img/general-ending-image.png');"
+        ></div>
+        <!--
+        <img src="static/assets/img/general-ending-image.png"
+        class="h-[568px] w-full absolute top-0 -z-10 object-cover">
+        -->
+        <div class="pt-24 pb-48 text-center flex flex-col items-center bg-[rgba(0,0,0,0.65)]">
+            <h1 class="text-5xl font-semibold">NEWSLETTER</h1>
+            <p class="w-60 mt-6">Sign up to receive updates on new products and special offers</p>
+            <div class="mt-10">
+                <form action="" method='POST' class="flex flex-col items-center w-[500px]">
+                    <span>Email *</span>
+                    <input type="text" name="newsletter-email" placeholder="example@email.com"
+                    class="w-full h-12 px-4 py-2 text-center rounded-tl-xl rounded-tr-xl border-2 
+                    border-solid focus:border-orange-600 bg-transparent text-white outline-none
+                    transition-all placeholder:italic">
+                    <button type="submit" class="w-full h-12 text-bgColor bg-white rounded-bl-xl rounded-br-xl 
+                    font-semibold border-2 border-solid border-white transition-all
+                    hover:text-white hover:bg-primaryColor">Subcribe</button>
+                </form>
+            </div>
         </div>
-
     </div>
 
     <!--BLOCK ENDING-->

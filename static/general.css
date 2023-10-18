@@ -63,6 +63,10 @@
     border-radius: 20px;
 }
 
+.carousel-swipe-btn::after {
+    color: white;
+}
+
 @media (max-width: 768px) {
     .cart-quantity {
         min-width: 12px;
