@@ -59,6 +59,67 @@
               class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
             />
           </div>
+
+          <div class="flex flex-col mb-3">
+            <label for="image_url" class="my-2 font-bold">Publisher</label>
+            <select
+              name="publisher"
+              id="publisher"
+              class="bg-transparent border-2 border-primaryColor w-full max-w-[400px] p-2 h-10 outline-none rounded-lg"
+            >
+              <option value="{{publisher.publisher_name}}" hidden>
+                {{publisher.publisher_name}}
+              </option>
+              {% for publisher in publishers_query%}
+              <option
+                value="{{publisher.publisher_name}}"
+                class="bg-secondaryColor"
+              >
+                {{publisher.publisher_name}}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <label class="my-3 font-bold">Platform</label>
+          <div
+            class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2 w-full max-w-[400px]"
+          >
+            {% for platform in platforms_of_game%}
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                checked="{{platform.platform_name}}"
+                id="{{platform.id}}"
+                name="platform{{platform.id}}"
+                value="{{platform.platform_name}}"
+              />
+              <label class="mx-5" for="{{platform.id}}"
+                >{{platform.platform_name}}</label
+              >
+            </div>
+            {% endfor %}
+          </div>
+
+          <label class="my-3 font-bold">Genre</label>
+          <div
+            class="flex flex-col mb-3 rounded-lg border-2 w-full max-w-[400px] border-primaryColor p-2 max-h-[200px] overflow-auto"
+          >
+            {% for genre in genres_of_game%}
+            <div class="flex items-center">
+              <input
+                checked
+                type="checkbox"
+                id="{{genre.id}}"
+                name="genre{{genre.id}}"
+                value="{{genre.genre_name}}"
+              />
+              <label class="mx-5" for="{{genre.id}}"
+                >{{genre.genre_name}}</label
+              >
+            </div>
+            {% endfor %}
+          </div>
         </div>
         <img
           src="{{game_query.image}}"

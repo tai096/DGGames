@@ -11,20 +11,24 @@ def admin_login():
 
 @admin_blueprint.route('/')
 def management():
-    from models import Games
+    from models import Games, Publisher, Genre, Platform
 
     # fetch games from db
     games_query = Games.query.all()
+    publishers_query = Publisher.query.all()
+    genres_query = Genre.query.all()
+    platforms_query = Platform.query.all()
 
-    render_modal_create_product = render_template('components/ModalCreateProduct.html')
+    render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
 
     return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product)
 
 @admin_blueprint.route('edit-product/<product_id>', methods = ['GET', 'POST'])
 def edit_product(product_id):
-    from models import Games
+    from models import Games, Publisher
 
     game_query = Games.query.filter_by(id = product_id).first()
+    publishers_query = Publisher.query.all()
 
     if request.method == 'POST':
         if game_query:
@@ -41,4 +45,4 @@ def edit_product(product_id):
 
             db.session.commit()
         
-    return render_template('edit-product.html', game_query = game_query)
+    return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
