@@ -56,14 +56,32 @@
               >
             </td>
             <td class="px-6 py-4 text-right">
-              <a href="#" class="font-medium text-red-500 hover:underline"
-                >Delete</a
+              <form
+                id="delete-form"
+                action="/admin/delete-product/{{game.id}}"
+                method="post"
               >
+                <button
+                  type="button"
+                  onclick="handleDelete()"
+                  class="font-medium text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
+              </form>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+
+    <script>
+      function handleDelete() {
+        if (window.confirm("Are you sure about this?")) {
+          document.getElementById("delete_form").submit();
+        }
+      }
+    </script>
   </body>
 </html>

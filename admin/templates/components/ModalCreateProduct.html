@@ -40,91 +40,112 @@
       </div>
 
       <!--Body-->
-      <div class="flex flex-row w-full justify-center">
-        <div class="w-full">
-          <div class="flex flex-col mb-3">
-            <label for="name" class="my-2 font-bold">Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="description" class="my-2 font-bold">Description</label>
-            <textarea
-              name="description"
-              id="description"
-              rows="3"
-              class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
-            ></textarea>
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="price" class="my-2 font-bold">Price (vnđ)</label>
-            <input
-              name="price"
-              id="price"
-              type="number"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="image_url" class="my-2 font-bold">Image url</label>
-            <input
-              id="image_url"
-              name="image_url"
-              type="text"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-        </div>
-        <div class="w-10"></div>
-        <div class="w-full">
-          <div class="flex flex-col mb-3">
-            <label for="image_url" class="my-2 font-bold">Publisher</label>
-            <select
-              name="publisher"
-              id="publisher"
-              class="bg-transparent border-2 border-primaryColor p-2 h-10 outline-none rounded-lg"
-            >
-              <option value="" hidden>Choose publisher</option>
-              {% for publisher in publishers_query%}
-              <option
-                value="{{publisher.publisher_name}}"
-                class="bg-secondaryColor"
+      <form action="/admin/create-product" method="post" id="create_form">
+        <div class="flex flex-row w-full justify-center">
+          <div class="w-full">
+            <div class="flex flex-col mb-3">
+              <label for="name" class="my-2 font-bold">Name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="description" class="my-2 font-bold"
+                >Description</label
               >
-                {{publisher.publisher_name}}
-              </option>
+              <textarea
+                name="description"
+                id="description"
+                rows="3"
+                class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
+              ></textarea>
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="price" class="my-2 font-bold">Price (vnđ)</label>
+              <input
+                name="price"
+                id="price"
+                type="number"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="image_url" class="my-2 font-bold">Image url</label>
+              <input
+                id="image_url"
+                name="image_url"
+                type="text"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+          </div>
+          <div class="w-10"></div>
+          <div class="w-full">
+            <div class="flex flex-col mb-3">
+              <label for="publisher" class="my-2 font-bold">Publisher</label>
+              <select
+                name="publisher"
+                id="publisher"
+                class="bg-transparent border-2 border-primaryColor p-2 h-10 outline-none rounded-lg"
+              >
+                <option value="" hidden>Choose publisher</option>
+                {% for publisher in publishers_query%}
+                <option value="{{publisher.id}}" class="bg-secondaryColor">
+                  {{publisher.publisher_name}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div
+              class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2"
+            >
+              <label class="my-1 font-bold">Platform</label>
+              {% for platform in platforms_query%}
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="{{platform.id}}"
+                  name="platforms"
+                  value="{{platform.id}}"
+                />
+                <label class="mx-5" for="{{platform.id}}"
+                  >{{platform.platform_name}}</label
+                >
+              </div>
               {% endfor %}
-            </select>
-          </div>
-
-          <div class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2">
-            <label for="image_url" class="my-1 font-bold">Platform</label>
-            {% for platform in platforms_query%}
-            <div class="flex items-center">
-              <input type="checkbox" id={{platform.id}} name='platform{{platform.id}}' value={{platform.platform_name}} />
-              <label class="mx-5" for={{platform.id}}>{{platform.platform_name}}</label>
             </div>
-            {% endfor %}
-          </div>
 
-          <div class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2 max-h-[200px] overflow-auto">
-            <label for="image_url" class="my-1 font-bold">Genre</label>
-            {% for genre in genres_query%}
-            <div class="flex items-center">
-              <input type="checkbox" id={{genre.id}} name='genre{{genre.id}}' value={{genre.genre_name}} />
-              <label class="mx-5" for={{genre.id}}>{{genre.genre_name}}</label>
+            <div
+              class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2 max-h-[200px] overflow-auto"
+            >
+              <label class="my-1 font-bold">Genre</label>
+              {% for genre in genres_query%}
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="{{genre.id}}"
+                  name="genres"
+                  value="{{genre.id}}"
+                />
+                <label class="mx-5" for="{{genre.id}}"
+                  >{{genre.genre_name}}</label
+                >
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
           </div>
         </div>
-      </div>
+      </form>
 
       <!--Footer-->
       <div class="flex justify-end pt-2">
         <button
+          onclick="handleSubmit()"
+          type="button"
           class="px-4 bg-transparent p-3 rounded-lg text-primaryColor hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2"
         >
           Create
@@ -175,5 +196,9 @@
     modal.classList.toggle("opacity-0");
     modal.classList.toggle("pointer-events-none");
     body.classList.toggle("modal-active");
+  }
+
+  function handleSubmit() {
+    document.getElementById("create_form").submit();
   }
 </script>

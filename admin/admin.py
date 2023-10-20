@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, flash
 from app import db
 from sqlalchemy import update
 
@@ -23,6 +23,29 @@ def management():
 
     return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product)
 
+@admin_blueprint.route('create-product', methods = ['POST'])
+def create_product():
+    from models import Games, Genre, Platform
+
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        price = request.form['price']
+        image = request.form['image_url']
+        purchase_number = 0
+        publisher_id = request.form['publisher']
+        genres = request.form.getlist('genres')
+        platforms = request.form.getlist('platforms')
+
+        new_game = Games(name = name, description = description, price = price, image = image,purchase_number = purchase_number ,publisher_id = publisher_id)
+        new_game.genres_of_game = Genre.query.filter(Genre.id.in_(genres)).all()
+        new_game.platforms_of_game = Platform.query.filter(Platform.id.in_(platforms)).all()
+
+        db.session.add(new_game)
+        db.session.commit()
+        
+        return redirect('/admin')
+
 @admin_blueprint.route('edit-product/<product_id>', methods = ['GET', 'POST'])
 def edit_product(product_id):
     from models import Games, Publisher
@@ -46,3 +69,19 @@ def edit_product(product_id):
             db.session.commit()
         
     return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
+
+@admin_blueprint.route('delete-product/<product_id>', methods = ['POST'])
+def delete_product(product_id):
+    from models import Games
+
+    game_query = Games.query.filter_by(id = product_id).first()
+
+    if request.method == 'POST':
+        if game_query:
+            try:
+                db.session.delete(game_query)  # Delete the product
+                db.session.commit()  # Commit the changes
+            except Exception as e:
+                db.session.rollback()
+        
+    return redirect('/admin')
