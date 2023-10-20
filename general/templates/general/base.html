@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/general.css"/>
+    <link rel="stylesheet" href="static/output.css">
+    <link rel="stylesheet" href="static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+
+  <body>
+    <!--NAVBAR-->
+    <nav 
+      class="navbar h-14 md:h-28 fixed top-0 w-full z-10"
+      style="background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);"
+    >
+      <div class="nav-container h-full w-full px-6 md:px-8 lg:px-24 flex justify-between items-center">
+        <div class="navbar-toggler md:hidden order-first">
+          <i class="fa-solid fa-bars p-2"></i>
+        </div>
+        
+        <div class="logo-container md:order-first">
+          <a href={{ url_for('general.index') }}>
+            <img src="static/assets/img/logo-DGGames.png" alt="DG Games" class="w-28 md:w-40 lg:w-60">
+          </a>
+        </div>
+
+        <div class="navbar-content flex justify-around items-center">
+          <ul class="navbar-nav hidden md:flex">
+            <li class="nav-item transition-all">
+              <a href={{ url_for('general.index') }} class="px-1 pt-8">Home</a>
+            </li>
+            <li class="nav-item transition-all">
+              <a href={{ url_for('products.index') }} class="px-1 pt-8">Products</a>
+            </li>
+            <li class="nav-item transition-all">
+              <a href='#' class="px-1 pt-8">Contact Us</a>
+            </li>
+            <li class="nav-item nav-item-w-subnav transition-all">
+              <span class="px-1 pt-8">More</span>
+              <ul class="subnav shadow-xl">
+                <li class="subnav-item px-2 pt-3 pb-2">
+                  <a href="#" class="block w-full">Terms & Conditions</a>
+                </li>
+                <li class="subnav-item px-2 py-2">
+                  <a href="#" class="block w-full">Refund Policy</a>
+                </li>
+                <li class="subnav-item px-2 pt-2 pb-3">
+                  <a href="#" class="block w-full">Support</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="navbar-user md:ml-3 lg:ml-11 flex">
+            <a href="#" class="user-auth hidden md:flex items-center mr-8">
+              <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
+              <p class="transition-all px-1 py-8">Log In</p>
+            </a>
+            <a href="#" class="user-cart md:pt-8">
+              <i class="fa-solid fa-cart-shopping md:text-xl"></i>
+              <p class="cart-quantity text-xs md:text-base px-1 md:px-2 -top-2 left-3 md:top-4 md:left-5 md:h-6">{{ session["cart"]|length }}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!--Mobile and Tablet Menu-->
+      <section id="mobile-menu" class="absolute top-0 w-full h-screen hidden"
+        style="backdrop-filter: blur(3px); background-color: rgba(0, 0, 0, 0.2);"
+      >
+        <div 
+          class="w-9/12 flex flex-col bg-fuchsia-900 h-full"
+          style="background-image: linear-gradient(to bottom, rgb(46,24,81,0.8) 65%, rgb(59,24,81,0.6) , rgb(70,23,81,0.5) , rgb(81,23,80,0.4));"
+        >
+          <a href={{ url_for('general.index') }} class="pt-6 pb-4 px-5 w-full">Home</a>
+          <a href={{ url_for('products.index') }} class="py-4 px-5 w-full">Products</a>
+          <a href='#' class="py-4 px-5 w-full">Contact Us</a>
+          <a href='#' class="py-4 px-5 w-full flex justify-between items-center">
+            More
+            <i class="fa-solid fa-chevron-down text-sm"></i>
+          </a>
+          <div class="h-0 overflow-hidden">
+            <div class="w-full flex flex-col">
+              <a href="#" class="py-3 px-9 w-full">Terms & Conditions</a>
+              <a href="#" class="py-3 px-9 w-full">Refund Policy</a>
+              <a href="#" class="py-3 px-9 w-full">Support</a>
+            </div>
+          </div>
+          <a href='#' class="py-4 px-5
+           w-full">Log In</a>
+        </div>
+      </section>
+    </nav>
+
+    <!--CONTENT-->
+    {% block content %}
+    
+    {% endblock content %}
+
+    <footer class="pt-24 px-20 pb-16">
+      <div id="footer_nav" class="pb-16 px-28 flex justify-between flex-wrap">
+        <a href={{ url_for("general.index") }} class="footer-logo mt-16">
+          <img src="static/assets/img/logo-DGGames.png" alt="DG Games" class="w-56">
+        </a>
+
+        <div class="footer_nav-products">
+          <h5 class="font-semibold mb-10">Games</h5>
+          <ul>
+            <li>
+              <a href="" class="block py-3">Best Sellers</a>
+            </li>
+            
+            <li>
+              <a href="" class="block py-3">For PC</a>
+            </li>
+            <li>
+              <a href="" class="block py-3">For PlayStation</a>
+            </li>
+            <li>
+              <a href="" class="block py-3">For Xbox Series</a>
+            </li>
+            <li>
+              <a href="" class="block py-3">For Nintendo Switch</a>
+            </li>
+            <li>
+              <a href="" class="block py-3">For Steam Deck</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer_store-info">
+          <h5 class="font-semibold mb-10">Address</h5>
+          <ul>
+            <li class="py-3">
+              Giai Phong, Ha Noi, Viet Nam
+            </li>
+            <li class="py-3">
+              Mon - Fri: 9 A.M - 9 P.M
+            </li>
+            <li class="py-3">
+              <a href="#">dggames@gmail.com</a>
+            </li>
+            <li class="py-3">
+              0-123-456-789
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer_policies">
+          <h5 class="font-semibold mb-10">Policies</h5>
+          <ul>
+            <li>
+              <a href="#" class="block py-3">Terms & Conditions</a>
+            </li>
+            <li>
+              <a href="#" class="block py-3">Shipping Policy</a>
+            </li>
+            <li>
+              <a href="#" class="block py-3">Refund Policy</a>
+            </li>
+            <li>
+              <a href="#" class="block py-3">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="#" class="block py-3">Cookie Policy</a>
+            </li>
+            <li>
+              <a href="#" class="block py-3">FAQ</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="break-line w-full border-t border-solid" style="border-color: rgba(204,204,204,0.6);"></div>
+      
+      <div id="payment-and-community" class="flex justify-between px-2 pt-4">
+        <div class="payment-methods">
+          <p class="font-semibold mb-8 tracking-wide pl-2">Payment Methods</p>
+          <div class="flex justify-between">
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_e0547a35fd3b42eb8fc45f9f73b77246~mv2.png/v1/fill/w_55,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Visa.png" alt="VISA">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_ad29ff701fee45629d63f3e4f3f2894b~mv2.png/v1/fill/w_63,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Master%20Card.png" alt="MASTER CARD">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_f73858b81fdb40388c28ec8a78c7d69f~mv2.png/v1/fill/w_55,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/American%20Express.png" alt="American Express">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_1947c7dbf840480ea8638b9b0c29c030~mv2.png/v1/fill/w_46,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/JCB.png" alt="JCB">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_0164b1a8ce80423890095a8b3d8a62eb~mv2.png/v1/crop/x_0,y_0,w_176,h_109/fill/w_57,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Discover.png" alt="DISCOVER">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_5fa529be46ae437db9ad6e58fa085ce1~mv2.png/v1/fill/w_55,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/China%20Union%20Pay.png" alt="UnionPay">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_bbd810de83bc447f96dc4bb0addbfaed~mv2.png/v1/crop/x_1,y_1,w_149,h_109/fill/w_48,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Diners.png" alt="Dinner">
+            </div>
+            <div class="px-2">
+              <img width="44px" class="object-cover h-7" src="https://static.wixstatic.com/media/c837a6_e0d5f0c365864fda9b7d65df15eecaf5~mv2.png/v1/fill/w_55,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/PayPal.png" alt="PayPal">
+            </div>
+          </div>
+        </div>
+        <div class="community-link pr-16">
+          <p class="font-semibold mb-8 tracking-wide">Join the Community</p>
+          <div class="flex justify-between">
+            <a href="#" class="pr-5">
+              <i class="text-xl fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" class="px-5">
+              <i class="text-xl fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="px-5">
+              <i class="text-xl fa-brands fa-youtube"></i>
+            </a>
+            <a href="#" class="px-5">
+              <i class="text-xl fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
