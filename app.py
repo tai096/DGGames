@@ -7,7 +7,7 @@ app.config['SECRET_KEY'] = '1fbd57e31d0ffb68ccbeb56c'
 db = SQLAlchemy(app)
 
 def format_currency(value):
-    return "{:,.0f} VND".format(value)
+    return "{:,.0f} VND".format(value).replace(',', '.')
 
 from general.general import general_blueprint
 from auth.auth import auth_blueprint

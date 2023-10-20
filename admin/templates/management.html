@@ -46,7 +46,7 @@
               <a href="{{game.image}}" target="_blank">{{game.image}}</a>
             </td>
             <td class="px-6 py-4">
-              {{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ
+              {{ game.price | currency }}
             </td>
             <td class="px-6 py-4 text-right">
               <a
