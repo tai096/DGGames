@@ -90,11 +90,11 @@
               <input
                 type="checkbox"
                 checked="{{platform.platform_name}}"
-                id="{{platform.id}}"
+                id="platform{{platform.id}}"
                 name="platform{{platform.id}}"
                 value="{{platform.platform_name}}"
               />
-              <label class="mx-5" for="{{platform.id}}"
+              <label class="mx-5" for="platform{{platform.id}}"
                 >{{platform.platform_name}}</label
               >
             </div>
@@ -110,11 +110,11 @@
               <input
                 checked
                 type="checkbox"
-                id="{{genre.id}}"
+                id="genre{{genre.id}}"
                 name="genre{{genre.id}}"
                 value="{{genre.genre_name}}"
               />
-              <label class="mx-5" for="{{genre.id}}"
+              <label class="mx-5" for="genre{{genre.id}}"
                 >{{genre.genre_name}}</label
               >
             </div>
