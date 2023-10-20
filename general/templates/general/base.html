@@ -59,8 +59,8 @@
               <p class="transition-all px-1 py-8">Log In</p>
             </a>
             <a href="#" class="user-cart md:pt-8">
-              <i class="fa-solid fa-cart-shopping md:text-xl md:text-2xl"></i>
-              <p class="cart-quantity text-xs md:text-base px-1 md:px-2 -top-2 left-3 md:top-4 md:left-5 md:h-6">8</p>
+              <i class="fa-solid fa-cart-shopping md:text-xl"></i>
+              <p class="cart-quantity text-xs md:text-base px-1 md:px-2 -top-2 left-3 md:top-4 md:left-5 md:h-6">{{ session["cart"]|length }}</p>
             </a>
           </div>
         </div>
