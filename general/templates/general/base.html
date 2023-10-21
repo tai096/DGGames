@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/general.css"/>
     <link rel="stylesheet" href="static/output.css">
     <link rel="stylesheet" href="static/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -29,38 +28,47 @@
 
         <div class="navbar-content flex justify-around items-center">
           <ul class="navbar-nav hidden md:flex">
-            <li class="nav-item transition-all">
+            <li class="nav-item hover:text-primaryColor mx-3 transition-all">
               <a href={{ url_for('general.index') }} class="px-1 pt-8">Home</a>
             </li>
-            <li class="nav-item transition-all">
+            <li class="nav-item hover:text-primaryColor mx-3 transition-all">
               <a href={{ url_for('products.index') }} class="px-1 pt-8">Products</a>
             </li>
-            <li class="nav-item transition-all">
+            <li class="nav-item hover:text-primaryColor mx-3 transition-all">
               <a href='#' class="px-1 pt-8">Contact Us</a>
             </li>
-            <li class="nav-item nav-item-w-subnav transition-all">
-              <span class="px-1 pt-8">More</span>
-              <ul class="subnav shadow-xl">
-                <li class="subnav-item px-2 pt-3 pb-2">
+            <li class="nav-item group mx-3 transition-all relative">
+              <span class="px-1 pt-8 group-hover:text-primaryColor
+              after:content-[''] after:block after:absolute after:top-[15px]
+              after:-right-8 after:h-8 after:w-24">
+                More
+              </span>
+              <ul class="subnav absolute hidden group-hover:block shadow-xl w-44
+              top-[120%] -right-8 mt-2 bg-primaryColor rounded-md overflow-hidden">
+                <li class="subnav-item hover:bg-[whitesmoke] hover:text-[#461751] px-2 pt-3 pb-2">
                   <a href="#" class="block w-full">Terms & Conditions</a>
                 </li>
-                <li class="subnav-item px-2 py-2">
+                <li class="subnav-item hover:bg-[whitesmoke] hover:text-[#461751] px-2 py-2">
                   <a href="#" class="block w-full">Refund Policy</a>
                 </li>
-                <li class="subnav-item px-2 pt-2 pb-3">
+                <li class="subnav-item hover:bg-[whitesmoke] hover:text-[#461751] px-2 pt-2 pb-3">
                   <a href="#" class="block w-full">Support</a>
                 </li>
               </ul>
             </li>
           </ul>
           <div class="navbar-user md:ml-3 lg:ml-11 flex">
-            <a href="#" class="user-auth hidden md:flex items-center mr-8">
+            <a href="#" class="user-auth group hidden md:flex items-center mr-8">
               <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
-              <p class="transition-all px-1 py-8">Log In</p>
+              <p class="group-hover:text-primaryColor transition-all px-1 py-8">Log In</p>
             </a>
-            <a href="#" class="user-cart md:pt-8">
+            <a href="#" class="user-cart md:pt-8 relative">
               <i class="fa-solid fa-cart-shopping md:text-xl"></i>
-              <p class="cart-quantity text-xs md:text-base px-1 md:px-2 -top-2 left-3 md:top-4 md:left-5 md:h-6">{{ session["cart"]|length }}</p>
+              <p class="cart-quantity absolute text-xs md:text-base px-1 md:px-2 -top-2 
+              left-3 md:top-4 md:left-5 h-auto md:h-6 text-[#461751] bg-white border-2 border-solid
+              border-[#461751] min-w-[12px] md:min-w-[36px] text-center text-medium rounded-2xl">
+                {{ session["cart"]|length }}
+              </p>
             </a>
           </div>
         </div>

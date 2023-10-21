@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 
 from models import Games, Platform
 
-general_blueprint = Blueprint('general', __name__, template_folder='templates',static_folder='static', static_url_path='/assets')
+general_blueprint = Blueprint('general', __name__, template_folder='templates', static_folder='static', static_url_path='/assets')
 
 @general_blueprint.route('/', methods=["POST", "GET"])
 def index():
