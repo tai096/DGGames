@@ -11,9 +11,11 @@ def index():
     games_by_price = Games.query.order_by(Games.price).all()
     games_recommended = []
     pc = Platform.query.filter_by(platform_name='PC').first()
+
     for game in games_by_price:
         if pc in game.platforms_of_game:
             games_recommended.append(game)
+            
     return render_template('general/index.html', games_best_seller=games_best_seller, games_recommended=games_recommended, game_hero_section=game_hero_section)
 
 @general_blueprint.route('/cart/add', methods=["POST"])

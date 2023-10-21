@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
+from utils.tools import MessageType
 
 products_blueprint = Blueprint('products', __name__, template_folder='templates',  static_folder='static', static_url_path='/static')
 
@@ -11,13 +12,19 @@ def index():
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
-    renderItem = render_template('components/Item.html', games_query = games_query)
-    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
-    renderDropdown = render_template('components/Dropdown.html')
-    renderSearch = render_template('components/Search.html')
+    try:
+        renderItem = render_template('components/Item.html', games_query = games_query)
+        renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
+        renderDropdown = render_template('components/Dropdown.html')
+        renderSearch = render_template('components/Search.html')
 
-    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
+        return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
+    except:
+        error_message = "Something went wrong! (GET: products/)"
+        flash(f'Error: {error_message}', category=MessageType['ERROR'].value)
 
+        return print(error_message)
+    
 @products_blueprint.route('/filter?platform=<platform>')
 def filterByPlatform(platform):
     from models import Platform, Genre

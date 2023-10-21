@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect
 from app import db
-from sqlalchemy import update
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 
@@ -81,7 +80,8 @@ def delete_product(product_id):
             try:
                 db.session.delete(game_query)  # Delete the product
                 db.session.commit()  # Commit the changes
+                return redirect('/admin')
+
             except Exception as e:
                 db.session.rollback()
         
-    return redirect('/admin')
