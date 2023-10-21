@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/general.css"/>
-    <link rel="stylesheet" href="static/output.css">
-    <link rel="stylesheet" href="static/main.css" />
+    <link rel="stylesheet" href="../../../static/general.css"/>
+    <link rel="stylesheet" href="../../../static/output.css">
+    <link rel="stylesheet" href="../../../static/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <title>{% block title %}{% endblock title %}</title>
+    <title>DG Games</title>
   </head>
 
   <body>
     <!--NAVBAR-->
     <nav 
-      class="navbar h-14 md:h-28 fixed top-0 w-full z-10"
+      class="navbar h-14 md:h-28 sticky top-0 w-full z-10"
       style="background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);"
     >
       <div class="nav-container h-full w-full px-6 md:px-8 lg:px-24 flex justify-between items-center">
@@ -23,7 +23,7 @@
         
         <div class="logo-container md:order-first">
           <a href={{ url_for('general.index') }}>
-            <img src="static/assets/img/logo-DGGames.png" alt="DG Games" class="w-28 md:w-40 lg:w-60">
+            <img src="../../../static/assets/img/logo-DGGames.png" alt="DG Games" class="w-28 md:w-40 lg:w-60">
           </a>
         </div>
 
@@ -102,7 +102,7 @@
     <footer class="pt-24 px-20 pb-16">
       <div id="footer_nav" class="pb-16 px-28 flex justify-between flex-wrap">
         <a href={{ url_for("general.index") }} class="footer-logo mt-16">
-          <img src="static/assets/img/logo-DGGames.png" alt="DG Games" class="w-56">
+          <img src="../../../static/assets/img/logo-DGGames.png" alt="DG Games" class="w-56">
         </a>
 
         <div class="footer_nav-products">
