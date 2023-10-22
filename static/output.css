@@ -590,6 +590,10 @@ video {
   bottom: 2.5rem;
 }
 
+.bottom-5 {
+  bottom: 1.25rem;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -622,8 +626,8 @@ video {
   top: 120%;
 }
 
-.bottom-5 {
-  bottom: 1.25rem;
+.left-10 {
+  left: 2.5rem;
 }
 
 .-z-10 {
@@ -2083,16 +2087,12 @@ body {
 }
 
 @media (min-width: 640px) {
-  .sm\:left-10 {
-    left: 2.5rem;
-  }
-
-  .sm\:top-10 {
-    top: 2.5rem;
-  }
-
   .sm\:bottom-10 {
     bottom: 2.5rem;
+  }
+
+  .sm\:left-10 {
+    left: 2.5rem;
   }
 
   .sm\:ml-2 {

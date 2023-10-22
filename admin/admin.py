@@ -69,12 +69,14 @@ def edit_product(product_id):
             description = request.form['description']
             price = request.form['price']
             image = request.form['image_url']
+            publisher_id = request.form['publisher']
 
             # Update the attributes of game_query
             game_query.name = name
             game_query.description = description
             game_query.price = price
             game_query.image = image
+            game_query.publisher_id = publisher_id
 
             try:
                 db.session.commit()
@@ -87,8 +89,7 @@ def edit_product(product_id):
 
                 db.session.rollback()
 
-            finally:
-                return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
+    return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
 
 @admin_blueprint.route('delete-product/<product_id>', methods = ['POST'])
 def delete_product(product_id):
