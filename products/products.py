@@ -115,3 +115,22 @@ def handle_search():
     renderSearch = render_template('components/Search.html')
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, search_text = search_text)
+
+@products_blueprint.route('/best-sellers')
+def best_sellers():
+    from models import Games, Platform, Genre
+
+    pageTitle = 'BEST SELLERS'
+    games_best_seller = Games.query.order_by(Games.purchase_number).limit(10).all()
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
+
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
+
+    renderItem = render_template('components/Item.html', games_query = games_best_seller)
+    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
+    renderDropdown = render_template('components/Dropdown.html')
+    renderSearch = render_template('components/Search.html')
+
+    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, pageTitle=pageTitle)
