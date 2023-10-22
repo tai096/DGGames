@@ -134,3 +134,29 @@ def best_sellers():
     renderSearch = render_template('components/Search.html')
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, pageTitle=pageTitle)
+
+@products_blueprint.route('/featured_and_recommended')
+def featured_recommended():
+    from models import Games, Platform, Genre
+
+    pageTitle = 'FEATURED AND RECOMMENDED'
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
+
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
+
+    games_by_price = Games.query.order_by(Games.price).all()
+    games_recommended = []
+    pc = Platform.query.filter_by(platform_name='PC').first()
+
+    for game in games_by_price:
+        if pc in game.platforms_of_game:
+            games_recommended.append(game)
+
+    renderItem = render_template('components/Item.html', games_query = games_recommended)
+    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
+    renderDropdown = render_template('components/Dropdown.html')
+    renderSearch = render_template('components/Search.html')
+
+    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, pageTitle=pageTitle)
