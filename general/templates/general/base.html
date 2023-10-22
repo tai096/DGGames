@@ -10,6 +10,17 @@
   </head>
 
   <body>
+    <!-- MESSAGE -->
+    {% with messages = get_flashed_messages(with_categories = true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% set category = category %}
+          {% set message = message %}
+          {% include "components/Message.html" %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
     <!--NAVBAR-->
     <nav 
       class="navbar h-14 md:h-28 sticky top-0 w-full z-10"
