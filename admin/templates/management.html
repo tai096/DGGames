@@ -1,7 +1,10 @@
 {% extends "general/base.html" %} {% block content %}
 
 <h1 class="text-3xl text-center my-10">Management</h1>
+
 {{ModalCreateProduct | safe}}
+{{Search | safe}}
+
 <div class="relative overflow-x-auto shadow-md rounded-lg my-5">
   <table class="w-full max-w-[1500px] text-sm text-left text-gray-400 mx-auto">
     <thead class="text-xs uppercase bg-primaryColor text-gray-400">

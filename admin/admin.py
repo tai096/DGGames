@@ -20,8 +20,26 @@ def management():
     platforms_query = Platform.query.all()
 
     render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
+    render_search = render_template('components/Search.html')
 
-    return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product)
+    return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
+
+@admin_blueprint.route('/search', methods = ['POST'])
+def handle_search():
+    from models import Games, Publisher, Genre, Platform
+
+    # fetch games from db
+    publishers_query = Publisher.query.all()
+    genres_query = Genre.query.all()
+    platforms_query = Platform.query.all()
+
+    search_text = request.form['search_input']
+    games_query = Games.query.filter(Games.name.like(f'%{search_text}%')).all()
+
+    render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
+    render_search = render_template('components/Search.html')
+
+    return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
 
 @admin_blueprint.route('create-product', methods = ['POST'])
 def create_product():
