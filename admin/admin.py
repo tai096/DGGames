@@ -20,7 +20,7 @@ def management():
     platforms_query = Platform.query.all()
 
     render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
-    render_search = render_template('components/Search.html')
+    render_search = render_template('components/SearchBar.html')
 
     return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
 
@@ -37,7 +37,7 @@ def handle_search():
     games_query = Games.query.filter(Games.name.like(f'%{search_text}%')).all()
 
     render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
-    render_search = render_template('components/Search.html')
+    render_search = render_template('components/SearchBar.html')
 
     return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
 

@@ -7,24 +7,21 @@ products_blueprint = Blueprint('products', __name__, template_folder='templates'
 def index():
     from models import Games, Platform, Genre
 
+    page = request.args.get('page', 1, type = int)
+
     # fetch games from db
-    games_query = Games.query.all()
+    games_query = Games.query.paginate(page = page, per_page= 9)
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
-    try:
-        renderItem = render_template('components/Item.html', games_query = games_query)
-        renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
-        renderDropdown = render_template('components/Dropdown.html')
-        renderSearch = render_template('components/Search.html')
+    renderItem = render_template('components/Item.html', games_query = games_query)
+    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
+    renderDropdown = render_template('components/Dropdown.html')
+    renderSearch = render_template('components/Search.html')
+    renderPagination = render_template('components/Pagination.html', pages = games_query.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2), current_page = games_query.page)
 
-        return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
-    except:
-        error_message = "Something went wrong! (GET: products/)"
-        flash(f'Error: {error_message}', category=MessageType['ERROR'].value)
+    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, Pagination = renderPagination)
 
-        return print(error_message)
-    
 @products_blueprint.route('/filter?platform=<platform>')
 def filterByPlatform(platform):
     from models import Platform, Genre
