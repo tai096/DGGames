@@ -44,3 +44,22 @@ html {
 body {
   background-color: var(--bgColor);
 }
+
+.toast {
+  transform: translateX(calc(100% + 60px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast.active {
+  transform: translate(0%);
+}
+
+.progress.active:before {
+  animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}

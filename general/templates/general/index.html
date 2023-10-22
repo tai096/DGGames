@@ -43,7 +43,6 @@
             border-2 border-solid border-white w-36 h-10 font-semibold 
             text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
         </div>
-        <p>Products in cart: {{ session["cart"]|length }}</p>
         <div class="carousel-container swiper w-full" style="padding: 0 96px;">
             <div class="product-carousel mt-24 overflow-hidden" style="width: 100%;">
                 <div class="swiper-wrapper" style="height:auto !important;">
@@ -70,9 +69,6 @@
             </div>
         </div>
     </div>
-    {% if session["message"] %}
-        <h1 class="text-red-500">{{ session["message"] }}</h1>
-    {% endif %}
 
     <!--GENRES SECTION-->
     <div id="genre-section" class="flex flex-col items-center px-24 mt-24 pt-20 bg-[rgb(77,77,77,0.35)]" 
@@ -199,7 +195,10 @@
                                 <h4 class="mt-4 w-72 text-lg font-semibold truncate">{{ game.name }}</h4>
                                 <p class="mt-2">{{ game.price|currency }}</p>
                             </a>
-                            <button class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="product_id" value="{{game.id}}">
+                                <button type="submit" class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
+                            </form>
                         </div>
                     {% endfor %}
                 </div>

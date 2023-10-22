@@ -18,28 +18,23 @@ def index():
 
 @general_blueprint.route('/cart/add', methods=["POST"])
 def cart_add():
-    try: 
-        product_id = request.form['product_id']
-        product = Games.query.filter_by(id=product_id).first()
-        if request.method == "POST":
-            message = []
-            product_dict = {
-                "id": product_id,
-                "name": product.name,
-                "price": product.price,
-            }
-            cart = session.get("cart", [])
-            found = False
-            for item in cart:
-                if item["id"] == product_id:
-                    found = True
-                    message = (f'{item["name"]} was already in your cart!')
-                    break
-            if not found:
-                cart.append(product_dict)
-            session["cart"] = cart
-            session["message"] = message
-    except Exception as e:
-        print(e)
-    finally:
-        return redirect(request.referrer)
+    product_id = request.form['product_id']
+    product = Games.query.filter_by(id=product_id).first()
+    if request.method == "POST":
+        product_dict = {
+            "id": product_id,
+            "name": product.name,
+            "price": product.price,
+        }
+        cart = session.get("cart", [])
+        found = False
+        for item in cart:
+            if item["id"] == product_id:
+                found = True
+                flash(f'This game was already in your cart!', category='Failure')
+                break
+        if not found:
+            cart.append(product_dict)
+            flash(f'Added to cart successfully!', category='Success')
+        session["cart"] = cart
+    return redirect(request.referrer)

@@ -102,6 +102,37 @@
       </section>
     </nav>
 
+    <!--FLASH MESSAGE-->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% include "includes/toast.html" %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <!--{% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == 'danger' %}
+            <div class="alert alert-{{ category }} text-center">
+              <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                <span>&times;</span>
+              </button>
+              {{ message }}
+            </div>
+          {% elif category == 'success' %}
+            <div class="alert alert-{{ category }} text-center">
+              <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                <span>&times;</span>
+              </button>
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}-->
+    
+    
     <!--CONTENT-->
     {% block content %}
     
