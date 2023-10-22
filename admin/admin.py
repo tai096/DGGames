@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, flash
+from utils.tools import MessageType
 from app import db
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
@@ -40,10 +41,20 @@ def create_product():
         new_game.genres_of_game = Genre.query.filter(Genre.id.in_(genres)).all()
         new_game.platforms_of_game = Platform.query.filter(Platform.id.in_(platforms)).all()
 
-        db.session.add(new_game)
-        db.session.commit()
-        
-        return redirect('/admin')
+        try:
+            db.session.add(new_game)
+            db.session.commit()
+
+            success_message = "Created successfully!"
+            flash(f'{success_message}', category = MessageType['SUCCESS'].value)
+        except:
+            error_message = "Something went wrong! (POST: admin/create-product)"
+            flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
+
+            db.session.rollback()
+            
+        finally:
+            return redirect('/admin')
 
 @admin_blueprint.route('edit-product/<product_id>', methods = ['GET', 'POST'])
 def edit_product(product_id):
@@ -65,9 +76,19 @@ def edit_product(product_id):
             game_query.price = price
             game_query.image = image
 
-            db.session.commit()
-        
-    return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
+            try:
+                db.session.commit()
+
+                success_message = "Updated successfully!"
+                flash(f'{success_message}', category = MessageType['SUCCESS'].value)
+            except:
+                error_message = "Something went wrong! (POST: admin/edit-product)"
+                flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
+
+                db.session.rollback()
+
+            finally:
+                return render_template('edit-product.html', game_query = game_query, publishers_query = publishers_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
 
 @admin_blueprint.route('delete-product/<product_id>', methods = ['POST'])
 def delete_product(product_id):
@@ -80,8 +101,14 @@ def delete_product(product_id):
             try:
                 db.session.delete(game_query)  # Delete the product
                 db.session.commit()  # Commit the changes
-                return redirect('/admin')
+
+                success_message = "Deleted successfully!"
+                flash(f'{success_message}', category = MessageType['SUCCESS'].value)
 
             except Exception as e:
                 db.session.rollback()
-        
+                error_message = "Something went wrong! (POST: admin/delete-product)"
+                flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
+
+            finally:
+                return redirect('/admin')

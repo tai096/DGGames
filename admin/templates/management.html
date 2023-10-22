@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--add this code to using tailwind -->
-    <link rel="stylesheet" href="../../static/output.css" />
-    <title>Document</title>
-  </head>
-  <body>
+{% extends "general/base.html" %}
+
+{% block content %}
+
     <h1 class="text-3xl text-center my-10">Management</h1>
     {{ModalCreateProduct | safe}}
     <div class="relative overflow-x-auto shadow-md rounded-lg my-5">
@@ -57,12 +51,12 @@
             </td>
             <td class="px-6 py-4 text-right">
               <form
-                id="delete-form"
-                action="/admin/delete-product/{{game.id}}"
+                id="delete_form"
+                action="{{ url_for('admin.delete_product', product_id = game.id) }}"
                 method="post"
               >
                 <button
-                  type="button"
+                  type="submit"
                   onclick="handleDelete()"
                   class="font-medium text-red-500 hover:underline"
                 >
@@ -83,5 +77,5 @@
         }
       }
     </script>
-  </body>
-</html>
+
+{% endblock %}
