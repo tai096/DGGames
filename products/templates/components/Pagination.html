@@ -1,0 +1,9 @@
+<div class="mt-5 sticky bottom-5 min-w-[200px] p-2 flex items-center justify-center rounded-full bg-slate-600/40 backdrop-blur-md mx-auto">
+    {% for page_num in pages %}
+      {% if page_num %}
+        <a class="px-2 mx-2 {{'bg-primaryColor' if current_page == page_num else 'bg-slate-500/40'}}  hover:bg-primaryColor rounded-full" href="{{url_for('products.index', page = page_num)}}">{{page_num}}</a>
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor%}
+</div>

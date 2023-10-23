@@ -1,0 +1,262 @@
+{% extends "general/base.html" %}
+
+{% block content %}
+<div>
+    <!--CAROUSEL JS  AND CSS| SwiperJS-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!--HERO SECTION-->
+    <div id="hero-section">
+        <div class="bg-no-repeat bg-cover bg-fixed"
+        style="background-image: url('static/assets/img/hero-image.jpg');">
+            <div class="hero-container flex justify-between px-24 h-[830px] overflow-visible">
+                <div 
+                class="hero-content mt-52 h-[396px] w-[610px] rounded-3xl pt-10 pb-11 pl-20"
+                style="background-color: var(--primaryColor); box-shadow: 5px 9px 14px 5px rgba(6,5,6,0.41)"
+                >
+                    <p class="text-xl mb-5">Power up your game</p>
+                    <h1 class="text-7xl font-bold">ROCKET LEAGUE 2023</h1>
+                    <p class="text-xl mt-5">Now Available on PC and Various Consoles</p>
+                    <a href={{ url_for('products.product_detail', product_id=game_hero_section.id) }} class="block mt-5 w-[132px] min-h-12 bg-white text-primaryColor 
+                    font-bold py-3 px-7 text-center rounded-[35px]
+                    hover:text-white hover:bg-primaryColor 
+                    border-2 border-solid border-white transition-all duration-200">Buy Now</a>
+                </div>
+                <div class="hero-vertical-image mt-52 mr-8 w-[538px] h-[690px]
+                rounded-[35px] overflow-hidden bg-no-repeat bg-cover"
+                style="background-image: url('static/assets/img/hero-image-vertical.jpg'); 
+                box-shadow: 0px 6px 20px 2px rgba(120,120,120,0.4), 3px 9px 14px 5px rgba(6,5,6,0.35)">
+                </div>
+            </div>
+            <div class="w-full bg-bgColor h-28"></div>
+        </div>
+    </div>
+    
+    <!--BEST SELLER SECTION-->
+    <div id="best-sellers-section" class="flex flex-col items-center mt-24">
+        <div class="best-sellers_header w-full px-24 flex justify-between">
+            <h1 class="text-5xl font-semibold">BEST SELLERS</h1>
+            <a href={{ url_for('products.best_sellers') }} class="block text-primaryColor bg-white 
+            border-2 border-solid border-white w-36 h-10 font-semibold 
+            text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
+        </div>
+        <div class="carousel-container swiper w-full" style="padding: 0 96px;">
+            <div class="product-carousel mt-24 overflow-hidden" style="width: 100%;">
+                <div class="swiper-wrapper" style="height:auto !important;">
+                    {% for game in games_best_seller %}
+                        <div class="swiper-slide flex flex-col items-center text-center">
+                            <a href={{ url_for('products.product_detail', product_id=game.id) }} class="group flex flex-col items-center">
+                                <div class="h-[440px] rounded-3xl overflow-hidden">
+                                    <img src={{ game.image }} alt="Game Image" 
+                                    class="h-full object-cover rounded-3xl group-hover:scale-125 transition-all duration-300"
+                                    style="aspect-ratio: 9/12">
+                                </div>
+                                <h4 class="mt-4 w-72 text-lg font-semibold truncate">{{ game.name }}</h4>
+                                <p class="mt-2">{{ game.price|currency }}</p>
+                            </a>
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="product_id" value="{{game.id}}">
+                                <button type="submit" class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev after:text-white" style="left: 3%"></div>
+                <div class="swiper-button-next after:text-white" style="right: 3%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--GENRES SECTION-->
+    <div id="genre-section" class="flex flex-col items-center px-24 mt-24 pt-20 bg-[rgb(77,77,77,0.35)]" 
+    style="padding-bottom: 100px;">
+        <div class="genres_header w-full mb-20 flex justify-between">
+            <h1 class="text-5xl font-semibold">BROWSE BY GENRE</h1>
+            <a href={{url_for('products.index')}} class="block text-primaryColor bg-white 
+            border-2 border-solid border-white w-36 h-10 font-semibold 
+            text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
+        </div>
+        <div class="grid grid-cols-4 gap-10">
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn2.unrealengine.com/egs-ac-mirage-carousel-desktop-1920x1080-9380e8fef189.jpg?h=720&quality=medium&resize=1&w=1280" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Action</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_9efa694175609b73e9d3dca54190cbd8f6a0bc60.600x338.jpg?t=1695060909" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Adventure</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://images.axios.com/JOUiw5V1Hz3yHP9v1s5BVzTCmb4=/0x0:1920x1080/1920x1080/2022/09/26/1664220539433.jpg" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Role-playing</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://www.kotaku.com.au/wp-content/uploads/2022/09/15/f5cfd85385282e757be2bef0bf200c5b.jpg?quality=75" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Simulation</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2497760/ss_974412e04c3fcd48ba79f1faaecac163dbc5ab1c.600x338.jpg?t=1696924927" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Strategy</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn2.unrealengine.com/egs-easportsfc24standardedition-eacanada-g1a-07-1920x1080-4a5ea9f5ddce.jpg" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Sport</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1659040/ss_33539163983d92cc770717b26b6f449f145d45a7.600x338.jpg?t=1693992811" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Puzzle</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn2.unrealengine.com/egs-sonic-superstars-carousel-desktop-2-1920x1080-678bb1d757ad.jpg?h=720&quality=medium&resize=1&w=1280" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Arcade</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://cdn2.unrealengine.com/03-tcm-announce-screenshots-04-1920x1080-1920x1080-f92576407c51.jpg" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Racing</p>
+            </a>
+            <a href="#" class="genre-item group flex flex-col items-center">
+                <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
+                    <img src="https://img-cdn.2game.vn/2022/06/23/52118140173_7935ba1924_h.jpg" 
+                    class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
+                    <div class="w-full h-full opacity-50 -top-[100%] group-hover:bg-gradient-to-t 
+                    group-hover:from-primaryColor group-hover:to-transparent absolute group-hover:top-0 transition-all duration-300"></div>
+                </div>
+                <p class="text-xl mt-3">Fighting</p>
+            </a>
+        </div>
+    </div>
+
+    <!--FEATURED AND RECOMMENDED SECTION (Based on highest price and played on PC platform)-->
+    <div id="best-sellers-section" class="flex flex-col items-center mt-24" style="padding-bottom: 96px">
+        <div class="best-sellers_header w-full px-24 flex justify-between">
+            <h1 class="text-5xl font-semibold">FEATURED AND RECOMMENDED</h1>
+            <a href={{ url_for('products.featured_recommended') }} class="block text-primaryColor bg-white 
+            border-2 border-solid border-white w-36 h-10 font-semibold 
+            text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
+        </div>
+        <div class="carousel-container swiper w-full" style="padding: 0 96px;">
+            <div class="product-carousel mt-24 overflow-hidden" style="width: 100%;">
+                <div class="swiper-wrapper" style="height:auto !important;">
+                    {% for game in games_recommended %}
+                        <div class="swiper-slide flex flex-col items-center text-center">
+                            <a href={{ url_for('products.product_detail', product_id=game.id) }} class="group flex flex-col items-center">
+                                <div class="h-[440px] rounded-3xl overflow-hidden">
+                                    <img src={{ game.image }} alt="" 
+                                    class="h-full object-cover rounded-3xl group-hover:scale-125 transition-all duration-300"
+                                    style="aspect-ratio: 9/12">
+                                </div>
+                                <h4 class="mt-4 w-72 text-lg font-semibold truncate">{{ game.name }}</h4>
+                                <p class="mt-2">{{ game.price|currency }}</p>
+                            </a>
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="product_id" value="{{game.id}}">
+                                <button type="submit" class="mt-3 h-10 w-64 rounded-[35px] bg-primaryColor font-semibold hover:opacity-70 transition-all">Add to Cart</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev after:text-white" style="left: 3%;"></div>
+                <div class="swiper-button-next after:text-white" style="right: 3%;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--NEWSLETTER SECTION-->
+    <div id="newsletter-section" class="relative">
+        <div class="h-[568px] absolute top-0 -z-10 w-full bg-no-repeat bg-cover bg-fixed"
+        style="background-image: url('static/assets/img/general-ending-image.png');"
+        ></div>
+        <!--
+        <img src="static/assets/img/general-ending-image.png"
+        class="h-[568px] w-full absolute top-0 -z-10 object-cover">
+        -->
+        <div class="pt-24 pb-48 text-center flex flex-col items-center bg-[rgba(0,0,0,0.65)]">
+            <h1 class="text-5xl font-semibold">NEWSLETTER</h1>
+            <p class="w-60 mt-6">Sign up to receive updates on new products and special offers</p>
+            <div class="mt-10">
+                <form action="" method='POST' class="flex flex-col items-center w-[500px]">
+                    <span>Email *</span>
+                    <input type="text" name="newsletter-email" placeholder="example@email.com"
+                    class="w-full h-12 px-4 py-2 text-center rounded-tl-xl rounded-tr-xl border-2 
+                    border-solid focus:border-orange-600 bg-transparent text-white outline-none
+                    transition-all placeholder:italic">
+                    <button type="submit" class="w-full h-12 text-bgColor bg-white rounded-bl-xl rounded-br-xl 
+                    font-semibold border-2 border-solid border-white transition-all
+                    hover:text-white hover:bg-primaryColor">Subcribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--BLOCK ENDING-->
+    <div id="ending-section">
+
+    </div>
+
+    <script>
+        swiperSlides = document.querySelectorAll('.swiper-slide').length;
+            if (swiperSlides < 8) {
+                slidesPerView = swiperSlides / 2;
+            } else {
+                slidesPerView = 4
+            }
+            var swiper = new Swiper(".product-carousel", {
+                slidesPerView: slidesPerView,
+                spaceBetween: 32,
+                loop: true,
+                grabCursor: 'true',
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            });
+    </script>
+</div>
+{% endblock content %}
