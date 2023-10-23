@@ -6,9 +6,12 @@
     <!--add this code to using tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../static/main.css" />
-    <title>DG Games - Login</title>
+    <title>DG Games - Register</title>
     <style>
-      
+      .bg-medium-slate-blue {
+        background: #8858ed;
+      }
+
       .bg-radial {
         background: radial-gradient(#252525,#1c1c1c);
       }
@@ -16,35 +19,23 @@
     </style>
   </head>
   <body>
-    <header class="bg-neutral-800">
-      <section class="max-w-7xl mx-auto p-6 flex justify-between items-center">
-        <a href="" class="font-bold text-3xl">DG GAMES</a>
-        <div>
-          <button id="mobile-open-button" class="text-3xl sm:hidden focus:outline-none">
-            &#9776;
-          </button>
-          <nav class="hidden sm:block space-x-8 text-xl" aria-label="main">
-            <a href="" class="hover:opacity-90 font-medium text-lg">Home</a>
-            <a href="" class="hover:opacity-90 font-medium text-lg">Products</a>
-            <a href="" class="hover:opacity-90 font-medium text-lg">Checkout</a>
-            <a href="" class="hover:opacity-90 font-medium text-lg"></a>
-          </nav>
-        </div>
-      </section>
-    </header>
-    <section class="bg-radial dark:bg-neutral-800 min-h-screen flex items-center justify-center">
-      <div class="py-12 px-28 flex bg-neutral-800 rounded-2xl shadow-lg max-w-3xl">
+    <section class="bg-radial min-h-screen flex items-center justify-center">
+      <div class="py-12 px-28 flex bg-neutral-900 bg-opacity-80 rounded-2xl shadow-lg max-w-full items-center">
         <form action="" class="flex flex-col">
-          <h2 class="text-neutral-900 dark:text-neutral-100 font-bold text-3xl mb-5 flex-col">Sign Up</h2>
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Username:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="text" name="email" placeholder="Username">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Email:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="text" name="email" placeholder="Email">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Password:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="password" name="password" placeholder="Password">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Confirm Password:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="password" name="password" placeholder="Confirm Password">
-          <button class="bg-neutral-900 dark:bg-neutral-700 w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Login</button>
+          <h2 class="text-neutral-100 font-bold text-4xl mb-5 flex-col mx-auto">Sign Up</h2>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Username:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="username" placeholder="Username" required>
+          <span class="validation-message">{{ username_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Email:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="email" placeholder="Email" required>
+          <span class="validation-message">{{ email_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Password:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="password" name="password" placeholder="Password" required>
+          <span class="validation-message">{{password_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Confirm Password:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="password" name="password" placeholder="Confirm Password" required>
+          <span class="validation-message">{{ confirm_error }}</span>
+          <button class="bg-medium-slate-blue hover:opacity-80 mx-auto w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Sign Up</button>
         </form>
       </div>
     </section>
