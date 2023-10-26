@@ -24,38 +24,24 @@ def index():
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, Pagination = renderPagination)
 
 @products_blueprint.route('')
-def filterByPlatform():
+def filter_products():
     from models import Platform, Genre
 
     platform_text = request.args.get('platform', '', type = str)
-
-    # fetch games from db
-    platforms_query = Platform.query.all()
-    genres_query = Genre.query.all()
-    platform_query = Platform.query.filter_by(platform_name = platform_text).first()
-
-    games_query = platform_query.games_on_platform
-
-    renderItem = render_template('components/Item.html', games_query = games_query)
-    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
-    renderDropdown = render_template('components/Dropdown.html')
-    renderSearch = render_template('components/Search.html')
-
-    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
-
-@products_blueprint.route('')
-def filterByGenre():
-    from models import Platform, Genre
-
-    # fetch games from db
-    platforms_query = Platform.query.all()
-    genres_query = Genre.query.all()
-
     genre_text = request.args.get('genre', '', type = str)
 
-    genre_query = Genre.query.filter_by(genre_name = genre_text).first()
-    games_query = genre_query.games_of_genre
+    # fetch games from db
+    platforms_query = Platform.query.all()
+    genres_query = Genre.query.all()
 
+    platform_query = Platform.query.filter_by(platform_name = platform_text).first()
+    genre_query = Genre.query.filter_by(genre_name = genre_text).first()
+
+    if platform_query:
+        games_query = platform_query.games_on_platform
+    if genre_query:
+        games_query = genre_query.games_of_genre
+        
 
     renderItem = render_template('components/Item.html', games_query = games_query)
     renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
@@ -63,6 +49,7 @@ def filterByGenre():
     renderSearch = render_template('components/Search.html')
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
+
 
 @products_blueprint.route('/sort?=<sort_by>',)
 def sort_products(sort_by):
