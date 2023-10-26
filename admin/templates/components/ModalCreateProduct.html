@@ -46,7 +46,10 @@
             <div class="flex flex-col mb-3">
               <label for="name" class="my-2 font-bold">Name</label>
               <input
+                required
                 id="name"
+                minlength="2"
+                maxlength="150"
                 name="name"
                 type="text"
                 class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
@@ -57,8 +60,10 @@
                 >Description</label
               >
               <textarea
+                required
                 name="description"
                 id="description"
+                maxlength="1024"
                 rows="3"
                 class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
               ></textarea>
@@ -66,8 +71,10 @@
             <div class="flex flex-col mb-3">
               <label for="price" class="my-2 font-bold">Price (vnđ)</label>
               <input
+                required
                 name="price"
                 id="price"
+                min="0"
                 type="number"
                 class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
               />
@@ -75,8 +82,10 @@
             <div class="flex flex-col mb-3">
               <label for="image_url" class="my-2 font-bold">Image url</label>
               <input
+                required
                 id="image_url"
                 name="image_url"
+                maxlength="1024"
                 type="text"
                 class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
               />
@@ -87,6 +96,7 @@
             <div class="flex flex-col mb-3">
               <label for="publisher" class="my-2 font-bold">Publisher</label>
               <select
+                required
                 name="publisher"
                 id="publisher"
                 class="bg-transparent border-2 border-primaryColor p-2 h-10 outline-none rounded-lg"
@@ -139,23 +149,22 @@
             </div>
           </div>
         </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2">
+          <button
+            onclick="handleSubmit()"
+            type="submit"
+            class="px-4 bg-transparent p-3 rounded-lg text-primaryColor hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2"
+          >
+            Create
+          </button>
+          <button
+            class="modal-close px-4 duration-200 bg-pr p-3 bg-red-500 rounded-lg text-white hover:bg-red-700"
+          >
+            Close
+          </button>
+        </div>
       </form>
-
-      <!--Footer-->
-      <div class="flex justify-end pt-2">
-        <button
-          onclick="handleSubmit()"
-          type="button"
-          class="px-4 bg-transparent p-3 rounded-lg text-primaryColor hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2"
-        >
-          Create
-        </button>
-        <button
-          class="modal-close px-4 duration-200 bg-pr p-3 bg-red-500 rounded-lg text-white hover:bg-red-700"
-        >
-          Close
-        </button>
-      </div>
     </div>
   </div>
 </div>
@@ -198,7 +207,4 @@
     body.classList.toggle("modal-active");
   }
 
-  function handleSubmit() {
-    document.getElementById("create_form").submit();
-  }
 </script>
