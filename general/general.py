@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session, flash
-
+from utils.tools import MessageType
 from models import Games, Platform
 
 general_blueprint = Blueprint('general', __name__, template_folder='templates', static_folder='static', static_url_path='/assets')
@@ -33,10 +33,10 @@ def cart_add():
         for item in cart:
             if item["id"] == product_id:
                 found = True
-                flash(f'This game was already in your cart!', category='Failure')
+                flash(f'This game was already in your cart!', category = MessageType['ERROR'].value)
                 break
         if not found:
             cart.append(product_dict)
-            flash(f'Added to cart successfully!', category='Success')
+            flash(f'Added to cart successfully!', category = MessageType['SUCCESS'].value)
         session["cart"] = cart
     return redirect(request.referrer)
