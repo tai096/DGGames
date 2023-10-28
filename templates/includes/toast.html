@@ -1,4 +1,4 @@
-{% if category == "Failure" %}
+{% if category == "ERROR" %}
   <div class="toast fixed z-[5] top-40 right-8 rounded-xl 
             bg-white py-5 pl-8 pr-6 overflow-hidden flex flex-col">
       <div class="flex justify-between items-center">
@@ -13,7 +13,7 @@
       before:content-[''] before:block before:w-full before:h-[3px] before:absolute before:bottom-0 before:right-0 
       before:bg-red-500 before:animate-[progress_3s_linear_forwards]"></div>
   </div>
-{% elif category == "Success" %}
+{% elif category == "SUCCESS" %}
   <div class="toast fixed z-[5] top-40 right-8 rounded-xl 
           bg-white py-5 pl-8 pr-6 overflow-hidden flex flex-col">
     <div class="flex justify-between items-center">

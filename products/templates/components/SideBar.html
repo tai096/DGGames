@@ -59,7 +59,7 @@
       <ul class="flex flex-col">
         <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for platform in platforms_query%}
-          <a href="{{ url_for('products.filterByPlatform', platform = platform.platform_name) }}" class="cursor-pointer hover:text-purple-500 duration-200">
+          <a href="{{ url_for('products.filter_products', platform = platform.platform_name) }}" class="cursor-pointer hover:text-purple-500 duration-200">
             {{platform.platform_name}}
           </a>
         {% endfor %}
@@ -71,7 +71,7 @@
       <ul class="flex flex-col">
         <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for genre in genres_query%}
-          <a href="{{ url_for('products.filterByGenre', genre = genre.genre_name) }}"
+          <a href="{{ url_for('products.filter_products', genre = genre.genre_name) }}"
             class="cursor-pointer hover:text-purple-500 duration-200">
             {{genre.genre_name}}
           </a>

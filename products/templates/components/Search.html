@@ -1,4 +1,4 @@
-<form id="search_form" action="/products/search" method="post" class="flex items-center">
+<form id="search_form" method="post" class="flex items-center">
   <input
     id="search_input"
     type="search"
@@ -12,3 +12,26 @@
   </button>
 </form>
 
+<script>
+  // Get references to the form and input field
+  const searchForm = document.getElementById('search_form');
+  const searchInput = document.getElementById('search_input');
+
+  // Add a submit event listener to the form
+  searchForm.addEventListener('submit', function (event) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    // Get the value from the input field
+    const searchValue = searchInput.value;
+
+    // Construct the new URL with the search query parameter
+    const newURL = "{{ url_for('products.handle_search') }}?search=" + encodeURIComponent(searchValue);
+
+    // Set the form's action attribute to the new URL
+    searchForm.action = newURL;
+
+    // Submit the form with the updated action
+    searchForm.submit();
+  });
+</script>

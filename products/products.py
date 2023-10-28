@@ -11,6 +11,7 @@ def index():
 
     # fetch games from db
     games_query = Games.query.paginate(page = page, per_page= 9)
+
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
@@ -22,16 +23,25 @@ def index():
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, Pagination = renderPagination)
 
-@products_blueprint.route('/filter?platform=<platform>')
-def filterByPlatform(platform):
+@products_blueprint.route('')
+def filter_products():
     from models import Platform, Genre
+
+    platform_text = request.args.get('platform', '', type = str)
+    genre_text = request.args.get('genre', '', type = str)
 
     # fetch games from db
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
-    platform_query = Platform.query.filter_by(platform_name = platform).first()
 
-    games_query = platform_query.games_on_platform
+    platform_query = Platform.query.filter_by(platform_name = platform_text).first()
+    genre_query = Genre.query.filter_by(genre_name = genre_text).first()
+
+    if platform_query:
+        games_query = platform_query.games_on_platform
+    if genre_query:
+        games_query = genre_query.games_of_genre
+        
 
     renderItem = render_template('components/Item.html', games_query = games_query)
     renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
@@ -40,23 +50,6 @@ def filterByPlatform(platform):
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
 
-@products_blueprint.route('/filter?genre=<genre>')
-def filterByGenre(genre):
-    from models import Platform, Genre
-
-    # fetch games from db
-    platforms_query = Platform.query.all()
-    genres_query = Genre.query.all()
-
-    genre_query = Genre.query.filter_by(genre_name = genre).first()
-    games_query = genre_query.games_of_genre
-
-    renderItem = render_template('components/Item.html', games_query = games_query)
-    renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
-    renderDropdown = render_template('components/Dropdown.html')
-    renderSearch = render_template('components/Search.html')
-
-    return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch)
 
 @products_blueprint.route('/sort?=<sort_by>',)
 def sort_products(sort_by):
@@ -96,16 +89,15 @@ def product_detail(product_id):
 
     return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
 
-@products_blueprint.route('/search', methods = ['POST'])
+@products_blueprint.route('', methods = ['POST'])
 def handle_search():
     from models import Games
     from models import Games, Platform, Genre
 
+    search_text = request.args.get('search', '', type = str)
+
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
-
-    # Get data search_text from request
-    search_text = request.form['search_input']
 
     games_query = Games.query.filter(Games.name.like(f'%{search_text}%')).all()
 
@@ -135,7 +127,7 @@ def best_sellers():
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, pageTitle=pageTitle)
 
-@products_blueprint.route('/featured_and_recommended')
+@products_blueprint.route('/featured-and-recommended')
 def featured_recommended():
     from models import Games, Platform, Genre
 
