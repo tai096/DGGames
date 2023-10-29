@@ -36,7 +36,7 @@ def filter_products():
 
     platform_query = Platform.query.filter_by(platform_name = platform_text).first()
     genre_query = Genre.query.filter_by(genre_name = genre_text).first()
-
+    games_query = []
     if platform_query:
         games_query = platform_query.games_on_platform
     if genre_query:
@@ -87,7 +87,7 @@ def product_detail(product_id):
     game_query = Games.query.filter_by(id = product_id).first()
     renderBreadcrumbs = render_template('components/Breadcrumbs.html', product_name = game_query.name)
 
-    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher)
+    return render_template('product-detail.html', Breadcrumbs = renderBreadcrumbs, game_query = game_query, platforms_of_game = game_query.platforms_of_game, genres_of_game = game_query.genres_of_game, publisher = game_query.publisher, game_id=product_id)
 
 @products_blueprint.route('', methods = ['POST'])
 def handle_search():

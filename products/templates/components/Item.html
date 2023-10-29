@@ -24,7 +24,7 @@
     </div>
   </a>
 
-  <form action="/cart/add" method="POST">
+  <form action={{ url_for('cart.cart_add') }} method="POST">
     <input type="hidden" name="product_id" value="{{game.id}}">
     <button
       class="font-bold w-60 sm:w-80 py-3 bg-primaryColor hover:bg-purple-800 duration-300 rounded-full my-5"

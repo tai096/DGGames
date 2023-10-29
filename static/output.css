@@ -875,10 +875,6 @@ video {
   height: 7rem;
 }
 
-.h-40 {
-  height: 10rem;
-}
-
 .h-44 {
   height: 11rem;
 }
@@ -941,14 +937,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-20 {
-  height: 5rem;
-}
-
-.h-16 {
-  height: 4rem;
 }
 
 .max-h-\[200px\] {

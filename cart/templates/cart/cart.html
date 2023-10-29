@@ -12,28 +12,30 @@
                 <div class="flex justify-between grow">
                     <div class="product-info flex">
                         <div class="h-44 rounded-md overflow-hidden inline-block mr-5">
-                            <img src={{ game['image'] }} 
+                            <img src={{ game.image }} 
                             style="aspect-ratio: 9/12" 
                             class="object-cover h-full rounded-sm">
                         </div>
                         <div class="flex flex-col justify-between pb-1">
                             <div>
-                                <h4 class="text-lg">{{ game['name'] }}</h4>
+                                <h4 class="text-lg">{{ game.name }}</h4>
 
                             </div>
                             <div class="flex items-center gap-3">
                                 <p class="text-sm">Self-Refundable</p>
-                                <a href={{ url_for('cart.cart_remove', game_id=game['id'])}}>
+                                <div>
                                     <i class="fa-regular fa-circle-question text-sm text-gray-500"></i>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <p class="font-medium">{{ game['price'] | currency }}</p>
+                    <p class="font-medium">{{ game.price | currency }}</p>
                 </div>
                 <div>
-                    <i id="remove-{{ game['id'] }}" class="remove-item fa-solid fa-xmark align-top text-[#616161] cursor-pointer opacity-70 
-                    hover:opacity-100"></i>
+                    <a href={{ url_for('cart.cart_remove', game_id=game.id) }}>
+                        <i class="remove-item fa-solid fa-xmark align-top text-[#616161] cursor-pointer opacity-70 
+                        hover:opacity-100"></i>
+                    </a>
                 </div>
             </div>
             {% endfor %}

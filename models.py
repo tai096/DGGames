@@ -90,7 +90,7 @@ class Orders(db.Model):
     # Many to One Relationship with: Customer (use 'customer'), Games (use 'game')
 
     def __repr__(self):
-        return f'Order {self.id}'
+        return f'Order {self.id}: Game {self.game_id}, Customer: {self.customer_id}'
     
 
 class Purchases(db.Model):

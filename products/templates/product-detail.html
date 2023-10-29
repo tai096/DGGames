@@ -41,11 +41,14 @@
           the DG-Games store. Here is an overview of how refunds work with other
           types of purchases.
         </p>
-        <button
-          class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
-        >
-          Add to cart
-        </button>
+        <form action={{ url_for('cart.cart_add') }} method="POST">
+          <input type="hidden" name="product_id" value="{{game_id}}">         
+          <button
+            class="font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
+          >
+            Add to cart
+          </button>
+        </form>
       </div>
     </div>
     <p class="max-w-2xl my-5 px-2 text-justify">{{game_query.description}}</p>
