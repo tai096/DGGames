@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--add this code to using tailwind -->
+    <link rel="stylesheet" href="../../static/output.css" />
+    <title>DG Games</title>
+  </head>
+  <body>
+    <video autoplay id="video" width="400" height="280"></video>
+    <br />
+    <button onclick="capture()">Capture your face</button>
+    <br />
+    <input type="text" id="name" required name="" />
+    <br />
+
+    <canvas id="canvas" width="400" height="280" class="hidden"></canvas>
+    <br />
+    <button onclick="register()">Register</button>
+    <button onclick="login()">Login</button>
+
+    <script>
+      let video;
+      let canvas;
+      let nameInput;
+
+      function init() {
+        video = document.getElementById("video");
+        canvas = document.getElementById("canvas");
+        nameInput = document.getElementById("name");
+
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            video.srcObject = stream;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function capture() {
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.style.display = "block";
+        video.style.display = "none";
+      }
+
+      function register() {
+        const name = nameInput.value;
+        const photo = dataURItoBob(canvas.toDataURL());
+
+        if (!name || !photo) {
+          alert("name and photo are required!");
+          return;
+        }
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("photo", photo, `${name}.jpg`);
+
+        fetch("/auth/register-face-id", {
+          method: "POST",
+          body: formData,
+        })
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      }
+
+      function login() {
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const photo = dataURItoBob(canvas.toDataURL());
+
+        if (!photo) {
+          alert("photo is required!");
+          return;
+        }
+        const formData = new FormData();
+        formData.append("photo", photo, `login.jpg`);
+
+        fetch("/auth/login-face-id", {
+          method: "POST",
+          body: formData,
+        })
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      }
+
+      function dataURItoBob(dataURI) {
+        const byteString = atob(dataURI.split(",")[1]);
+        const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: mimeString });
+      }
+
+      init();
+    </script>
+  </body>
+</html>

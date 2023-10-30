@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect
 from utils.tools import MessageType
 
 products_blueprint = Blueprint('products', __name__, template_folder='templates',  static_folder='static', static_url_path='/static')
@@ -23,7 +23,7 @@ def index():
 
     return render_template('products.html', Item = renderItem, SideBar = renderSideBar, Dropdown = renderDropdown, Search = renderSearch, Pagination = renderPagination)
 
-@products_blueprint.route('')
+@products_blueprint.route('/filter')
 def filter_products():
     from models import Platform, Genre
 
@@ -33,15 +33,15 @@ def filter_products():
     # fetch games from db
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
-
     platform_query = Platform.query.filter_by(platform_name = platform_text).first()
     genre_query = Genre.query.filter_by(genre_name = genre_text).first()
-    games_query = []
+
     if platform_query:
         games_query = platform_query.games_on_platform
     if genre_query:
         games_query = genre_query.games_of_genre
-        
+    if not platform_text or not genre_text:
+        return redirect('/products/')
 
     renderItem = render_template('components/Item.html', games_query = games_query)
     renderSideBar = render_template('components/SideBar.html', platforms_query = platforms_query, genres_query = genres_query)
