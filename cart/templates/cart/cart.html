@@ -32,10 +32,12 @@
                     <p class="font-medium">{{ game.price | currency }}</p>
                 </div>
                 <div>
-                    <a href={{ url_for('cart.cart_remove', game_id=game.id) }}>
-                        <i class="remove-item fa-solid fa-xmark align-top text-[#616161] cursor-pointer opacity-70 
-                        hover:opacity-100"></i>
-                    </a>
+                    <form id="delete_form-{{game.id}}" action={{ url_for('cart.cart_remove', game_id=game.id) }} method="POST">
+                        <button id={{game.id}} type="submit" onclick="handleDelete(event, id)">
+                            <i class="remove-item fa-solid fa-xmark align-top text-[#616161] cursor-pointer opacity-70 
+                            hover:opacity-100"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             {% endfor %}
@@ -76,4 +78,15 @@
         </button>
     </div>
 </div>
+
+<script>
+    function handleDelete(event, id) {
+        if (window.confirm('Are you sure to remove this game from your cart?')) {
+            delete_form = document.getElementById(`delete_form-${id}`);
+            delete_form.submit();
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
 {% endblock content %}

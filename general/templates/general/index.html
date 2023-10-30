@@ -80,7 +80,7 @@
             text-center leading-10 rounded-[35px] hover:bg-primaryColor hover:text-white transition-all duration-200">View All</a>
         </div>
         <div class="grid grid-cols-4 gap-10">
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Action") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn2.unrealengine.com/egs-ac-mirage-carousel-desktop-1920x1080-9380e8fef189.jpg?h=720&quality=medium&resize=1&w=1280" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -89,7 +89,7 @@
                 </div>
                 <p class="text-xl mt-3">Action</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Adventure") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_9efa694175609b73e9d3dca54190cbd8f6a0bc60.600x338.jpg?t=1695060909" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -98,7 +98,7 @@
                 </div>
                 <p class="text-xl mt-3">Adventure</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Role-playing") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://images.axios.com/JOUiw5V1Hz3yHP9v1s5BVzTCmb4=/0x0:1920x1080/1920x1080/2022/09/26/1664220539433.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -107,7 +107,7 @@
                 </div>
                 <p class="text-xl mt-3">Role-playing</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Simulation") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://www.kotaku.com.au/wp-content/uploads/2022/09/15/f5cfd85385282e757be2bef0bf200c5b.jpg?quality=75" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -116,7 +116,7 @@
                 </div>
                 <p class="text-xl mt-3">Simulation</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Strategy") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/2497760/ss_974412e04c3fcd48ba79f1faaecac163dbc5ab1c.600x338.jpg?t=1696924927" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -125,7 +125,7 @@
                 </div>
                 <p class="text-xl mt-3">Strategy</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Sport") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn2.unrealengine.com/egs-easportsfc24standardedition-eacanada-g1a-07-1920x1080-4a5ea9f5ddce.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -134,7 +134,7 @@
                 </div>
                 <p class="text-xl mt-3">Sport</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Puzzle") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/1659040/ss_33539163983d92cc770717b26b6f449f145d45a7.600x338.jpg?t=1693992811" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -143,7 +143,7 @@
                 </div>
                 <p class="text-xl mt-3">Puzzle</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Arcade") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn2.unrealengine.com/egs-sonic-superstars-carousel-desktop-2-1920x1080-678bb1d757ad.jpg?h=720&quality=medium&resize=1&w=1280" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -152,7 +152,7 @@
                 </div>
                 <p class="text-xl mt-3">Arcade</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Racing") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://cdn2.unrealengine.com/03-tcm-announce-screenshots-04-1920x1080-1920x1080-f92576407c51.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">
@@ -161,7 +161,7 @@
                 </div>
                 <p class="text-xl mt-3">Racing</p>
             </a>
-            <a href="#" class="genre-item group flex flex-col items-center">
+            <a href={{ url_for('products.filter_products', genre = "Fighting") }} class="genre-item group flex flex-col items-center">
                 <div class="w-80 h-60 rounded-3xl overflow-hidden relative">
                     <img src="https://img-cdn.2game.vn/2022/06/23/52118140173_7935ba1924_h.jpg" 
                     class="h-full object-cover group-hover:h-[120%] transition-all duration-500">

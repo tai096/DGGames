@@ -50,15 +50,18 @@ def cart_add():
 
     return redirect(request.referrer)
 
-@cart_blueprint.route('/remove/<game_id>')
+@cart_blueprint.route('/remove/<game_id>', methods=['POST'])
 def cart_remove(game_id):
     curr_user = User.query.filter_by(id=2).first()
     orders = Orders.query.filter_by(customer_id=curr_user.id).all()
-    for order in orders:
-        if order.game_id == int(game_id):
-            db.session.delete(order)
-    db.session.commit()
-    orders_update = Orders.query.filter_by(customer_id=curr_user.id).all()
-    cart_length = len(orders_update)
-    session['cart_length'] = cart_length
+
+    if request.method == 'POST':
+        for order in orders:
+            if order.game_id == int(game_id):
+                db.session.delete(order)
+                break
+        db.session.commit()
+        orders_update = Orders.query.filter_by(customer_id=curr_user.id).all()
+        cart_length = len(orders_update)
+        session['cart_length'] = cart_length
     return redirect(request.referrer)
