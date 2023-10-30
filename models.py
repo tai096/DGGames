@@ -17,6 +17,14 @@ class User(db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+class registered_faces(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    photo = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f'RegisteredFaces {self.username}'
+    
 genre_games = db.Table('genre_games',
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True),
     db.Column('games_id', db.Integer, db.ForeignKey('games.id'), primary_key=True)
