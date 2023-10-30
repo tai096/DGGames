@@ -66,18 +66,30 @@
               </ul>
             </li>
           </ul>
-          <div class="navbar-user md:ml-3 lg:ml-11 flex">
-            <a href="#" class="user-auth group hidden md:flex items-center mr-8">
-              <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
-              <p class="group-hover:text-primaryColor transition-all px-1 py-8">Log In</p>
-            </a>
-            <a href={{ url_for('cart.index') }} class="user-cart md:pt-8 relative">
-              <i class="fa-solid fa-cart-shopping md:text-xl"></i>
-              <p class="cart-quantity absolute text-xs md:text-base px-1 md:px-2 -top-2 
-              left-3 md:top-4 md:left-5 h-auto md:h-6 text-[#461751] bg-white border-2 border-solid
-              border-[#461751] min-w-[12px] md:min-w-[36px] text-center text-medium rounded-2xl">
-                {{ session['cart_length'] }}
-              </p>
+          <div class="navbar-user md:ml-3 lg:ml-11 flex items-center">
+            <span class="mr-8">
+              {{ session['current_user']['budget'] | currency}}
+            </span>
+            {% if session['current_user'] %}
+              <a href="#" class="user-auth group hidden md:flex items-center mr-8">
+                <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
+                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+                  {{ session['current_user']['name'] }}
+                </span>
+            {% else %}
+                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+                  Log In
+                </span>
+              </a>
+            {% endif %}
+            <a href={{ url_for('cart.index') }} class="user-cart relative flex items-center">
+              <i class="fa-solid fa-cart-shopping md:text-xl">
+                <p class="cart-quantity absolute text-xs md:text-base px-1 md:px-2 -top-2 
+                left-3 md:-top-4 md:left-4 h-auto md:h-6 text-[#461751] bg-white border-2 border-solid
+                border-[#461751] min-w-[12px] md:min-w-[36px] text-center font-medium rounded-2xl">
+                  {{ session['cart_length'] }}
+                </p>
+              </i>
             </a>
           </div>
         </div>

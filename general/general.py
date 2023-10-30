@@ -12,8 +12,18 @@ def index():
     games_recommended = []
     pc = Platform.query.filter_by(platform_name='PC').first()
     curr_user = User.query.filter_by(id=2).first()
-    orders = Orders.query.filter_by(customer_id = curr_user.id).all()
-    cart_length = len(orders)
+    session['current_user'] = []
+    cart_length = 0
+    if curr_user:
+        orders = Orders.query.filter_by(customer_id = curr_user.id).all()
+        cart_length = len(orders)
+        user_obj = {
+            'username': curr_user.username,
+            'name': curr_user.name,
+            'budget': curr_user.budget
+        }
+        session['current_user'] = user_obj
+
     session['cart_length'] = cart_length
 
     for game in games_by_price:

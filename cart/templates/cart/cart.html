@@ -6,6 +6,8 @@
         <h3 class="mb-12 text-4xl font-medium">My Cart</h3>
         <hr class="opacity-40">
         <br>
+
+        {% if cart %}
         <div class="cart-products-container w-full">
             {% for game in cart %}
             <div class="cart-product h-56 flex justify-between gap-6 pl-6 pr-4 py-5 mb-4 bg-[#212121] rounded-sm">
@@ -48,6 +50,12 @@
                 Enter a promo code
             </p>
         </div>
+        {% else %}
+        <p class="italic">Your cart is empty, let's go shopping and fill up the cart!</p>
+        <p class="italic">Explore more products
+            <a href={{ url_for('products.index') }} class="underline hover:text-primaryColor">here...</a>
+        </p>
+        {% endif %}
     </div>
     
     <div class="order-summary w-1/4">
@@ -72,10 +80,13 @@
             <span>Total</span>
             <span>{{ total | currency }}</span>
         </div>
-        <button class="block mt-4 mx-auto bg-primaryColor text-white h-12 w-full font-bold rounded-3xl
-        hover:opacity-70 transition-all duration-200">
-            Checkout
-        </button>
+        <form method="POST" id="checkout_form">
+            <button type="button" class="block mt-4 mx-auto bg-primaryColor text-white h-12 w-full font-bold rounded-3xl
+            hover:opacity-70 transition-all duration-200"
+            onclick="handleCheckout()">
+                Checkout
+            </button>
+        </form>
     </div>
 </div>
 
@@ -84,6 +95,16 @@
         if (window.confirm('Are you sure to remove this game from your cart?')) {
             delete_form = document.getElementById(`delete_form-${id}`);
             delete_form.submit();
+        } else {
+            event.preventDefault();
+        }
+    }
+
+    function handleCheckout(event) {
+        if (window.confirm(`Are you sure to purchase all these games for {{total | currency}}`)) {
+            checkout_form = document.getElementById('checkout_form');
+            checkout_form.type
+            checkout_form.submit();
         } else {
             event.preventDefault();
         }

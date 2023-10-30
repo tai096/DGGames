@@ -1,12 +1,12 @@
 from flask import Blueprint, redirect, render_template, request, session, flash
-from models import Games, Orders, User
+from models import Games, Orders, User, Purchases
 from datetime import datetime
 from app import db
 from utils.tools import MessageType
 
 cart_blueprint = Blueprint('cart', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
-@cart_blueprint.route('/')
+@cart_blueprint.route('/', methods=['POST', 'GET'])
 def index():
     curr_user = User.query.filter_by(id=2).first()
     orders = Orders.query.filter_by(customer_id = curr_user.id).all()
@@ -21,20 +21,45 @@ def index():
             subtotal += game.price
         taxes = subtotal * 5 / 100
     total = subtotal + taxes + discount
+    if request.method == 'POST':
+        if games_in_cart:
+            if curr_user.can_purchase(total):
+                for game in games_in_cart:
+                    new_purchase = Purchases(
+                        customer_id=curr_user.id, 
+                        game_id=game.id, 
+                        date_of_purchase=datetime.now()
+                    )
+                    db.session.add(new_purchase)
+                    game.purchased_success()
+                curr_user.purchase_item(total)
+                for order in orders:
+                    db.session.delete(order)
+                db.session.commit()
+                session['cart_length'] = 0
+                session['current_user']['budget'] = curr_user.budget
+                flash(f'Purchase successfully!', category=MessageType['SUCCESS'].value)
+            else:
+                flash(f'Your balance is not enough for this purchasing!', category=MessageType['ERROR'].value)
+        else:
+            flash(f'Your cart is empty, please go back and shopping :D', category=MessageType['ERROR'].value)
+        return redirect(request.referrer)
     return render_template('cart/cart.html', cart=games_in_cart, subtotal=subtotal, discount=discount, taxes=taxes, total=total)
 
 @cart_blueprint.route('/add', methods=["POST"])
 def cart_add():
     game_id = int(request.form['product_id'])
     curr_user = User.query.filter_by(id=2).first()
-    orders = Orders.query.filter_by(customer_id=curr_user.id).all()
+    order_exist = Orders.query.filter_by(customer_id=curr_user.id, game_id=game_id).first()
+    purchase_exist = Purchases.query.filter_by(customer_id=curr_user.id,  game_id=game_id).first()
     if request.method == "POST":
         found = False
-        for order in orders:
-            if order.game_id == game_id:
-                found = True
-                flash(f'This game was already in your cart!', category=MessageType['ERROR'].value)
-                break
+        if order_exist:
+            found = True
+            flash(f'This game was already in your cart!', category=MessageType['ERROR'].value)
+        elif purchase_exist:
+            found = True
+            flash(f'You already bought this game!', category=MessageType['ERROR'].value)
         if not found:
             newOrder = Orders(
                 date_of_order = datetime.now(),
@@ -53,13 +78,11 @@ def cart_add():
 @cart_blueprint.route('/remove/<game_id>', methods=['POST'])
 def cart_remove(game_id):
     curr_user = User.query.filter_by(id=2).first()
-    orders = Orders.query.filter_by(customer_id=curr_user.id).all()
+    deleted_order = Orders.query.filter_by(customer_id=curr_user.id, game_id=game_id).first()
 
     if request.method == 'POST':
-        for order in orders:
-            if order.game_id == int(game_id):
-                db.session.delete(order)
-                break
+        if deleted_order:
+            db.session.delete(deleted_order)
         db.session.commit()
         orders_update = Orders.query.filter_by(customer_id=curr_user.id).all()
         cart_length = len(orders_update)

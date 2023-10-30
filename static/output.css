@@ -1851,6 +1851,18 @@ video {
   text-decoration-line: underline;
 }
 
+.decoration-white {
+  text-decoration-color: #fff;
+}
+
+.decoration-solid {
+  text-decoration-style: solid;
+}
+
+.decoration-dashed {
+  text-decoration-style: dashed;
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -2370,12 +2382,12 @@ body {
 }
 
 @media (min-width: 768px) {
-  .md\:left-5 {
-    left: 1.25rem;
+  .md\:-top-4 {
+    top: -1rem;
   }
 
-  .md\:top-4 {
-    top: 1rem;
+  .md\:left-4 {
+    left: 1rem;
   }
 
   .md\:order-first {
@@ -2432,10 +2444,6 @@ body {
   .md\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .md\:pt-8 {
-    padding-top: 2rem;
   }
 
   .md\:text-2xl {
