@@ -68,9 +68,15 @@ def cart_add():
             )
             db.session.add(newOrder)
             db.session.commit()
-            orders_update = Orders.query.filter_by(customer_id=curr_user.id).all()
-            cart_length = len(orders_update)
-            session['cart_length'] = cart_length
+            order_add = Orders.query.filter_by(game_id=newOrder.game_id).first()
+            game_order_obj = {
+                'image': order_add.game.image,
+                'name': order_add.game.name,
+                'price': order_add.game.price
+            }
+            session['cart'].append(game_order_obj)
+            session['subtotal'] += order_add.game.price
+            session['cart_length'] = len(session['cart'])
             flash(f'Added to cart successfully!', category=MessageType['SUCCESS'].value)    
 
     return redirect(request.referrer)
@@ -82,9 +88,15 @@ def cart_remove(game_id):
 
     if request.method == 'POST':
         if deleted_order:
+            game_order_obj = {
+                'image': deleted_order.game.image,
+                'name': deleted_order.game.name,
+                'price': deleted_order.game.price
+            }
+            session['cart'].remove(game_order_obj)
+            session['subtotal'] -= deleted_order.game.price
             db.session.delete(deleted_order)
         db.session.commit()
-        orders_update = Orders.query.filter_by(customer_id=curr_user.id).all()
-        cart_length = len(orders_update)
-        session['cart_length'] = cart_length
+        
+        session['cart_length'] = len(session['cart'])
     return redirect(request.referrer)

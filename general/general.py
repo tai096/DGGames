@@ -17,6 +17,17 @@ def index():
     if curr_user:
         orders = Orders.query.filter_by(customer_id = curr_user.id).all()
         cart_length = len(orders)
+        session['subtotal'] = 0
+        session['cart'] = []
+        for order in orders:
+            game_order_obj = {
+                'image': order.game.image,
+                'name': order.game.name,
+                'price': order.game.price
+            }
+            session['cart'].append(game_order_obj)
+            session['subtotal'] += order.game.price
+            
         user_obj = {
             'username': curr_user.username,
             'name': curr_user.name,
