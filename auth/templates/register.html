@@ -21,8 +21,11 @@
   <body>
     <section class="bg-radial min-h-screen flex items-center justify-center">
       <div class="py-12 px-28 flex bg-neutral-900 bg-opacity-80 rounded-2xl shadow-lg max-w-full items-center">
-        <form action="" class="flex flex-col">
+        <form action={{ url_for('register') }} method="POST" class="flex flex-col">
           <h2 class="text-neutral-100 font-bold text-4xl mb-5 flex-col mx-auto">Sign Up</h2>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Name:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="name" placeholder="Your name" required>
+          <span class="validation-message">{{ name_error }}</span>
           <p class="py-2 mt-1 text-sm text-neutral-100">Username:</p>
           <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="username" placeholder="Username" required>
           <span class="validation-message">{{ username_error }}</span>
@@ -31,10 +34,10 @@
           <span class="validation-message">{{ email_error }}</span>
           <p class="py-2 mt-1 text-sm text-neutral-100">Password:</p>
           <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="password" name="password" placeholder="Password" required>
-          <span class="validation-message">{{password_error }}</span>
-          <p class="py-2 mt-1 text-sm text-neutral-100">Confirm Password:</p>
-          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="password" name="password" placeholder="Confirm Password" required>
-          <span class="validation-message">{{ confirm_error }}</span>
+          <span class="validation-message">{{ password_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Phone Number:</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="phone" placeholder="Phone Number" required>
+          <span class="validation-message">{{ phone_error }}</span>
           <button class="bg-medium-slate-blue hover:opacity-80 mx-auto w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Sign Up</button>
         </form>
       </div>
