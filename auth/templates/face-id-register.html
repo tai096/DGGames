@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--add this code to using tailwind -->
+    <link rel="stylesheet" href="../../static/output.css" />
+    <title>DG Games</title>
+  </head>
+  <body>
+    <video autoplay id="video" width="400" height="280"></video>
+    <br />
+    <button onclick="capture()">Capture your face</button>
+    <br />
+
+    <form action="{{ url_for('auth.register_face_id') }}" method="post">
+      <input type="text" id="name" required name="name" />
+      <input type="text" id="photo" required name="photo" hidden />
+
+      <button type="submit" onclick="register()">Register</button>
+    </form>
+    <br />
+
+    <canvas id="canvas" width="400" height="280" class="hidden"></canvas>
+    <br />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"
+      integrity="sha256-JOJ7NmVm2chxYZ1KPcAYd2bwVK7NaFj9QKMp7DClews="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      let video;
+      let canvas;
+      let nameInput;
+
+      function init() {
+        video = document.getElementById("video");
+        canvas = document.getElementById("canvas");
+        nameInput = document.getElementById("name");
+        photoInput = document.getElementById("photo");
+
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            video.srcObject = stream;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function capture() {
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.style.display = "block";
+        video.style.display = "none";
+      }
+
+      function register() {
+        const name = nameInput.value;
+
+        capture();
+
+        let photo = canvas.toDataURL(`${name}/jpeg`);
+
+        photoInput.value = photo;
+      }
+
+      init();
+    </script>
+  </body>
+</html>

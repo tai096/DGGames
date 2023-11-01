@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--add this code to using tailwind -->
+    <link rel="stylesheet" href="../../static/output.css" />
+    <title>DG Games</title>
+    <style>
+      canvas {
+        position: absolute;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body class="relative">
+    <video autoplay id="video" width="400" height="280"></video>
+    <br />
+    <button onclick="capture()">Capture your face</button>
+    <br />
+
+    <form action="{{ url_for('auth.register_face_id') }}" method="post">
+      <input type="text" id="name" required name="name" />
+      <input type="text" id="photo" required name="photo" hidden />
+
+      <button type="button" onclick="register()">Register</button>
+    </form>
+    <br />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"
+      integrity="sha256-JOJ7NmVm2chxYZ1KPcAYd2bwVK7NaFj9QKMp7DClews="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var video = document.getElementById("video");
+
+      let nameInput;
+
+      async function loadModelFaceApi() {
+        await Promise.all([
+          await faceapi.nets.ssdMobilenetv1.loadFromUri("/static/models"),
+          await faceapi.nets.faceRecognitionNet.loadFromUri("/static/models"),
+          await faceapi.nets.tinyFaceDetector.loadFromUri("/static/models"),
+          await faceapi.nets.faceLandmark68Net.loadFromUri("/static/models"),
+        ]);
+
+        //   const trainingData = await loadTrainingData();
+        //   faceMatcher = new faceapi.FaceMatcher(trainingData, 0.6);
+
+        //   console.log(faceMatcher);
+        //   document.querySelector("#loading").remove();
+      }
+
+      function init() {
+        nameInput = document.getElementById("name");
+        photoInput = document.getElementById("photo");
+
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            video.srcObject = stream;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      video.addEventListener("play", () => {
+        const canvas = faceapi.createCanvasFromMedia(video);
+        document.body.append(canvas);
+        const displaySize = { width: video.width, height: video.height };
+
+        faceapi.matchDimensions(canvas, displaySize);
+
+        setInterval(async () => {
+          const detections = await faceapi.detectAllFaces(
+            video,
+            new faceapi.TinyFaceDetectorOptions()
+          ).withFaceLandmarks().withFaceDescriptors()
+
+          const resizedDetections = faceapi.resizeResults(
+            detections,
+            displaySize
+          );
+          canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+
+          faceapi.draw.drawDetections(canvas, resizedDetections);
+        }, 100);
+      });
+      // function capture() {
+      //   const context = canvas.getContext("2d");
+      //   context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      //   canvas.style.display = "block";
+      //   video.style.display = "none";
+      // }
+
+      // async function register() {
+      //   const name = nameInput.value;
+
+      //   await capture();
+
+      //   let photo = canvas.toDataURL(`${name}/jpeg`);
+
+      //   const image = await faceapi.bufferToImage(photo)
+
+      //   console.log('image',image)
+      //   photoInput.value = photo;
+      // }
+
+      loadModelFaceApi().then(init);
+    </script>
+  </body>
+</html>

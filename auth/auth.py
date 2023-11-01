@@ -20,9 +20,13 @@ def login():
 
     return render_template('login.html')
 
-@auth_blueprint.route('/face-id')
-def face_id():
-    return render_template('face-id.html')
+@auth_blueprint.route('/face-id-register')
+def face_id_register_ui():
+    return render_template('face-id-register.html')
+
+@auth_blueprint.route('/face-id-login')
+def face_id_login_ui():
+    return render_template('face-id-login.html')
 
 @auth_blueprint.route('/register-face-id', methods=["POST"])
 def register_face_id():
