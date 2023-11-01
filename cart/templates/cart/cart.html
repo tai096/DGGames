@@ -1,0 +1,114 @@
+{% extends "general/base.html" %}
+
+{% block content %}
+<div class="px-48 mt-12 flex justify-between gap-10">
+    <div class="my-cart grow">
+        <h3 class="mb-12 text-4xl font-medium">My Cart</h3>
+        <hr class="opacity-40">
+        <br>
+
+        {% if cart %}
+        <div class="cart-products-container w-full">
+            {% for game in cart %}
+            <div class="cart-product h-56 flex justify-between gap-6 pl-6 pr-4 py-5 mb-4 bg-[#212121] rounded-sm">
+                <div class="flex justify-between grow">
+                    <div class="product-info flex">
+                        <div class="h-44 rounded-md overflow-hidden inline-block mr-5">
+                            <img src={{ game.image }} 
+                            style="aspect-ratio: 9/12" 
+                            class="object-cover h-full rounded-sm">
+                        </div>
+                        <div class="flex flex-col justify-between pb-1">
+                            <div>
+                                <h4 class="text-lg">{{ game.name }}</h4>
+
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <p class="text-sm">Self-Refundable</p>
+                                <div>
+                                    <i class="fa-regular fa-circle-question text-sm text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="font-medium">{{ game.price | currency }}</p>
+                </div>
+                <div>
+                    <form id="delete_form-{{game.id}}" action={{ url_for('cart.cart_remove', game_id=game.id) }} method="POST">
+                        <button id={{game.id}} type="submit" onclick="handleDelete(event, id)">
+                            <i class="remove-item fa-solid fa-xmark align-top text-[#616161] cursor-pointer opacity-70 
+                            hover:opacity-100"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="promo-code mt-6">
+            <p class="text-primaryColor">
+                <i class="fa-solid fa-tag mr-1 text-primaryColor"></i>
+                Enter a promo code
+            </p>
+        </div>
+        {% else %}
+        <p class="italic">Your cart is empty, let's go shopping and fill up the cart!</p>
+        <p class="italic">Explore more products
+            <a href={{ url_for('products.index') }} class="underline hover:text-primaryColor">here...</a>
+        </p>
+        {% endif %}
+    </div>
+    
+    <div class="order-summary w-1/4">
+        <h3 class="mb-12 text-4xl font-medium">Order Summary</h3>
+        <hr class="opacity-40">
+        <div class="pt-5 pb-3">
+            <div class="py-2 flex justify-between">
+                <span>Subtotal</span>
+                <span>{{ subtotal | currency }}</span>
+            </div>
+            <div class="py-2 flex justify-between">
+                <span>Sale Discount</span>
+                <span>{{ discount | currency }}</span>
+            </div>
+            <div class="py-2 flex justify-between">
+                <span>Taxes (5%)</span>
+                <span>{{ taxes | currency }}</span>
+            </div>
+        </div>
+        <hr class="opacity-40">
+        <div class="font-semibold pt-4 pb-3 flex justify-between">
+            <span>Total</span>
+            <span>{{ total | currency }}</span>
+        </div>
+        <form method="POST" id="checkout_form">
+            <button type="button" class="block mt-4 mx-auto bg-primaryColor text-white h-12 w-full font-bold rounded-3xl
+            hover:opacity-70 transition-all duration-200"
+            onclick="handleCheckout()">
+                Checkout
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+    function handleDelete(event, id) {
+        if (window.confirm('Are you sure to remove this game from your cart?')) {
+            delete_form = document.getElementById(`delete_form-${id}`);
+            delete_form.submit();
+        } else {
+            event.preventDefault();
+        }
+    }
+
+    function handleCheckout(event) {
+        if (window.confirm(`Are you sure to purchase all these games for {{total | currency}}`)) {
+            checkout_form = document.getElementById('checkout_form');
+            checkout_form.type
+            checkout_form.submit();
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+{% endblock content %}

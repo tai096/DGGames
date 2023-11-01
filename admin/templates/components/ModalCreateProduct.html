@@ -1,5 +1,5 @@
 <button
-  class="modal-open fixed bottom-10 right-10 z-40 bg-black/30 backdrop-blur-lg border border-gray-500 hover:border-primaryColor hover:text-primaryColor font-medium py-2 px-4 rounded-full"
+  class="modal-open fixed bottom-10 left-10 z-40 bg-black/30 backdrop-blur-lg border-2 border-gray-500 hover:border-primaryColor hover:text-primaryColor font-medium py-2 px-4 rounded-full"
 >
   + Add new game
 </button>
@@ -9,21 +9,21 @@
   class="z-50 modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
 >
   <div
-    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60"
   ></div>
 
   <div
-    class="modal-container bg-black/30 backdrop-blur-xl w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+    class="modal-container bg-black/30 backdrop-blur-xl w-[70%] max-w-[800px] mx-auto rounded shadow-lg z-50 overflow-y-auto"
   >
     <div
       class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50"
     ></div>
 
     <!-- Add margin if you want to see some of the overlay behind the modal-->
-    <div class="modal-content py-4 text-left px-6">
+    <div class="modal-content py-4 text-left px-6 w-full">
       <!--Title-->
       <div class="flex justify-between items-center pb-3">
-        <p class="text-2xl font-bold">Create</p>
+        <p class="text-3xl font-bold">Create New Product</p>
         <div class="modal-close cursor-pointer z-50">
           <svg
             class="fill-current text-black"
@@ -40,56 +40,131 @@
       </div>
 
       <!--Body-->
-      <div class="flex flex-col mb-3">
-        <label for="name" class="my-2 font-bold">Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-        />
-      </div>
-      <div class="flex flex-col mb-3">
-        <label for="description" class="my-2 font-bold">Description</label>
-        <textarea
-          name="description"
-          id="description"
-          rows="3"
-          class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
-        ></textarea>
-      </div>
-      <div class="flex flex-col mb-3">
-        <label for="price" class="my-2 font-bold">Price (vnđ)</label>
-        <input
-          name="price"
-          id="price"
-          type="number"
-          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-        />
-      </div>
-      <div class="flex flex-col mb-3">
-        <label for="image_url" class="my-2 font-bold">Image url</label>
-        <input
-          id="image_url"
-          name="image_url"
-          type="text"
-          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-        />
-      </div>
+      <form action="/admin/create-product" method="post" id="create_form">
+        <div class="flex flex-row w-full justify-center">
+          <div class="w-full">
+            <div class="flex flex-col mb-3">
+              <label for="name" class="my-2 font-bold">Name</label>
+              <input
+                required
+                id="name"
+                minlength="2"
+                maxlength="150"
+                name="name"
+                type="text"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="description" class="my-2 font-bold"
+                >Description</label
+              >
+              <textarea
+                required
+                name="description"
+                id="description"
+                maxlength="1024"
+                rows="3"
+                class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
+              ></textarea>
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="price" class="my-2 font-bold">Price (vnđ)</label>
+              <input
+                required
+                name="price"
+                id="price"
+                min="0"
+                type="number"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+            <div class="flex flex-col mb-3">
+              <label for="image_url" class="my-2 font-bold">Image url</label>
+              <input
+                required
+                id="image_url"
+                name="image_url"
+                maxlength="1024"
+                type="text"
+                class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+              />
+            </div>
+          </div>
+          <div class="w-10"></div>
+          <div class="w-full">
+            <div class="flex flex-col mb-3">
+              <label for="publisher" class="my-2 font-bold">Publisher</label>
+              <select
+                required
+                name="publisher"
+                id="publisher"
+                class="bg-transparent border-2 border-primaryColor p-2 h-10 outline-none rounded-lg"
+              >
+                <option value="" hidden>Choose publisher</option>
+                {% for publisher in publishers_query%}
+                <option value="{{publisher.id}}" class="bg-secondaryColor">
+                  {{publisher.publisher_name}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
 
-      <!--Footer-->
-      <div class="flex justify-end pt-2">
-        <button
-          class="px-4 bg-transparent p-3 rounded-lg text-primaryColor hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2"
-        >
-          Create
-        </button>
-        <button
-          class="modal-close px-4 duration-200 bg-pr p-3 bg-red-500 rounded-lg text-white hover:bg-red-700"
-        >
-          Close
-        </button>
-      </div>
+            <div
+              class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2"
+            >
+              <label class="my-1 font-bold">Platform</label>
+              {% for platform in platforms_query%}
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="platform{{platform.id}}"
+                  name="platforms"
+                  value="{{platform.id}}"
+                />
+                <label class="mx-5" for="platform{{platform.id}}"
+                  >{{platform.platform_name}}</label
+                >
+              </div>
+              {% endfor %}
+            </div>
+
+            <div
+              class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2 max-h-[200px] overflow-auto"
+            >
+              <label class="my-1 font-bold">Genre</label>
+              {% for genre in genres_query%}
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="genre{{genre.id}}"
+                  name="genres"
+                  value="{{genre.id}}"
+                />
+                <label class="mx-5" for="genre{{genre.id}}"
+                  >{{genre.genre_name}}</label
+                >
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!--Footer-->
+        <div class="flex justify-end pt-2">
+          <button
+            onclick="handleSubmit()"
+            type="submit"
+            class="px-4 bg-transparent p-3 rounded-lg text-primaryColor hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2"
+          >
+            Create
+          </button>
+          <button
+            class="modal-close px-4 duration-200 bg-pr p-3 bg-red-500 rounded-lg text-white hover:bg-red-700"
+          >
+            Close
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -131,4 +206,5 @@
     modal.classList.toggle("pointer-events-none");
     body.classList.toggle("modal-active");
   }
+
 </script>

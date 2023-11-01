@@ -1,4 +1,52 @@
-{% if category == "Failure" %}
+{% if category == "ERROR" %}
+  <div class="toast fixed z-[5] top-40 right-8 rounded-xl 
+            bg-white py-5 pl-8 pr-6 overflow-hidden flex flex-col">
+      <div class="flex justify-between items-center">
+          <i class="fa-solid fa-circle-exclamation text-red-500 h-8 w-8 text-4xl"></i>
+          <div class="flex flex-col mx-5">
+              <h1 class="text-base font-semibold text-[#333]"> {{ category }}</h1>
+              <p class="text-base text-[#555]">{{ message }}</p>
+          </div>
+          <i class="close fa-solid fa-xmark text-[#444] cursor-pointer opacity-70 hover:opacity-100 self-start"></i>
+      </div>
+      <div class="progress w-full h-[3px] 
+      before:content-[''] before:block before:w-full before:h-[3px] before:absolute before:bottom-0 before:right-0 
+      before:bg-red-500 before:animate-[progress_3s_linear_forwards]"></div>
+  </div>
+{% elif category == "SUCCESS" %}
+  <div class="toast fixed z-[5] top-40 right-8 rounded-xl 
+          bg-white py-5 pl-8 pr-6 overflow-hidden flex flex-col">
+    <div class="flex justify-between items-center">
+        <i class="fa-solid fa-circle-check text-blue-500 h-8 w-8 text-4xl"></i>
+        <div class="flex flex-col mx-5">
+            <h1 class="text-base font-semibold text-[#333]"> {{ category }}</h1>
+            <p class="text-base text-[#555]">{{ message }}</p>
+        </div>
+        <i class="close fa-solid fa-xmark text-[#444] cursor-pointer opacity-70 hover:opacity-100 self-start"></i>
+    </div>
+    <div class="progress w-full h-[3px] 
+    before:content-[''] before:block before:w-full before:h-[3px] before:absolute before:bottom-0 before:right-0 
+    before:bg-blue-500 before:animate-[progress_3s_linear_forwards]"></div>
+  </div>
+{% endif %}
+
+<script>
+    const toast = document.querySelector(".toast");
+    (closeIcon = document.querySelector(".close")),
+    (progress = document.querySelector(".progress"));
+    
+    let timer;
+    toast.classList.add("active");
+    
+    timer = setTimeout(() => {
+      toast.classList.remove("active");
+    }, 3000)
+
+    closeIcon.addEventListener("click", ()=> {
+      toast.classList.remove("active");
+      clearTimeout(timer);
+    })
+  </script>{% if category == "Failure" %}
   <div class="toast fixed z-[5] top-40 right-8 rounded-xl 
             bg-white py-5 pl-8 pr-6 overflow-hidden flex flex-col">
       <div class="flex justify-between items-center">

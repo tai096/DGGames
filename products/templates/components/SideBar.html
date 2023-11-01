@@ -15,7 +15,7 @@
   <svg
     id="filterBtn"
     title="filter"
-    class="cursor-pointer p-2 bg-purple-500 rounded-xl hover:bg-purple-700 duration-200 fixed top-5 left-2 sm:top-10 sm:left-10 opacity-50 hover:opacity-100"
+    class="cursor-pointer p-2 bg-purple-500 rounded-xl hover:bg-purple-700 duration-200 fixed bottom-5 left-2 sm:bottom-10 sm:left-10 opacity-50 hover:opacity-100"
     xmlns="http://www.w3.org/2000/svg"
     height="40px"
     viewBox="0 0 512 512"
@@ -59,7 +59,7 @@
       <ul class="flex flex-col">
         <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for platform in platforms_query%}
-          <a href="{{ url_for('products.filterByPlatform', platform = platform.platform_name) }}" class="cursor-pointer hover:text-purple-500 duration-200">
+          <a href="{{ url_for('products.filter_products', platform = platform.platform_name) }}" class="cursor-pointer hover:text-purple-500 duration-200">
             {{platform.platform_name}}
           </a>
         {% endfor %}
@@ -71,7 +71,7 @@
       <ul class="flex flex-col">
         <a href="/products" class="cursor-pointer hover:text-purple-500 duration-200">All</a>
         {% for genre in genres_query%}
-          <a href="{{ url_for('products.filterByGenre', genre = genre.genre_name) }}"
+          <a href="{{ url_for('products.filter_products', genre = genre.genre_name) }}"
             class="cursor-pointer hover:text-purple-500 duration-200">
             {{genre.genre_name}}
           </a>

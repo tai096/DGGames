@@ -66,19 +66,70 @@
               </ul>
             </li>
           </ul>
-          <div class="navbar-user md:ml-3 lg:ml-11 flex">
-            <a href="#" class="user-auth group hidden md:flex items-center mr-8">
-              <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
-              <p class="group-hover:text-primaryColor transition-all px-1 py-8">Log In</p>
-            </a>
-            <a href="#" class="user-cart md:pt-8 relative">
-              <i class="fa-solid fa-cart-shopping md:text-xl"></i>
-              <p class="cart-quantity absolute text-xs md:text-base px-1 md:px-2 -top-2 
-              left-3 md:top-4 md:left-5 h-auto md:h-6 text-[#461751] bg-white border-2 border-solid
-              border-[#461751] min-w-[12px] md:min-w-[36px] text-center text-medium rounded-2xl">
-                {{ session["cart"]|length }}
-              </p>
-            </a>
+          <div class="navbar-user md:ml-3 lg:ml-11 flex items-center">
+            <span class="mr-8">
+              {{ session['current_user']['budget'] | currency}}
+            </span>
+            {% if session['current_user'] %}
+              <a href="#" class="user-auth group hidden md:flex items-center mr-6">
+                <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
+                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+                  {{ session['current_user']['name'] }}
+                </span>
+            {% else %}
+                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+                  Log In
+                </span>
+              </a>
+            {% endif %}
+            <div class="relative group p-2">
+              <a href={{ url_for('cart.index') }} class="user-cart relative flex items-center">
+                <i class="fa-solid fa-cart-shopping md:text-xl">
+                  <p class="cart-quantity absolute text-xs md:text-base px-1 md:px-2 -top-2 
+                  left-3 md:-top-4 md:left-4 h-auto md:h-6 text-[#461751] bg-white border-2 border-solid
+                  border-[#461751] min-w-[12px] md:min-w-[36px] text-center font-medium rounded-2xl">
+                    {{ session['cart_length'] }}
+                  </p>
+                </i>
+              </a>
+
+              <!-- POPUP CART -->
+              <div id="popup-cart" class="absolute top-10 -right-4 bg-secondaryColor w-[380px] pb-4 rounded-lg shadow-lg
+              hidden group-hover:block
+              before:block before:content-[''] before:w-0 before:h-0 before:absolute
+              before:-top-1 before:right-7 before:border-b-4 before:border-x-[6px] before:border-x-transparent before:border-b-[var(--primaryColor)]
+              after:block after:content-[''] after:w-16 after:h-8 after:absolute
+              after:-top-3 after:right-1
+              ">
+                <h1 class="bg-primaryColor px-3 py-2 text-white font-semibold rounded-t-lg">Your cart</h1>
+                <div class="max-h-96 overflow-y-scroll">
+                  {% if (session['cart_length'] <= 0) %}
+                    <p class="text-sm italic p-4 text-center">Your cart is empty now</p>
+                  {% else %}
+                    {% for game in session['cart'] %}
+                    <div class="px-3 py-2 first-of-type:pt-4 last:pb-4 flex gap-4 hover:bg-[#3e2d5c]">
+                      <div class="h-20 shrink-0 overflow-hidden">
+                        <img src={{ game['image'] }} alt="{{ game['image'] }}"
+                        class="h-full object-cover rounded" style="aspect-ratio: 4/5">
+                      </div>
+                      <div class="grow flex justify-between">
+                        <p class="text-sm w-40">{{ game['name'] }}</p>
+                        <p class="text-sm font-semibold">{{ game['price'] | currency}}</p>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                <hr class="opacity-50">
+                <div class="px-3 py-2 flex justify-between">
+                  <p class="text-base font-medium">Subtotal:</p>
+                  <p class="text-base font-medium">{{ session['subtotal'] | currency }}</p>
+                </div>
+                <a href={{ url_for('cart.index') }} class="block mx-auto mt-3 leading-8 h-8 w-72 rounded-xl bg-primaryColor hover:opacity-70 
+                transition-all text-center font-medium">View Cart</a>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>

@@ -18,18 +18,23 @@
     </h1>
     <div class="flex items-center justify-between w-60 sm:w-80">
       <p class="text-primaryColor font-medium">
-        {{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ
+        {{ game.price | currency }}
       </p>
       <span>{{game.purchase_number}} sold</span>
     </div>
   </a>
 
-  <button
-    class="font-bold w-60 sm:w-80 py-3 bg-primaryColor hover:bg-purple-800 duration-300 rounded-full my-5"
-  >
-    Add to cart
-  </button>
+  <form action={{ url_for('cart.cart_add') }} method="POST">
+    <input type="hidden" name="product_id" value="{{game.id}}">
+    <button
+      class="font-bold w-60 sm:w-80 py-3 bg-primaryColor hover:bg-purple-800 duration-300 rounded-full my-5"
+    >
+      Add to cart
+   </button>
+  </form>
 </div>
-{% endfor %} {% else %}
-<p class="w-full">No games found</p>
+{% endfor %}
+
+{% else %}
+  <p class="w-full">No games found</p>
 {% endif %}

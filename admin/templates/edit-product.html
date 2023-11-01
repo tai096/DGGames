@@ -1,78 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--add this code to using tailwind -->
-    <link rel="stylesheet" href="../../static/output.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div
-      class="flex flex-row items-end justify-between max-w-[1000px] mx-auto mt-8 mb-20"
-    >
-      <a href="/admin" class="text-lg hover:text-primaryColor">Back to home</a>
-      <h1 class="text-3xl text-center">Edit</h1>
-      <span class="opacity-0">a</span>
-    </div>
-    <form action="" method="post" class="flex flex-col">
-      <div class="flex items-center justify-center">
-        <div class="w-[500px]">
-          <div class="flex flex-col mb-3">
-            <label for="name" class="my-2 font-bold">Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value="{{game_query.name}}"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="description" class="my-2 font-bold">Description</label>
-            <textarea
-              name="description"
-              id="description"
-              rows="5"
-              class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
-            >
+{% extends "general/base.html" %}
+
+{% block content %}
+
+<div
+  class="flex flex-row items-end justify-between max-w-[1000px] mx-auto mt-8 mb-20"
+>
+  <a href="/admin" class="text-lg hover:text-primaryColor">Back to home</a>
+  <h1 class="text-3xl text-center">Edit</h1>
+  <span class="opacity-0">a</span>
+</div>
+<form action="" method="post" class="flex flex-col">
+  <div class="flex items-center justify-center">
+    <div class="w-[500px]">
+      <div class="flex flex-col mb-3">
+        <label for="name" class="my-2 font-bold">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          value="{{game_query.name}}"
+          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+        />
+      </div>
+      <div class="flex flex-col mb-3">
+        <label for="description" class="my-2 font-bold">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          rows="5"
+          class="bg-transparent max-w-[400px] outline-none resize-none border-2 border-primaryColor rounded-lg p-2"
+        >
 {{game_query.description}}</textarea
-            >
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="price" class="my-2 font-bold">Price (vnđ)</label>
-            <input
-              name="price"
-              id="price"
-              type="number"
-              value="{{game_query.price}}"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-          <div class="flex flex-col mb-3">
-            <label for="image_url" class="my-2 font-bold">Image url</label>
-            <input
-              id="image_url"
-              name="image_url"
-              type="text"
-              value="{{game_query.image}}"
-              class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
-            />
-          </div>
-        </div>
-        <img
-          src="{{game_query.image}}"
-          alt="image"
-          class="h-[500px] aspect-[9/13] object-cover rounded-lg"
+        >
+      </div>
+      <div class="flex flex-col mb-3">
+        <label for="price" class="my-2 font-bold">Price (vnđ)</label>
+        <input
+          name="price"
+          id="price"
+          type="number"
+          value="{{game_query.price}}"
+          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
+        />
+      </div>
+      <div class="flex flex-col mb-3">
+        <label for="image_url" class="my-2 font-bold">Image url</label>
+        <input
+          id="image_url"
+          name="image_url"
+          type="text"
+          value="{{game_query.image}}"
+          class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor"
         />
       </div>
 
-      <button
-        type="submit"
-        class="max-w-[300px] mx-auto font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
+      <div class="flex flex-col mb-3">
+        <label for="image_url" class="my-2 font-bold">Publisher</label>
+        <select
+          name="publisher"
+          id="publisher"
+          class="bg-transparent border-2 border-primaryColor w-full max-w-[400px] p-2 h-10 outline-none rounded-lg"
+        >
+          <option value="{{publisher.id}}" hidden>
+            {{publisher.publisher_name}}
+          </option>
+          {% for publisher in publishers_query%}
+          <option
+            value="{{publisher.id}}"
+            class="bg-secondaryColor"
+          >
+            {{publisher.publisher_name}}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <label class="my-3 font-bold">Platform</label>
+      <div
+        class="flex flex-col mb-3 rounded-lg border-2 border-primaryColor p-2 w-full max-w-[400px]"
       >
-        Save
-      </button>
-    </form>
-  </body>
-</html>
+        {% for platform in platforms_of_game%}
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            checked="{{platform.platform_name}}"
+            id="platform{{platform.id}}"
+            name="platform{{platform.id}}"
+            value="{{platform.platform_name}}"
+          />
+          <label class="mx-5" for="platform{{platform.id}}"
+            >{{platform.platform_name}}</label
+          >
+        </div>
+        {% endfor %}
+      </div>
+
+      <label class="my-3 font-bold">Genre</label>
+      <div
+        class="flex flex-col mb-3 rounded-lg border-2 w-full max-w-[400px] border-primaryColor p-2 max-h-[200px] overflow-auto"
+      >
+        {% for genre in genres_of_game%}
+        <div class="flex items-center">
+          <input
+            checked
+            type="checkbox"
+            id="genre{{genre.id}}"
+            name="genre{{genre.id}}"
+            value="{{genre.genre_name}}"
+          />
+          <label class="mx-5" for="genre{{genre.id}}"
+            >{{genre.genre_name}}</label
+          >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <img
+      src="{{game_query.image}}"
+      alt="image"
+      class="h-[500px] aspect-[9/13] object-cover rounded-lg"
+    />
+  </div>
+
+  <button
+    type="submit"
+    class="max-w-[300px] mx-auto font-bold px-20 py-2 bg-purple-500 hover:bg-purple-700 duration-300 rounded-full my-5"
+  >
+    Save
+  </button>
+</form>
+
+{% endblock %}

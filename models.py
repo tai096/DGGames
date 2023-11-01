@@ -16,6 +16,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+    
+    def can_purchase(self, total_orders):
+        return self.budget >= total_orders
+    
+    def purchase_item(self, total):
+        self.budget -= total
+        db.session.commit()
 
 genre_games = db.Table('genre_games',
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True),
@@ -82,6 +89,10 @@ class Games(db.Model):
     def __repr__(self):
         return f'Game {self.id} {self.name} {self.description} {self.price} {self.image} {self.purchase_number} {self.publisher_id} {self.order} {self.purchases}'
 
+    def purchased_success(self):
+        self.purchase_number += 1
+        db.session.commit()
+        
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_of_order = db.Column(db.DateTime, nullable=False)
@@ -90,7 +101,7 @@ class Orders(db.Model):
     # Many to One Relationship with: Customer (use 'customer'), Games (use 'game')
 
     def __repr__(self):
-        return f'Order {self.id}'
+        return f'Order {self.id}: Game {self.game_id} - Customer: {self.customer_id}'
     
 
 class Purchases(db.Model):

@@ -1,69 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--add this code to using tailwind -->
-    <link rel="stylesheet" href="../../static/output.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1 class="text-3xl text-center my-10">Management</h1>
-    {{ModalCreateProduct | safe}}
-    <div class="relative overflow-x-auto shadow-md rounded-lg my-5">
-      <table
-        class="w-full max-w-[1500px] text-sm text-left text-gray-400 mx-auto"
-      >
-        <thead class="text-xs uppercase bg-primaryColor text-gray-400">
-          <tr class="">
-            <th scope="col" class="px-6 py-3">Game name</th>
-            <th scope="col" class="px-6 py-3">Description</th>
-            <th scope="col" class="px-6 py-3">Image</th>
-            <th scope="col" class="px-6 py-3">Price</th>
-            <th scope="col" class="px-6 py-3">
-              <span class="sr-only">Edit</span>
-            </th>
-            <th scope="col" class="px-6 py-3">
-              <span class="sr-only">Delete</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for game in games_query%}
-          <tr
-            class="border-b bg-secondaryColor border-gray-700 hover:bg-gray-600"
+{% extends "general/base.html" %} {% block content %}
+
+<h1 class="text-3xl text-center my-10">Management</h1>
+
+{{ModalCreateProduct | safe}}
+{{Search | safe}}
+
+<div class="relative overflow-x-auto shadow-md rounded-lg my-5">
+  <table class="w-full max-w-[1500px] text-sm text-left text-gray-400 mx-auto">
+    <thead class="text-xs uppercase bg-primaryColor text-gray-400">
+      <tr class="">
+        <th scope="col" class="px-6 py-3">Game name</th>
+        <th scope="col" class="px-6 py-3">Description</th>
+        <th scope="col" class="px-6 py-3">Image</th>
+        <th scope="col" class="px-6 py-3">Price</th>
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Edit</span>
+        </th>
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Delete</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in games_query%}
+      <tr class="border-b bg-secondaryColor border-gray-700 hover:bg-gray-600">
+        <th scope="row" class="px-6 py-4 font-medium max-w-[300px] truncate">
+          {{game.name}}
+        </th>
+        <td class="px-6 py-4 max-w-[400px] truncate">{{game.description}}</td>
+        <td class="px-6 py-4 max-w-[400px] truncate">
+          <a href="{{game.image}}" target="_blank">{{game.image}}</a>
+        </td>
+        <td class="px-6 py-4">{{ game.price | currency }}</td>
+        <td class="px-6 py-4 text-right">
+          <a
+            href="{{ url_for('admin.edit_product', product_id = game.id) }}"
+            class="font-medium text-blue-500 hover:underline"
+            >Edit</a
           >
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium max-w-[300px] truncate"
+        </td>
+        <td class="px-6 py-4 text-right">
+          <form
+            id="delete_form"
+            action="{{ url_for('admin.delete_product', product_id = game.id) }}"
+            method="post"
+          >
+            <button
+              id="delete_btn"
+              type="submit"
+              onclick="handleDelete(event)"
+              class="font-medium text-red-500 hover:underline"
             >
-              {{game.name}}
-            </th>
-            <td class="px-6 py-4 max-w-[400px] truncate">
-              {{game.description}}
-            </td>
-            <td class="px-6 py-4 max-w-[400px] truncate">
-              <a href="{{game.image}}" target="_blank">{{game.image}}</a>
-            </td>
-            <td class="px-6 py-4">
-              {{ '{:,.0f}'.format(game.price).replace(',', '.') }} vnđ
-            </td>
-            <td class="px-6 py-4 text-right">
-              <a
-                href="{{ url_for('admin.edit_product', product_id = game.id) }}"
-                class="font-medium text-blue-500 hover:underline"
-                >Edit</a
-              >
-            </td>
-            <td class="px-6 py-4 text-right">
-              <a href="#" class="font-medium text-red-500 hover:underline"
-                >Delete</a
-              >
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </body>
-</html>
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function handleDelete(event) {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      document.getElementById("delete_form").submit();
+    } else {
+      // Prevent form submission
+      event.preventDefault();
+    }
+  }
+</script>
+
+{% endblock %}
