@@ -27,7 +27,7 @@
     </form>
     <br />
 
-    <div>
+    <div hidden>
       {% for registered_face in registered_faces%}
       <p class="registered_face_username">{{registered_face.username}}</p>
       <p class="registered_face_photo">{{registered_face.photo}}</p>
@@ -49,15 +49,6 @@
         "registered_face_photo"
       );
 
-      // Array.from(registeredFaces).forEach(async (face) => {
-      //   var image = new Image();
-      //   image.src = face.innerText;
-      //   document.body.appendChild(image);
-
-      //   // console.log('registeredFace', face.innerText)
-      //   // console.log(image);
-      // });
-
       let nameInput;
 
       async function loadTrainingData() {
@@ -76,36 +67,33 @@
 
         labels.length > 0 &&
           labels.map((label) => {
-            const descriptions = [];
+            const descriptors = [];
 
             photos.length > 0 &&
               photos.map(async (photo) => {
-                const image = dataURLtoFile(photo, `${label}.png`);
+                let image = document.createElement("img");
+                image.setAttribute("src", photo);
 
                 const detections = await faceapi
                   .detectSingleFace(image)
                   .withFaceLandmarks()
                   .withFaceDescriptor();
-                descriptions.push(detections.descriptor);
 
-                console.log("detections", detections);
+                if (detections) {
+                  console.log("detections", detections);
+                  descriptors.push(detections.descriptor);
+                }
               });
+
+            faceDescriptors.push(
+              new faceapi.LabeledFaceDescriptors(label, descriptors)
+            );
           });
+
+        return faceDescriptors;
       }
 
-      loadTrainingData();
-
-      function dataURLtoFile(dataurl, filename) {
-        var arr = dataurl.split(","),
-          mime = arr[0].match(/:(.*?);/)[1],
-          bstr = atob(arr[1]),
-          n = bstr.length,
-          u8arr = new Uint8Array(n);
-        while (n--) {
-          u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new File([u8arr], filename, { type: mime });
-      }
+      let faceMatcher;
 
       async function loadModelFaceApi() {
         await Promise.all([
@@ -115,11 +103,11 @@
           await faceapi.nets.faceLandmark68Net.loadFromUri("/static/models"),
         ]);
 
-        //   const trainingData = await loadTrainingData();
-        //   faceMatcher = new faceapi.FaceMatcher(trainingData, 0.6);
+        const trainingData = await loadTrainingData();
 
-        //   console.log(faceMatcher);
-        //   document.querySelector("#loading").remove();
+        faceMatcher = new faceapi.FaceMatcher(trainingData, 0.6);
+
+        console.log("faceMatcher", faceMatcher);
       }
 
       function init() {
@@ -137,9 +125,6 @@
       }
 
       video.addEventListener("play", async () => {
-        // const labeledFaceDescriptors = await getLabeledFaceDescriptions();
-        // const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors);
-
         const canvas = faceapi.createCanvasFromMedia(video);
         document.body.append(canvas);
 
@@ -158,41 +143,22 @@
             displaySize
           );
 
-          canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-
-          // const results = resizedDetections.map((d) => {
-          //   return faceMatcher.findBestMatch(d.descriptor);
-          // });
-
-          resizedDetections.map((resizedDetection, i) => {
+          const context = canvas.getContext('2d');
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.canvas.willReadFrequently = true;
+          
+          resizedDetections.forEach((resizedDetection, i) => {
             const box = resizedDetection.detection.box;
-            const drawBox = new faceapi.draw.DrawBox(box, { label: "Face" });
+            const descriptor = resizedDetection.descriptor; // Get the descriptor from the resizedDetection
+
+            const drawBox = new faceapi.draw.DrawBox(box, {
+              label: faceMatcher.findBestMatch(descriptor).toString(), // Use the descriptor here
+            });
 
             drawBox.draw(canvas);
           });
-
-          // faceapi.draw.drawDetections(canvas, resizedDetections);
         }, 100);
       });
-      // function capture() {
-      //   const context = canvas.getContext("2d");
-      //   context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      //   canvas.style.display = "block";
-      //   video.style.display = "none";
-      // }
-
-      // async function register() {
-      //   const name = nameInput.value;
-
-      //   await capture();
-
-      //   let photo = canvas.toDataURL(`${name}/jpeg`);
-
-      //   const image = await faceapi.bufferToImage(photo)
-
-      //   console.log('image',image)
-      //   photoInput.value = photo;
-      // }
 
       loadModelFaceApi().then(init);
     </script>
