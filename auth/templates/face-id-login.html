@@ -27,6 +27,13 @@
     </form>
     <br />
 
+    <div>
+      {% for registered_face in registered_faces%}
+      <p class="registered_face_username">{{registered_face.username}}</p>
+      <p class="registered_face_photo">{{registered_face.photo}}</p>
+      {% endfor %}
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"
       integrity="sha256-JOJ7NmVm2chxYZ1KPcAYd2bwVK7NaFj9QKMp7DClews="
@@ -35,8 +42,70 @@
 
     <script>
       var video = document.getElementById("video");
+      var registeredFaceUsernames = document.getElementsByClassName(
+        "registered_face_username"
+      );
+      var registeredFacePhotos = document.getElementsByClassName(
+        "registered_face_photo"
+      );
+
+      // Array.from(registeredFaces).forEach(async (face) => {
+      //   var image = new Image();
+      //   image.src = face.innerText;
+      //   document.body.appendChild(image);
+
+      //   // console.log('registeredFace', face.innerText)
+      //   // console.log(image);
+      // });
 
       let nameInput;
+
+      async function loadTrainingData() {
+        let labels = [];
+        let photos = [];
+
+        Array.from(registeredFaceUsernames).forEach((username) => {
+          labels.push(username.innerText);
+        });
+
+        Array.from(registeredFacePhotos).forEach((photo) => {
+          photos.push(photo.innerText);
+        });
+
+        const faceDescriptors = [];
+
+        labels.length > 0 &&
+          labels.map((label) => {
+            const descriptions = [];
+
+            photos.length > 0 &&
+              photos.map(async (photo) => {
+                const image = dataURLtoFile(photo, `${label}.png`);
+
+                const detections = await faceapi
+                  .detectSingleFace(image)
+                  .withFaceLandmarks()
+                  .withFaceDescriptor();
+                descriptions.push(detections.descriptor);
+
+                console.log("detections", detections);
+              });
+          });
+      }
+
+      loadTrainingData();
+
+      function dataURLtoFile(dataurl, filename) {
+        var arr = dataurl.split(","),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+      }
 
       async function loadModelFaceApi() {
         await Promise.all([
@@ -67,26 +136,42 @@
           });
       }
 
-      video.addEventListener("play", () => {
+      video.addEventListener("play", async () => {
+        // const labeledFaceDescriptors = await getLabeledFaceDescriptions();
+        // const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors);
+
         const canvas = faceapi.createCanvasFromMedia(video);
         document.body.append(canvas);
+
         const displaySize = { width: video.width, height: video.height };
 
         faceapi.matchDimensions(canvas, displaySize);
 
         setInterval(async () => {
-          const detections = await faceapi.detectAllFaces(
-            video,
-            new faceapi.TinyFaceDetectorOptions()
-          ).withFaceLandmarks().withFaceDescriptors()
+          const detections = await faceapi
+            .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceDescriptors();
 
           const resizedDetections = faceapi.resizeResults(
             detections,
             displaySize
           );
+
           canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 
-          faceapi.draw.drawDetections(canvas, resizedDetections);
+          // const results = resizedDetections.map((d) => {
+          //   return faceMatcher.findBestMatch(d.descriptor);
+          // });
+
+          resizedDetections.map((resizedDetection, i) => {
+            const box = resizedDetection.detection.box;
+            const drawBox = new faceapi.draw.DrawBox(box, { label: "Face" });
+
+            drawBox.draw(canvas);
+          });
+
+          // faceapi.draw.drawDetections(canvas, resizedDetections);
         }, 100);
       });
       // function capture() {

@@ -26,7 +26,9 @@ def face_id_register_ui():
 
 @auth_blueprint.route('/face-id-login')
 def face_id_login_ui():
-    return render_template('face-id-login.html')
+    registered_faces_query = registered_faces.query.all()
+
+    return render_template('face-id-login.html', registered_faces = registered_faces_query)
 
 @auth_blueprint.route('/register-face-id', methods=["POST"])
 def register_face_id():
