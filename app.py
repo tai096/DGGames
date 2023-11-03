@@ -23,3 +23,6 @@ app.register_blueprint(cart_blueprint, url_prefix='/cart')
 app.jinja_env.filters['currency'] = format_currency
 
 app.app_context().push()
+
+if __name__ == "__main__":
+    app.run()

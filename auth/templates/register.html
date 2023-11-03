@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--add this code to using tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../static/main.css" />
+    <link rel="stylesheet" href="../../../static/output.css">
+    <link rel="stylesheet" href="../../../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>DG Games - Register</title>
     <style>
       .bg-medium-slate-blue {
         background: #8858ed;
       }
 
-      .bg-radial {
-        background: radial-gradient(#252525,#1c1c1c);
+      .bg-dggames {
+        background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);
       }
-
     </style>
   </head>
   <body>
-    <section class="bg-radial min-h-screen flex items-center justify-center">
-      <div class="py-12 px-28 flex bg-neutral-900 bg-opacity-80 rounded-2xl shadow-lg max-w-full items-center">
-        <form action={{ url_for('register') }} method="POST" class="flex flex-col">
+    <section class="bg-dggames h-screen flex items-center justify-center">
+      <div class="py-10 px-20 items-center flex bg-neutral-900 bg-opacity-80 rounded-2xl shadow-lg">
+        <form class="flex flex-col" action={{ url_for('auth.register') }} method="POST">
           <h2 class="text-neutral-100 font-bold text-4xl mb-5 flex-col mx-auto">Sign Up</h2>
           <p class="py-2 mt-1 text-sm text-neutral-100">Name:</p>
           <input class="p-2 w-60 mx-auto rounded-sm border text-black" type="text" name="name" placeholder="Your name" required>

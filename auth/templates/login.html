@@ -4,33 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--add this code to using tailwind -->
-    <link rel="stylesheet" href="../../static/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../static/output.css">
+    <link rel="stylesheet" href="../../../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>DG Games - Login</title>
     <style>
       
       .bg-medium-slate-blue {
         background: #8858ed;
       }
-
-      .bg-radial-dark {
-        background: radial-gradient(#252525,#1c1c1c);
+      
+      .bg-dggames {
+        background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);
       }
+
+
     </style>
   </head>
   <body>
-    <section class="bg-radial-dark min-h-screen max-w-full flex items-center justify-center">
-      <div class="py-32 px-52 flex bg-neutral-900 rounded-2xl shadow-lg">
-        <div class="w-1/2 items-center">
-          <img src="" alt="Insert Logo Here">
-         </div>
+    <section class="bg-dggames h-screen flex items-center justify-center">
+      <div class="py-24 px-28 flex bg-neutral-900 rounded-2xl shadow-lg">
+        <div class="w-1/2 top-1/3">
+          <img class="w-96 p-5 pr-14" src="../../../static/assets/img/logo-DGGames.png" alt="Insert Logo Here">
+        </div>
         <div class="w-1/2 items-center">
           <h2 class="text-neutral-100 font-bold text-3xl mb-2 w-96">Sign in to DG Games</h2>
           <p class="text-sm italic text-neutral-400 mb-4">"Unlock your gaming potential!"</p>
-          <form action="" class="flex flex-col">
+          <form action= {{ url_for('auth.login') }} method='POST' class="flex flex-col">
+            <p class="py-2 mt-1 text-sm font-medium text-red-600">{{ login_error }}</p>
             <p class="py-2 mt-1 text-sm font-medium text-neutral-100">Email Address</p>
-            <input class="p-2 w-96 rounded-md border text-black" type="text" name="email" placeholder="Enter your email here" required>
+            <input class="p-2 w-96 rounded-md border text-black text-sm" type="text" name="email" placeholder="Enter your email here" required>
             <p class="py-2 mt-1 text-sm font-medium text-neutral-100">Password</p>
-            <input class="p-2 w-96 rounded-md border text-black" type="password" name="password" placeholder="Password" required>
+            <input class="p-2 w-96 rounded-md border text-black text-sm" type="password" name="password" placeholder="Password" required>
             <a href="" class="py-2 mb-2 text-neutral-400 text-xs hover:underline">Forgot Password?</a>
             <button class="bg-medium-slate-blue hover:opacity-80 rounded-md py-2 text-neutral-100 font-medium w-96">Sign in</button>
           </form>
@@ -38,7 +44,7 @@
             <hr class="border-gray-500 border-solid w-96">
           </div>
           <div>
-            <p class="text-xs py-2 text-neutral-100">Are you new? <a href="" class="font-medium hover:underline text-neutral-100">Sign Up!</a></p>
+            <p class="text-xs py-2 text-neutral-100">Are you new? <a href={{url_for('auth.register')}} class="font-medium hover:underline text-neutral-100">Sign Up!</a></p>
           </div>
         </div>
       </div>
