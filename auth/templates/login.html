@@ -32,7 +32,7 @@
           <h2 class="text-neutral-100 font-bold text-3xl mb-2 w-96">Sign in to DG Games</h2>
           <p class="text-sm italic text-neutral-400 mb-4">"Unlock your gaming potential!"</p>
           <form action= {{ url_for('auth.login') }} method='POST' class="flex flex-col">
-            <p class="py-2 mt-1 text-sm font-medium text-red-600">{{ login_error }}</p>
+            <p class="py-2 mt-1 text-sm font-light italic text-red-600">{{ login_error }}</p>
             <p class="py-2 mt-1 text-sm font-medium text-neutral-100">Email Address</p>
             <input class="p-2 w-96 rounded-md border text-black text-sm" type="text" name="email" placeholder="Enter your email here" required>
             <p class="py-2 mt-1 text-sm font-medium text-neutral-100">Password</p>

@@ -52,8 +52,10 @@ def get_obj_user(email):
     sqlcommand = (f'Select * from user where email = "{email}"')
     cursor.execute(sqlcommand)
     obj_user = cursor.fetchone()
-    if len(obj_user) > 0:
+    if obj_user != None:
         result = obj_user
+    else:
+        result = [0, 0, 0, 0]
     conn.close()
     return result
 
@@ -69,9 +71,9 @@ def register():
         email_error = ""
         if check_notunique_username(username) or check_notunique_email(email):
             if check_notunique_username(username):
-                username_error = "Username already exists!"
+                username_error = "*Username already exists!"
             if check_notunique_email(email):
-                email_error = "Email already exists!"
+                email_error = "*Email already exists!"
             return render_template('register.html', username_error=username_error, email_error=email_error, 
                            registration_success="")
         hash = password.encode('utf-8')
@@ -79,8 +81,7 @@ def register():
         hashed_password_str = hashed_password_bytes.decode()
         new_id = save_to_db(name, username, email, hashed_password_str, phone)
         return redirect(url_for('auth.login'))
-    return render_template('register.html', username_error="", email_error="", 
-                           registration_success="")
+    return render_template('register.html', username_error="", email_error="")
 
 @auth_blueprint.route('/login', methods=['GET','POST'])
 def login():
@@ -88,18 +89,23 @@ def login():
         email = request.form['email']
         password = request.form['password']
         obj_user = get_obj_user(email)
-        obj_pw = obj_user[3]
-        obj_pw_encoded = obj_pw.encode('utf-8')
-        check_hash = bcrypt.checkpw(password.encode('utf-8'), obj_pw_encoded)
-        if int(obj_user[0]) > 0 and check_hash == True:
-            curr_user = {
-                "id": obj_user[0],
-                "username": obj_user[1],
-                "name": obj_user[5],
-                "phone_number": obj_user[6]
-            }
-            session['current_user'] = curr_user
-            return redirect(url_for('general.index'))
+        if int(obj_user[0]) > 0:
+            obj_pw = obj_user[3]
+            obj_pw_encoded = obj_pw.encode('utf-8')
+            check_hash = bcrypt.checkpw(password.encode('utf-8'), obj_pw_encoded)
+            if check_hash == True:
+                curr_user = {
+                    "id": obj_user[0],
+                    "username": obj_user[1],
+                    "name": obj_user[5],
+                    "phone_number": obj_user[6]
+                }
+                session['current_user'] = curr_user
+                return redirect(url_for('general.index'))
+            else:
+                login_error = "*Invalid email or password!"
+                return render_template('login.html', login_error=login_error)
         else:
-            flash("Username and password are not correct!", category='danger')
-    return render_template('login.html')
+            login_error = "*Invalid email or password!"
+            return render_template('login.html', login_error=login_error)
+    return render_template('login.html', login_error="")
