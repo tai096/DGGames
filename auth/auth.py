@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, flash, get_flashed_messages, url_for
-import sqlite3, bcrypt
+import sqlite3, bcrypt, re
 
 auth_blueprint = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 sqldbname = 'instance/dggames.db'
@@ -59,6 +59,16 @@ def get_obj_user(email):
     conn.close()
     return result
 
+def validate_email(email):  
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):  
+        return True  
+    return False
+
+def validate_number(phone):
+    if phone.isnumeric():
+        return True
+    return False
+
 @auth_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -67,8 +77,15 @@ def register():
         email = request.form['email']
         password = request.form['password']
         phone = request.form['phone']
+        phone_error = ""
         username_error = ""
         email_error = ""
+        if validate_number(phone) == False:
+            phone_error = "*Invalid Phone Number!"
+            return render_template('register.html', phone_error=phone_error)
+        if validate_email(email) == False:
+            email_error = "*Invalid Email Address!"
+            return render_template('register.html', email_error=email_error)
         if check_notunique_username(username) or check_notunique_email(email):
             if check_notunique_username(username):
                 username_error = "*Username already exists!"
