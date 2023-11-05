@@ -42,3 +42,4 @@ def index():
             games_recommended.append(game)
             
     return render_template('general/index.html', games_best_seller=games_best_seller, games_recommended=games_recommended, game_hero_section=game_hero_section)
+
