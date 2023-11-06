@@ -8,8 +8,8 @@ cart_blueprint = Blueprint('cart', __name__, template_folder='templates', static
 
 @cart_blueprint.route('/', methods=['POST', 'GET'])
 def index():
-    curr_user = User.query.filter_by(id=2).first()
-    orders = Orders.query.filter_by(customer_id = curr_user.id).all()
+    curr_user = session['current_user']
+    orders = Orders.query.filter_by(customer_id = curr_user['id']).all()
     games_in_cart = []
     subtotal = 0
     discount = 0
@@ -21,12 +21,13 @@ def index():
             subtotal += game.price
         taxes = subtotal * 5 / 100
     total = subtotal + taxes + discount
+
     if request.method == 'POST':
         if games_in_cart:
             if curr_user.can_purchase(total):
                 for game in games_in_cart:
                     new_purchase = Purchases(
-                        customer_id=curr_user.id, 
+                        customer_id=curr_user['id'], 
                         game_id=game.id, 
                         date_of_purchase=datetime.now()
                     )
@@ -49,9 +50,9 @@ def index():
 @cart_blueprint.route('/add', methods=["POST"])
 def cart_add():
     game_id = int(request.form['product_id'])
-    curr_user = User.query.filter_by(id=2).first()
-    order_exist = Orders.query.filter_by(customer_id=curr_user.id, game_id=game_id).first()
-    purchase_exist = Purchases.query.filter_by(customer_id=curr_user.id,  game_id=game_id).first()
+    curr_user = session['current_user']
+    order_exist = Orders.query.filter_by(customer_id=curr_user['id'], game_id=game_id).first()
+    purchase_exist = Purchases.query.filter_by(customer_id=curr_user['id'],  game_id=game_id).first()
     if request.method == "POST":
         found = False
         if order_exist:
@@ -63,7 +64,7 @@ def cart_add():
         if not found:
             newOrder = Orders(
                 date_of_order = datetime.now(),
-                customer_id = curr_user.id,
+                customer_id = curr_user['id'],
                 game_id = game_id
             )
             db.session.add(newOrder)
@@ -83,8 +84,8 @@ def cart_add():
 
 @cart_blueprint.route('/remove/<game_id>', methods=['POST'])
 def cart_remove(game_id):
-    curr_user = User.query.filter_by(id=2).first()
-    deleted_order = Orders.query.filter_by(customer_id=curr_user.id, game_id=game_id).first()
+    curr_user = session['current_user']
+    deleted_order = Orders.query.filter_by(customer_id=curr_user['id'], game_id=game_id).first()
 
     if request.method == 'POST':
         if deleted_order:

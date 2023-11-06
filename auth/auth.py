@@ -115,7 +115,8 @@ def login():
                     "id": obj_user[0],
                     "username": obj_user[1],
                     "name": obj_user[5],
-                    "phone_number": obj_user[6]
+                    "phone_number": obj_user[6],
+                    "budget": obj_user[7]
                 }
                 session['current_user'] = curr_user
                 return redirect(url_for('general.index'))
