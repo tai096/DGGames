@@ -20,10 +20,20 @@ class User(db.Model):
 class registered_faces(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    photo = db.Column(db.Text, nullable=False)
+    photos = db.relationship('user_photos', backref='registered_faces', lazy=True)
 
     def __repr__(self):
-        return f'RegisteredFaces {self.username}'
+        obj = {"id": self.id, "username": self.username}
+        return f'{obj}'
+
+class user_photos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photo = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('registered_faces.id'), nullable=False)
+
+    def __repr__(self):
+        obj = {"id": self.id, "user_id": self.user_id, "photo": self.photo}
+        return f'{obj}'
     
 genre_games = db.Table('genre_games',
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True),

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--add this code to using tailwind -->
+    <link rel="stylesheet" href="../../static/output.css" />
+    <title>DG Games</title>
+    <style>
+      canvas {
+        position: absolute;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body class="relative">
+    <video autoplay id="video" width="400" height="280"></video>
+    <br />
+    <button onclick="capture()">Capture your face</button>
+    <br />
+
+    <form action="{{ url_for('auth.register_face_id') }}" method="post">
+      <input type="text" id="name" required name="name" />
+      <input type="text" id="photo" required name="photo" hidden />
+
+      <button type="submit" onclick="register()">Register</button>
+    </form>
+    <br />
+    <canvas id="canvas" width="400" height="280" class="hidden"></canvas>
+
+    <!-- <div >
+      {% for registered_face in registered_faces%}
+      <p class="registered_face_username">{{registered_face.username}}</p>
+      <p class="registered_face_id">{{registered_face.id}}</p>
+        {% for user_photo in user_photos%}
+          {% if registered_face.id == user_photo.user_id%}
+            <p class="registered_face_photo_user">{{registered_face.username}} {{user_photo.photo}}</p>
+          {% endif %}
+          <p class="registered_face_photo">{{user_photo.photo}}</p>
+        {% endfor %}
+      {% endfor %}
+    </div> -->
+
+    <!-- <div>
+      {% for user_photo in user_photos%}
+      <p class="registered_face_photo_user">{{user_photo.user_id}}</p>
+      <p class="registered_face_photo">{{user_photo.photo}}</p>
+      {% endfor %}
+    </div> -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"
+      integrity="sha256-JOJ7NmVm2chxYZ1KPcAYd2bwVK7NaFj9QKMp7DClews="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var video = document.getElementById("video");
+      // var registeredFaceUsernames = document.getElementsByClassName(
+      //   "registered_face_username"
+      // );
+      // var registeredFacePhotos = document.getElementsByClassName(
+      //   "registered_face_photo"
+      // );
+      // var registeredFacePhotos = document.getElementsByClassName(
+      //   "registered_face_photo"
+      // );
+      // var registeredFacePhotoUsers = document.getElementsByClassName(
+      //   "registered_face_photo_user"
+      // );
+      var nameInput = document.getElementById("name");
+      var photoInput = document.getElementById("photo");
+      var canvasElement = document.getElementById("canvas");
+
+      const registeredFacesData = {{ registered_faces|safe }};
+      const userPhotosData = {{ user_photos|safe }};
+
+      // let newData = []
+      // let photos = []
+
+      // registeredFacesData.map(registeredFace=> {
+      //   userPhotosData.map(userPhoto=> {
+      //     if(registeredFace.id === userPhoto.user_id){
+      //       photos.push(userPhoto.photo)
+
+      //     }
+      //   })
+      //   var obj = {
+      //         "userName": registeredFace.username,
+      //         "photo": photos
+      //       }
+      //   newData.push(obj)
+      // })
+
+
+      const userIdToUsername = {};
+      registeredFacesData.forEach(user => { userIdToUsername[user.id] = user.username });
+
+      // Create an object to store the result
+      const result = {};
+
+      userPhotosData.forEach(userPhoto => {
+        const username = userIdToUsername[userPhoto.user_id];
+        const photo = userPhoto.photo;
+
+        if (!result[username]) {
+          result[username] = { username, photos: [] };
+        }
+
+        result[username].photos.push(photo);
+      });
+
+      // Convert the result object into an array
+      var dataTraining = Object.values(result);
+
+      console.log(dataTraining);
+
+      async function loadTrainingData() {
+        // let labels = [];
+        // let photos = [];
+
+        // Array.from(registeredFaceUsernames).forEach((username) => {
+        //   labels.push(username.innerText);
+        // });
+
+        // // console.log('labels', labels)
+
+        // Array.from(registeredFacePhotos).forEach((photo) => {
+        //   photos.push(photo.innerText);
+        // });
+
+        // console.log('photos',photos)
+
+        const faceDescriptors = [];
+
+        dataTraining.length > 0 &&
+          dataTraining.map((data) => {
+            const descriptors = [];
+            data.photos.length > 0 &&
+            data.photos.map(async (photo) => {
+                let image = document.createElement("img");
+                image.setAttribute("src", photo);
+
+                const detections = await faceapi
+                  .detectSingleFace(image)
+                  .withFaceLandmarks()
+                  .withFaceDescriptor();
+
+                if (detections) {
+                  console.log("detections", detections);
+                  descriptors.push(detections.descriptor);
+                }
+              });
+
+            faceDescriptors.push(
+              new faceapi.LabeledFaceDescriptors(data.username, descriptors)
+            );
+          });
+
+        return faceDescriptors;
+      }
+
+      let faceMatcher;
+
+      async function loadModelFaceApi() {
+        await Promise.all([
+          await faceapi.nets.ssdMobilenetv1.loadFromUri("/static/models"),
+          await faceapi.nets.faceRecognitionNet.loadFromUri("/static/models"),
+          await faceapi.nets.tinyFaceDetector.loadFromUri("/static/models"),
+          await faceapi.nets.faceLandmark68Net.loadFromUri("/static/models"),
+        ]);
+
+        const trainingData = await loadTrainingData();
+
+        faceMatcher = new faceapi.FaceMatcher(trainingData, 0.6);
+
+        console.log("faceMatcher", faceMatcher);
+      }
+
+      function init() {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            video.srcObject = stream;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      video.addEventListener("play", async () => {
+        const canvas = faceapi.createCanvasFromMedia(video);
+        document.body.append(canvas);
+
+        const displaySize = { width: video.width, height: video.height };
+
+        faceapi.matchDimensions(canvas, displaySize);
+
+        setInterval(async () => {
+          const detections = await faceapi
+            .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 320 }))
+            .withFaceLandmarks()
+            .withFaceDescriptors();
+
+          const resizedDetections = faceapi.resizeResults(
+            detections,
+            displaySize
+          );
+
+          const context = canvas.getContext("2d");
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.canvas.willReadFrequently = true;
+
+          resizedDetections.forEach((resizedDetection, i) => {
+            const box = resizedDetection.detection.box;
+            const descriptor = resizedDetection.descriptor; // Get the descriptor from the resizedDetection
+
+            const drawBox = new faceapi.draw.DrawBox(box, {
+              label: faceMatcher.findBestMatch(descriptor).toString(), // Use the descriptor here
+            });
+
+            drawBox.draw(canvas);
+          });
+        }, 300);
+      });
+
+      loadModelFaceApi().then(init);
+
+      function capture() {
+        const context = canvasElement.getContext("2d");
+        context.drawImage(
+          video,
+          0,
+          0,
+          canvasElement.width,
+          canvasElement.height
+        );
+        canvasElement.style.display = "block";
+        video.style.display = "none";
+      }
+
+      function register() {
+        const name = nameInput.value;
+
+        capture();
+
+        let photo = canvasElement.toDataURL(`${name}/jpeg`);
+        // console.log(photo)
+
+        photoInput.value = photo;
+      }
+    </script>
+  </body>
+</html>
