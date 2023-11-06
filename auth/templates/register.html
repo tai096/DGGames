@@ -1,33 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--add this code to using tailwind -->
-    <link rel="stylesheet" href="../../static/output.css" />
-    <title>DG Games - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../static/output.css">
+    <link rel="stylesheet" href="../../../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>DG Games - Register</title>
     <style>
-      
-      .bg-radial {
-        background: radial-gradient(#252525,#1c1c1c);
+      .bg-medium-slate-blue {
+        background: #8858ed;
       }
 
+      .bg-dggames {
+        background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);
+      }
     </style>
   </head>
   <body>
-    <section class="bg-radial dark:bg-neutral-800 min-h-screen flex items-center justify-center">
-      <div class="py-12 px-28 flex bg-neutral-800 rounded-2xl shadow-lg max-w-3xl">
-        <form action="" class="flex flex-col">
-          <h2 class="text-neutral-900 dark:text-neutral-100 font-bold text-3xl mb-5 flex-col">Sign Up</h2>
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Username:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="text" name="email" placeholder="Username">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Email:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="text" name="email" placeholder="Email">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Password:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="password" name="password" placeholder="Password">
-          <p class="py-2 mt-1 text-sm text-neutral-900 dark:text-neutral-100">Confirm Password:</p>
-          <input class="p-2 w-60 rounded-sm border text-black" type="password" name="password" placeholder="Confirm Password">
-          <button class="bg-neutral-900 dark:bg-neutral-700 w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Login</button>
+    <section class="bg-dggames h-screen flex items-center justify-center">
+      <div class="py-10 px-20 items-center flex bg-neutral-950 bg-opacity-80 rounded-2xl shadow-lg">
+        <form class="flex flex-col" action={{ url_for('auth.register') }} method="POST">
+          <h2 class="text-neutral-100 font-bold text-4xl mb-5 flex-col mx-auto">Sign Up</h2>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Name: (*)</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" required type="text" name="name" placeholder="Your name">
+          <p class="py-2 mt-1 text-sm text-neutral-100">Username: (*)</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" required type="text" name="username" placeholder="Username">
+          <span class="validation-message py-1 text-xs font-medium italic text-red-600">{{ username_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Email: (*)</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" required  type="email" name="email" placeholder="Email">
+          <span class="validation-message py-1 text-xs font-medium italic text-red-600">{{ email_error }}</span>
+          <p class="py-2 mt-1 text-sm text-neutral-100">Password: (*)</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" required type="password" name="password" minlength="6" placeholder="Password">
+          <p class="py-2 mt-1 text-sm text-neutral-100">Phone Number: (*)</p>
+          <input class="p-2 w-60 mx-auto rounded-sm border text-black" required type="tel" name="phone" placeholder="Phone Number">
+          <span class="validation-message py-1 text-xs font-medium italic text-red-600">{{ phone_error }}</span>
+          <button class="bg-medium-slate-blue hover:opacity-80 mx-auto w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Sign Up</button>
         </form>
       </div>
     </section>
