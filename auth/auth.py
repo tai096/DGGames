@@ -37,7 +37,7 @@ def save_to_db(name, username, email, hashed_password, phone_number):
     if id_max > 0:
         id_max += 1
     else: id_max = 1
-    conn = sqlite3.connect(sqldbname)
+    conn = sqlite3.connect(sqldbname, timeout=30)
     cursor = conn.cursor()
     sqlcommand = (f'Insert Into user (id, name, username, email, hash_password, phone_number, role, budget) VALUES ({id_max}, "{name}", "{username}", "{email}", "{hashed_password}", "{phone_number}", "{role}", "{budget}")')
     cursor.execute(sqlcommand)
@@ -47,7 +47,7 @@ def save_to_db(name, username, email, hashed_password, phone_number):
 
 def get_obj_user(email):
     result = []
-    conn = sqlite3.connect(sqldbname)
+    conn = sqlite3.connect(sqldbname, timeout=30)
     cursor = conn.cursor()
     sqlcommand = (f'Select * from user where email = "{email}"')
     cursor.execute(sqlcommand)
