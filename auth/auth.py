@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session, flash, get_flashed_messages, url_for
+from flask import Blueprint, render_template, request, redirect, session, url_for
 import sqlite3, bcrypt, re
 
 auth_blueprint = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
@@ -97,7 +97,9 @@ def register():
         hashed_password_bytes = bcrypt.hashpw(hash, bcrypt.gensalt())
         hashed_password_str = hashed_password_bytes.decode()
         new_id = save_to_db(name, username, email, hashed_password_str, phone)
+        
         return redirect(url_for('auth.login'))
+    
     return render_template('register.html', username_error="", email_error="")
 
 @auth_blueprint.route('/login', methods=['GET','POST'])
@@ -116,6 +118,7 @@ def login():
                     "username": obj_user[1],
                     "name": obj_user[5],
                     "phone_number": obj_user[6],
+                    "role": obj_user[4],
                     "budget": obj_user[7]
                 }
                 session['current_user'] = curr_user
@@ -126,4 +129,10 @@ def login():
         else:
             login_error = "*Invalid email or password!"
             return render_template('login.html', login_error=login_error)
+        
     return render_template('login.html', login_error="")
+
+@auth_blueprint.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect(url_for('auth.login'))

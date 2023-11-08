@@ -9,43 +9,58 @@ cart_blueprint = Blueprint('cart', __name__, template_folder='templates', static
 @cart_blueprint.route('/', methods=['POST', 'GET'])
 def index():
     curr_user = session['current_user']
-    orders = Orders.query.filter_by(customer_id = curr_user['id']).all()
+    customer_id = curr_user['id']
+
+    user_query = User.query.filter_by(id = customer_id).first()
+    orders = Orders.query.filter_by(customer_id = customer_id).all()
+
     games_in_cart = []
     subtotal = 0
     discount = 0
     taxes = 0
-    if orders:
-        for order in orders:
-            game = Games.query.filter_by(id=order.game_id).first()
-            games_in_cart.append(game)
-            subtotal += game.price
-        taxes = subtotal * 5 / 100
-    total = subtotal + taxes + discount
 
-    if request.method == 'POST':
-        if games_in_cart:
-            if curr_user.can_purchase(total):
-                for game in games_in_cart:
-                    new_purchase = Purchases(
-                        customer_id=curr_user['id'], 
-                        game_id=game.id, 
-                        date_of_purchase=datetime.now()
-                    )
-                    db.session.add(new_purchase)
-                    game.purchased_success()
-                curr_user.purchase_item(total)
-                for order in orders:
-                    db.session.delete(order)
-                db.session.commit()
-                session['cart_length'] = 0
-                session['current_user']['budget'] = curr_user.budget
-                flash(f'Purchase successfully!', category=MessageType['SUCCESS'].value)
+    print(user_query)
+
+    if 'current_user' in session:
+        if orders:
+            for order in orders:
+                game = Games.query.filter_by(id=order.game_id).first()
+                games_in_cart.append(game)
+                subtotal += game.price
+            taxes = subtotal * 5 / 100
+
+        total = subtotal + taxes + discount
+
+        if request.method == 'POST':
+            if games_in_cart:
+                if user_query.can_purchase(total):
+                    for game in games_in_cart:
+                        new_purchase = Purchases(
+                            customer_id=curr_user['id'], 
+                            game_id=game.id, 
+                            date_of_purchase=datetime.now()
+                        )
+                        db.session.add(new_purchase)
+                        game.purchased_success()
+                    user_query.purchase_item(total)
+
+                    for order in orders:
+                        db.session.delete(order)
+
+                    db.session.commit()
+
+                    session['cart_length'] = 0
+                    session['current_user']['budget'] = user_query.budget
+                    flash(f'Purchase successfully!', category=MessageType['SUCCESS'].value)
+                else:
+                    flash(f'Your balance is not enough for this purchasing!', category=MessageType['ERROR'].value)
             else:
-                flash(f'Your balance is not enough for this purchasing!', category=MessageType['ERROR'].value)
-        else:
-            flash(f'Your cart is empty, please go back and shopping :D', category=MessageType['ERROR'].value)
-        return redirect(request.referrer)
-    return render_template('cart/cart.html', cart=games_in_cart, subtotal=subtotal, discount=discount, taxes=taxes, total=total)
+                flash(f'Your cart is empty, please go back and shopping :D', category=MessageType['ERROR'].value)
+            return redirect(request.referrer)
+        
+        return render_template('cart/cart.html', cart=games_in_cart, subtotal=subtotal, discount=discount, taxes=taxes, total=total)
+    else:
+        return redirect('auth/login')
 
 @cart_blueprint.route('/add', methods=["POST"])
 def cart_add():
@@ -53,6 +68,7 @@ def cart_add():
     curr_user = session['current_user']
     order_exist = Orders.query.filter_by(customer_id=curr_user['id'], game_id=game_id).first()
     purchase_exist = Purchases.query.filter_by(customer_id=curr_user['id'],  game_id=game_id).first()
+
     if request.method == "POST":
         found = False
         if order_exist:
