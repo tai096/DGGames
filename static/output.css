@@ -668,8 +668,8 @@ video {
   top: 2.5rem;
 }
 
-.top-20 {
-  top: 5rem;
+.top-16 {
+  top: 4rem;
 }
 
 .top-40 {
@@ -678,14 +678,6 @@ video {
 
 .top-\[120\%\] {
   top: 120%;
-}
-
-.top-16 {
-  top: 4rem;
-}
-
-.right-10 {
-  right: 2.5rem;
 }
 
 .-z-10 {
@@ -1085,6 +1077,10 @@ video {
   width: 24rem;
 }
 
+.w-\[100px\] {
+  width: 100px;
+}
+
 .w-\[132px\] {
   width: 132px;
 }
@@ -1113,16 +1109,12 @@ video {
   width: 100%;
 }
 
-.w-14 {
-  width: 3.5rem;
+.w-\[150px\] {
+  width: 150px;
 }
 
-.w-\[50px\] {
-  width: 50px;
-}
-
-.w-\[100px\] {
-  width: 100px;
+.w-\[250px\] {
+  width: 250px;
 }
 
 .min-w-\[12px\] {
@@ -1333,9 +1325,19 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-b-xl {
+  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+}
+
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+}
+
+.rounded-t-xl {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
 }
 
 .rounded-bl-xl {
@@ -1557,11 +1559,6 @@ video {
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
-}
-
-.px-10 {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
 }
 
 .px-2 {
@@ -2457,6 +2454,10 @@ body {
 
 .group:hover .group-hover\:block {
   display: block;
+}
+
+.group:hover .group-hover\:flex {
+  display: flex;
 }
 
 .group:hover .group-hover\:h-\[120\%\] {

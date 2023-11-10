@@ -1,0 +1,55 @@
+{% extends "general/base.html" %}
+
+{% block content %}
+<div class="px-48 mt-12 flex justify-between gap-10">
+    {% if purchased_games %}
+        <div class="cart-products-container w-full">
+            <form id="search_form" action={{url_for('purchase.index')}} method="post" class="flex items-center mb-5">
+                <input
+                  id="search_input"
+                  type="search"
+                  name="search_input"
+                  placeholder="Search by name"
+                  class="h-11 w-52 border-2 border-primaryColor p-2 rounded-xl outline-none bg-bgColor "
+                />
+                <div class="w-2"></div>
+                <button title="search" type="submit" class="hover:bg-primaryColor/60 h-10 w-10 rounded-full flex items-center justify-center">
+                 <i class="fas fa-search" style="color: #ffffff;"></i>
+                </button>
+            </form>
+            {% for purchased_game in purchased_games%}
+                <div class="cart-product h-56 flex justify-between gap-6 pl-6 pr-4 py-5 mb-2 bg-[#212121] rounded-sm">
+                    <div class="flex justify-between grow">
+                        <div class="product-info flex">
+                            <div class="h-44 rounded-md overflow-hidden inline-block mr-5">
+                                <img src={{ purchased_game.image }} 
+                                style="aspect-ratio: 9/12" 
+                                class="object-cover h-full rounded-sm">
+                            </div>
+                            <div class="flex flex-col justify-between pb-1">
+                                <div>
+                                    <h4 class="text-xl font-bold">{{ purchased_game.name }}</h4>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <b>Payment time:</b> <span class="text-primaryColor">{{ purchased_game.date_of_purchase }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="font-medium">{{ purchased_game.price | currency }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="flex flex-col items-center">
+            <img src="https://booster.io/wp-content/uploads/custom-order-numbers-e1438361586475.png"   
+            class="w-[250px] mb-10"
+            alt="image">
+            <p class="italic">No Orders Yet</p>
+            <p class="italic">Explore more products
+                <a href={{ url_for('products.index') }} class="underline hover:text-primaryColor">here...</a>
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

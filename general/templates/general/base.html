@@ -76,8 +76,11 @@
                 <span class="hover:text-primaryColor transition-all px-1 py-8 cursor-pointer">
                   {{ session['current_user']['name'] }}
                 </span>
-                <form action={{url_for('auth.logout')}} method="post">
-                  <button type="submit" class="absolute hidden group-hover:block top-16 right-0 text-center hover:bg-white hover:text-primaryColor duration-200 w-[100px] py-2 bg-primaryColor rounded-xl">Log out</button>
+                <form class="absolute hidden group-hover:flex top-16 right-0 flex-col bg-primaryColor w-[150px] rounded-xl"
+                  action={{url_for('auth.logout')}} method="post">
+                  <a href="#" class="rounded-t-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Profile</a>
+                  <a href="{{url_for('purchase.index')}}" class="py-2 text-center hover:bg-white hover:text-primaryColor duration-200">My Purchases</a>
+                  <button type="submit" class="rounded-b-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Log out</button>
                 </form>
               </div>
             {% else %}
