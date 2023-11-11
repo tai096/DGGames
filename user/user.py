@@ -31,20 +31,18 @@ def wallet():
 
             check_hash = bcrypt.checkpw(password.encode('utf-8'), encoded_pass)
 
-            print(check_hash)
             if check_hash == True:
                 user_query.budget = user_query.budget + int(top_up_value)
                 db.session.commit()
 
                 session['current_user']['budget'] = user_query.budget
-                
+
                 success_message = "Top Up successfully!"
                 flash(f'{success_message}', category = MessageType['SUCCESS'].value)
+    
             else:
                 error_message = "Incorrect password!"
                 flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
-
-            return redirect(url_for('user.wallet'))
         
         return render_template('wallet.html', user_query = user_query)
     else:
