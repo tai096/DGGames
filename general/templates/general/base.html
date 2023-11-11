@@ -78,8 +78,9 @@
                 </span>
                 <form class="absolute hidden group-hover:flex top-16 right-0 flex-col bg-primaryColor w-[150px] rounded-xl"
                   action={{url_for('auth.logout')}} method="post">
-                  <a href="#" class="rounded-t-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Profile</a>
+                  <a href="{{url_for('user.profile')}}" class="rounded-t-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Profile</a>
                   <a href="{{url_for('purchase.index')}}" class="py-2 text-center hover:bg-white hover:text-primaryColor duration-200">My Purchases</a>
+                  <a href="{{url_for('user.wallet')}}" class="py-2 text-center hover:bg-white hover:text-primaryColor duration-200">My Wallet</a>
                   <button type="submit" class="rounded-b-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Log out</button>
                 </form>
               </div>
