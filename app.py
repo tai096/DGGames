@@ -1,6 +1,6 @@
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
-from utils.tools import format_currency
+from utils.tools import format_currency, format_datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dggames.db'
@@ -23,6 +23,7 @@ app.register_blueprint(cart_blueprint, url_prefix='/cart')
 app.register_blueprint(purchase_blueprint, url_prefix='/purchases')
 
 app.jinja_env.filters['currency'] = format_currency
+app.jinja_env.filters['datetime'] = format_datetime
 
 app.app_context().push()
 

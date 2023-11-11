@@ -1,9 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, session, flash
 from models import Games, Orders, User, Purchases
-from datetime import datetime
 from app import db
 from utils.tools import MessageType
-from datetime import datetime
 
 purchase_blueprint = Blueprint('purchase', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
@@ -11,18 +9,17 @@ purchase_blueprint = Blueprint('purchase', __name__, template_folder='templates'
 def index():
     if 'current_user' in session:
         curr_user = session['current_user']
+        search_text = ''
+        
+        if request.method == "POST":
+            search_text = request.form["search_input"]
 
-        purchases = Purchases.query.filter_by(customer_id = curr_user['id']).order_by(Purchases.date_of_purchase.desc()).all()
+            purchases = Purchases.query.filter_by(customer_id = curr_user['id']).join(Purchases.game).filter(Games.name.like(f'%{search_text}%')).order_by(Purchases.date_of_purchase.desc()).all()
 
-        purchased_games = []
+        else:
+            purchases = Purchases.query.filter_by(customer_id = curr_user['id']).order_by(Purchases.date_of_purchase.desc()).all()
 
-        for purchase in purchases:
-            purchased_game = Games.query.filter_by(id = purchase.game_id).first()
-            purchased_game.date_of_purchase = purchase.date_of_purchase.strftime("%m/%d/%Y, %H:%M")
-
-            purchased_games.append(purchased_game)
-
-        return render_template('my-purchases.html', purchased_games = purchased_games)
+        return render_template('my-purchases.html', purchases = purchases, search_text = search_text, method = request.method)
     else:
         return redirect('auth/login')
 
