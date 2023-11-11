@@ -104,6 +104,7 @@ def edit_product(product_id):
 
                 success_message = "Updated successfully!"
                 flash(f'{success_message}', category = MessageType['SUCCESS'].value)
+
             except:
                 error_message = "Something went wrong! (POST: admin/edit-product)"
                 flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
