@@ -11,6 +11,7 @@ db = SQLAlchemy(app)
 from general.general import general_blueprint
 from auth.auth import auth_blueprint
 from products.products import products_blueprint
+from contact.contact import contact_blueprint
 from admin.admin import admin_blueprint
 from cart.cart import cart_blueprint
 from purchase.purchase import purchase_blueprint
@@ -21,6 +22,7 @@ app.register_blueprint(general_blueprint)
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
 app.register_blueprint(products_blueprint, url_prefix='/products')
+app.register_blueprint(contact_blueprint, url_prefix='/contact')
 app.register_blueprint(cart_blueprint, url_prefix='/cart')
 app.register_blueprint(purchase_blueprint, url_prefix='/purchases')
 app.register_blueprint(user_blueprint, url_prefix='/user')

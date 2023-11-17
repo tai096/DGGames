@@ -1,0 +1,68 @@
+{% extends "general/base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../static/output.css">
+    <link rel="stylesheet" href="../../../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>DG Games - Contact Us</title>
+    <style>
+
+        .bg-medium-slate-blue {
+            background: #8858ed;
+        }
+
+        .bg-dggames {
+            background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);
+        }
+
+      </style>
+</head>
+<body>
+    <section class="bg-neutral-950">
+        <div class="w-full h-1/5">
+            <h2 class="mb-14 text-7xl font-extrabold pl-16 pt-20">NEED A HAND?</h2>
+        </div>
+        <div class="w-full h-full flex">
+            <div class="w-1/2 pl-20 py-10">
+                <h2 class="mb-32 text-3xl font-extrabold">CONTACT US</h2>
+                <h3 class="mb-4 text-2xl font-medium">DG Games</h3>
+                <h3 class="mb-4 text-2xl font-medium">0-123-456-789</h3>
+                <h3 class="mb-4 text-2xl font-medium">dggames@gmail.com</h3> 
+                <h3 class="mb-4 text-2xl font-medium">NEU, Giai Phong, Hai Ba Trung, Hanoi</h3>
+                <div class="relative pt-2"><iframe class="md:block" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.813813879309!2d105.83992427479538!3d21.00009918876326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac71752d8f79%3A0xd2ec575c01017afa!2sNational%20Economics%20University%20(NEU)!5e0!3m2!1sen!2s!4v1699117963224!5m2!1sen!2s" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>  
+            </div>
+            <div class="py-16 lg:py-16 pl-20 pr-10 max-w-screen-md w-1/2">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-white">Send us a question</h2>
+                <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.</p>
+                <form action="#" class="space-y-8">
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-neutral-100">Your Name *</label>
+                            <input type="name" id="name" class="shadow-sm bg-neutral-950 border border-neutral-100 text-neutral-100 text-sm border-double focus:ring-primary-500 focus:border-primary-500 block w-full pr-10 p-2.5" placeholder="John Doe" required>
+                        </div>
+                        <div class="w-1/2">
+                            <label for="email" class="block mb-2 text-sm font-medium text-neutral-100">Your email *</label>
+                            <input type="email" id="email" class="shadow-sm bg-neutral-950 border border-neutral-100 text-neutral-100 text-sm border-double focus:ring-primary-500 focus:border-primary-500 block w-full pr-10 p-2.5" placeholder="name@gmail.com" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="subject" class="block mb-2 text-sm font-medium text-neutral-100">Subject *</label>
+                        <input type="text" id="subject" class="block p-3 w-full text-sm text-neutral-100 bg-neutral-950 border border-neutral-100 shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Let us know how we can help you" required>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="message" class="block mb-2 text-sm font-medium text-neutral-100">Your message *</label>
+                        <textarea id="message" rows="6" class="block p-2.5 w-full text-sm text-neutral-100 bg-neutral-950 shadow-sm border border-neutral-100 focus:ring-primary-500 focus:border-primary-500" placeholder="Leave a comment..."></textarea>
+                    </div>
+                    <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-white bg-medium-slate-blue rounded-md sm:w-full hover:bg-violet-400 focus:ring-4 focus:outline-none focus:ring-primary-300">Submit</button>
+                </form>
+            </div>
+        </div>  
+    </section>
+</body>
+</html>
+{% endblock content %}
