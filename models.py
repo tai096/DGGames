@@ -10,6 +10,8 @@ class User(db.Model):
     name = db.Column(db.String(50), nullable=False)
     phone_number = db.Column(db.String(50), nullable=True, unique=True)
     budget = db.Column(db.Integer, nullable=False, default=5000000)
+    avatar = db.Column(db.Text, nullable=True)
+
     # One to Many Relationship (For customer)
     orders = db.relationship('Orders', backref='customer', lazy=True)
     purchases = db.relationship('Purchases', backref='customer', lazy=True)
