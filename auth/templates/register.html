@@ -39,6 +39,7 @@
           <input class="p-2 w-60 mx-auto rounded-sm border text-black" required type="tel" name="phone" placeholder="Phone Number">
           <span class="validation-message py-1 text-xs font-medium italic text-red-600">{{ phone_error }}</span>
           <button class="bg-medium-slate-blue hover:opacity-80 mx-auto w-60 rounded-sm py-2 text-neutral-900 dark:text-neutral-100 font-medium mt-10">Sign Up</button>
+          <p class="text-xs py-2 text-neutral-100">Already have an account? <a href={{url_for('auth.login')}} class="font-medium hover:underline text-neutral-100">Log in</a></p>
         </form>
       </div>
     </section>
