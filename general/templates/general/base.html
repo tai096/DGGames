@@ -44,7 +44,7 @@
               <a href={{ url_for('products.index') }} class="px-1 pt-8">Products</a>
             </li>
             <li class="nav-item hover:text-primaryColor mx-3 transition-all">
-              <a href='#' class="px-1 pt-8">Contact Us</a>
+              <a href={{ url_for('contact.contact')}} class="px-1 pt-8">Contact Us</a>
             </li>
             <li class="nav-item group mx-3 transition-all relative">
               <span class="px-1 pt-8 group-hover:text-primaryColor
@@ -67,21 +67,34 @@
             </li>
           </ul>
           <div class="navbar-user md:ml-3 lg:ml-11 flex items-center">
-            <span class="mr-8">
+            <span title='{{ session['current_user']['budget'] | currency}}' class="mr-8 max-w-[100px] truncate">
               {{ session['current_user']['budget'] | currency}}
             </span>
             {% if session['current_user'] %}
-              <a href="#" class="user-auth group hidden md:flex items-center mr-6">
-                <i class="fa-solid fa-circle-user text-2xl mr-4"></i>
-                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+              <div class="user-auth group relative hidden md:flex items-center mr-6">
+                <i class="fa-solid fa-circle-user text-2xl mr-1"></i>
+                <span class="hover:text-primaryColor transition-all px-1 py-8 cursor-pointer">
                   {{ session['current_user']['name'] }}
                 </span>
+                <form class="absolute hidden group-hover:flex top-16 right-0 flex-col bg-primaryColor w-[150px] rounded-xl"
+                  action={{url_for('auth.logout')}} method="post">
+                  <a href="{{url_for('user.profile')}}" class="rounded-t-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Profile</a>
+                  <a href="{{url_for('purchase.index')}}" class="py-2 text-center hover:bg-white hover:text-primaryColor duration-200">My Purchases</a>
+                  <a href="{{url_for('user.wallet')}}" class="py-2 text-center hover:bg-white hover:text-primaryColor duration-200">My Wallet</a>
+                  <button type="submit" class="rounded-b-xl py-2 text-center hover:bg-white hover:text-primaryColor duration-200">Log out</button>
+                </form>
+              </div>
             {% else %}
-                <span class="group-hover:text-primaryColor transition-all px-1 py-8">
+              <div>
+                <span class="group-hover:text-primaryColor transition-all px-1 py-8 before:block before:content-[''] before:w-0 before:h-0 before:absolute
+                before:-top-1 before:right-7 before:border-b-4 before:border-x-[6px] before:border-x-transparent before:border-b-[var(--primaryColor)]
+                after:block after:content-[''] after:w-16 after:h-8 after:absolute
+                after:-top-3 after:right-1">
                   Log In
                 </span>
-              </a>
+              </div>
             {% endif %}
+
             <div class="relative group p-2">
               <a href={{ url_for('cart.index') }} class="user-cart relative flex items-center">
                 <i class="fa-solid fa-cart-shopping md:text-xl">

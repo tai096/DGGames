@@ -21,6 +21,7 @@ def index():
         cart_length = len(orders)
         session['subtotal'] = 0
         session['cart'] = []
+        
         for order in orders:
             game_order_obj = {
                 'image': order.game.image,
@@ -30,14 +31,6 @@ def index():
             session['cart'].append(game_order_obj)
             session['subtotal'] += order.game.price
             
-        # user_obj = {
-        #     'username': curr_user.username,
-        #     'name': curr_user.name,
-        #     'budget': curr_user.budget
-        # }
-        # session['current_user'] = user_obj
-    
-
         session['cart_length'] = cart_length
 
         print(session.items())

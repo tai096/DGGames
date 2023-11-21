@@ -1,28 +1,31 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect, flash, session, url_for
 from utils.tools import MessageType
 from app import db
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 
-@admin_blueprint.route('/auth/login')
-def admin_login():
-
-    return render_template('admin-login.html')
-
 @admin_blueprint.route('/')
 def management():
     from models import Games, Publisher, Genre, Platform
 
-    # fetch games from db
-    games_query = Games.query.all()
-    publishers_query = Publisher.query.all()
-    genres_query = Genre.query.all()
-    platforms_query = Platform.query.all()
+    if 'current_user' in session:
 
-    render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
-    render_search = render_template('components/SearchBar.html')
+        if session['current_user']['role'] == 'admin':
+            # fetch games from db
+            games_query = Games.query.all()
+            publishers_query = Publisher.query.all()
+            genres_query = Genre.query.all()
+            platforms_query = Platform.query.all()
 
-    return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
+            render_modal_create_product = render_template('components/ModalCreateProduct.html', publishers_query = publishers_query, genres_query = genres_query, platforms_query = platforms_query)
+            render_search = render_template('components/SearchBar.html')
+
+            return render_template('management.html', games_query = games_query, ModalCreateProduct = render_modal_create_product, Search = render_search)
+        else:
+            return redirect(url_for('general.index'))
+        
+    else:
+        return redirect(url_for('auth.login'))
 
 @admin_blueprint.route('/search', methods = ['POST'])
 def handle_search():
@@ -101,6 +104,7 @@ def edit_product(product_id):
 
                 success_message = "Updated successfully!"
                 flash(f'{success_message}', category = MessageType['SUCCESS'].value)
+
             except:
                 error_message = "Something went wrong! (POST: admin/edit-product)"
                 flash(f'Error: {error_message}', category = MessageType['ERROR'].value)

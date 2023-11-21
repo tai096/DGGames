@@ -1,0 +1,53 @@
+{% extends "general/base.html" %}
+
+{% block content %}
+
+<div class="flex flex-col lg:flex-row items-center lg:items-start justify-around my-20">
+  <form action="{{url_for('user.wallet')}}" method="post" class="bg-primaryColor/20 p-5 rounded-xl w-[400px]">
+    <h1 class="text-3xl font-bold mb-10">DG-Games Top Up</h1>
+    <div class="flex flex-col items-start mb-5">
+      <label class="font-bold" for="top_up_input">Top up value (vnđ)</label>
+      <input required min="0" max="50000000" value="0" class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor" type="number" name="top_up" id="top_up_input" >
+    </div>
+
+    <div class="flex flex-col items-start mb-8">
+      <label class="font-bold" for="password_input">Account Password</label>
+      <input required placeholder="Input your account password" class="bg-transparent w-full max-w-[400px] p-2 h-10 outline-none rounded-lg border-2 border-primaryColor" type="password" name="password" id="password_input">
+    </div>
+
+    <button
+      type="submit"
+      class="px-4 bg-gray-100/20 p-3 rounded-lg hover:bg-gray-100 hover:text-primaryColor duration-200 mr-2 w-full"
+    >
+      Pay Now
+    </button>
+  </form>
+
+  <div
+  style="background-image: linear-gradient(to right, #2e1851 65%, #3b1851 , #461751 , #511750);"
+  class="flex flex-col items-start rounded-xl w-[500px] py-5 px-5">
+    <div class="flex items-center justify-between w-full">
+      <h1 class="text-xl font-bold">DG Card</h1>
+      <img src="../../../static/assets/img/logo-DGGames.png" alt="DG Games" class="w-40">
+    </div>
+    <p class="text-4xl font-bold mt-10 mb-2">6992 9312 4222 2683</p>
+    <p class="mb-10">Total Balance: <b>{{user_query.budget | currency}}</b></p>
+  
+    <div class="flex items-start justify-between w-full">
+      <div class="flex flex-col items-start">
+        <label for="" class="text-sm opacity-70">Card Holder</label>
+        <span>{{user_query.name}}</span>
+      </div>
+      <div class="flex flex-col items-start">
+        <label class="text-sm opacity-70" for="">Expries</label>
+        <span>08/99</span>
+      </div>
+      <div class="flex flex-col items-start">
+        <label class="text-sm opacity-70" for="">CVV</label>
+        <span>123</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
