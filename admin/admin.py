@@ -130,7 +130,7 @@ def delete_product(product_id):
 
             except Exception as e:
                 db.session.rollback()
-                error_message = "Something went wrong! (POST: admin/delete-product)"
+                error_message = "Can not delete this game!"
                 flash(f'Error: {error_message}', category = MessageType['ERROR'].value)
 
             finally:

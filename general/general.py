@@ -7,7 +7,7 @@ general_blueprint = Blueprint('general', __name__, template_folder='templates', 
 @general_blueprint.route('/', methods=["POST", "GET"])
 def index():
     game_hero_section = Games.query.filter_by(name='Rocket League').first()
-    games_best_seller = Games.query.order_by(Games.purchase_number).limit(10).all()
+    games_best_seller = Games.query.order_by(Games.purchase_number.desc()).limit(10).all()
     games_by_price = Games.query.order_by(Games.price).all()
     games_recommended = []
     pc = Platform.query.filter_by(platform_name='PC').first()

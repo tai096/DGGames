@@ -119,7 +119,7 @@ def best_sellers():
     from models import Games, Platform, Genre
 
     pageTitle = 'BEST SELLERS'
-    games_best_seller = Games.query.order_by(Games.purchase_number).limit(10).all()
+    games_best_seller = Games.query.order_by(Games.purchase_number.desc()).limit(10).all()
     platforms_query = Platform.query.all()
     genres_query = Genre.query.all()
 
